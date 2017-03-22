@@ -295,3 +295,18 @@ function set_var(&$param) {
         echo '';
     }
 }
+
+function get_param($param) {
+
+//    $param = array(
+//        'action' => 'test',
+//        'filename' => 'filetest',
+//    );
+    $params = '';
+    if(is_array($param)){
+        foreach ($param as $key => $value) {
+            $params .= '&'.$key.'?'.$value; 
+        }
+        return $params;
+    }
+}
