@@ -2,6 +2,7 @@
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $active = 'change-password';
+$title = 'เปลี่ยนรหัสผ่าน';
 ?>
 <?php
 if (isset($_POST['submit'])) {

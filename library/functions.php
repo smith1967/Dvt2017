@@ -287,3 +287,11 @@ function humanTime($seconds) {
 
     return sprintf("%d:%02d:%02d", $hour, $minute, $seconds);
 }
+
+function set_var(&$param) {
+    if(isset($param)){
+        echo $param;
+    }  else {
+        echo '';
+    }
+}
