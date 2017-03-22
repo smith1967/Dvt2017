@@ -12,7 +12,7 @@ if (!defined('BASE_PATH'))
         <meta name="author" content="<?php echo $auhtor; ?>">
         <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-        <title><?php $title ?></title>
+        <title><?php echo $title ?></title>
 
         <!-- Bootstrap core CSS -->
         <link href = "<?php echo BOOTSTRAP_URL ?>css/bootstrap.min.css" rel = "stylesheet">
