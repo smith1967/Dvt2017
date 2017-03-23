@@ -157,10 +157,12 @@ function do_save() {
 //    die("sql: " . $sql);
     mysqli_query($db, $sql);
     if (mysqli_affected_rows($db) > 0) {
-        $_SESSION['info'] = "ลงทะเบียนเรียบร้อยครับ";
+        set_info('ลงทะเบียนข้อมูลเรียบร้อย');
+//        $_SESSION['info'] = "ลงทะเบียนเรียบร้อยครับ";
         redirect('home/index');
     } else {
-        $_SESSION['error'] = "ลงทะเบียนไม่สำเร็จ กรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql;
+        set_err("ลงทะเบียนไม่สำเร็จ กรุณาตรวจสอบข้อมูล" . mysqli_error($db));
+//        $_SESSION['error'] = "ลงทะเบียนไม่สำเร็จ กรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql;
         redirect('user/signup');
     }
     /* close statement and connection */
@@ -175,12 +177,22 @@ function get_info($mem_id) {
 }
 
 function do_validate($data) {
-    var_dump($data);
+//    var_dump($data);
+    global $db;
     $valid = TRUE;
     if (!preg_match('/[a-zA-Z0-9_@]{5,}/', $data['username'])) {
         set_err('ชื่อผู้ใช้ต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 5 ตัวอักษร');
         $valid = FALSE;
     }
+    $sql = "SELECT username FROM user WHERE username = ".pq($data['username']);
+    if(mysqli_query($db, $sql)){
+        set_err('ชือผู้ใช้นี้ถูกใช้ไปแล้ว');
+        $valid = FALSE;
+    }
+    if (!preg_match('/[a-zA-Z0-9_@]{5,}/', $data['username'])) {
+        set_err('ชื่อผู้ใช้ต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 5 ตัวอักษร');
+        $valid = FALSE;
+    }    
     if (!preg_match('/[a-zA-Z0-9_@]{6,}/', $data['password'])) {
         set_err('รหัสผ่านต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 6 ตัวอักษร');
         $valid = FALSE;
@@ -190,15 +202,15 @@ function do_validate($data) {
         $valid = FALSE;
     }
     if ($data['password'] == $data['username']) {
-        set_err('ชื่อผู้ใช้กับรหัสผ่านต้องไม่เหมือนกันครับ');
+        set_err('ชื่อผู้ใช้กับรหัสผ่านต้องไม่เหมือนกัน');
         $valid = FALSE;
     }
     if (empty($data['fname'])) {
-        set_err('กรุณาใส่ชื่อด้วยครับ');
+        set_err('กรุณาใส่ชื่อ');
         $valid = FALSE;
     }
     if (empty($data['lname'])) {
-        set_err('กรุณาใส่นามสกุลด้วยครับ');
+        set_err('กรุณาใส่นามสกุล');
         $valid = FALSE;
     }
 //    if (check_confirm_password($data['confirm_password'])) {
@@ -209,8 +221,13 @@ function do_validate($data) {
         set_err('รูปแบบอีเมล์ไม่ถูกต้อง');
         $valid = FALSE;
     }
+    $sql = "SELECT username FROM user WHERE email = ".pq($data['email']);
+    if(mysqli_query($db, $sql)){
+        set_err('อีเมล์นี้ถูกใช้ไปแล้ว');
+        $valid = FALSE;
+    }    
     if (!preg_match('/[0-9_-]{8,}/', $data['phone'])) {
-        set_err('กรุณาใส่หมายเลขโทรศัพท์ด้วยครับ');
+        set_err('กรุณาใส่หมายเลขโทรศัพท์');
         $valid = FALSE;
     }
     if (empty($data['agree'])) {
