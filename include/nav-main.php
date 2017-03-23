@@ -21,7 +21,7 @@
                 'signup' => array(
                     'title' => 'ลงทะเบียน',
                     'url' => 'user/signup',
-                    'cond' => !isset($_SESSION['user']),
+                    'cond' => !isset($_SESSION['username']),
                 ),
                 'change-password' => array(
                     'title' => 'แก้ไขรหัสผ่าน',
@@ -31,7 +31,7 @@
 //                'ireport' => array(
 //                    'title' => 'รายงานการใช้',
 //                    'url' => 'user/ireport',
-//                    'cond' => isset($_SESSION['user']),
+//                    'cond' => isset($_SESSION['username']),
 //                ),
                 'edit-user' => array(
                     'title' => 'แก้ไขข้อมูลผู้ใช้',
@@ -51,19 +51,19 @@
                 'logout' => array(
                     'title' => 'ออกระบบ',
                     'url' => 'user/logout',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => isset($_SESSION['username']),
                 ),
                 'login' => array(
                     'title' => 'เข้าระบบ',
                     'url' => 'user/login',
-                    'cond' => !isset($_SESSION['user']),
+                    'cond' => !isset($_SESSION['username']),
                 ),
             );
             $menu_class = "nav navbar-nav";
             echo gen_menu($menu_class, $menu, $active);
             ?> 
             <?php
-            echo isset($_SESSION['user']) ? '<p class="navbar-text navbar-right">คุณ' . $_SESSION['user']['fname'] . ' กำลังอยู่ในระบบ</p>' : '';
+            echo isset($_SESSION['username']) ? '<p class="navbar-text navbar-right">คุณ' . $_SESSION['fname'] . ' กำลังอยู่ในระบบ</p>' : '';
             ?>
 
         </div><!--/.nav-collapse -->

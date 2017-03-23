@@ -1,5 +1,5 @@
 <?php
-
+include_once 'password_hash.php';
 function hs($s) {
     return htmlspecialchars($s);
 }
