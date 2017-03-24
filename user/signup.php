@@ -34,9 +34,7 @@ require_once INC_PATH . 'header.php';
 
 <div class='container'>
     <?php show_message() ?>
-    <div class="col-xs-10">
-
-
+    <div class="row">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <label class="panel-title">กรอกข้อมูลสมัครเข้าใช้ระบบ</label>
@@ -88,7 +86,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group"> 
                         <label class="control-label col-md-3" for="user_type_id">ประเภทผู้ใช้</label>
                         <div class="col-md-4">
-                            <select class='form-control input-sm'id="user_type_id" name="user_type_id">
+                            <select class='form-control input-xlarge'id="user_type_id" name="user_type_id">
                                 <?php
                                 $def = isset($user_type_id) ? $user_type_id : '3';
                                 $sql = "SELECT user_type_id,user_type_desc FROM user_type";
@@ -105,14 +103,14 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group">
-                        <div class="col-md-offset-3">
+
                             <div class="checkbox" >
-                                <label><input type="checkbox" id='agree' name='agree' value='1'>ยืนยันข้อมูลถูกต้อง</label>
+                                <label class="control-label col-md-offset-3"><input type="checkbox" id='agree' name='agree' value='1'>ยืนยันข้อมูลถูกต้อง</label>
                             </div>
-                        </div>
+
                     </div>            
                     <div class="form-group">
-                        <div class="col-md-offset-3 col-md-10">
+                        <div class="col-md-offset-3 col-md-5">
                             <button type="submit" class="btn btn-primary" name='submit'>บันทึกข้อมูล</button>
                         </div>
                     </div>

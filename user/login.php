@@ -20,7 +20,7 @@ require_once INC_PATH . 'header.php';
 <div class='container'>
     <?php show_message() ?>
     <div class="col-md-offset-3 col-md-6">
-        <div class="panel panel-default">
+        <div class="panel panel-default center-block">
             <div class="panel-heading">
                 <label class="panel-title">ลงชื่อเข้าระบบ</label>
             </div>
@@ -65,7 +65,7 @@ function do_login($data) {
             $_SESSION['username'] = $row['username'];
             $_SESSION['fname'] = $row['fname'];
             $_SESSION['lname'] = $row['lname'];
-            //set_info('เข้าระบบเรียบร้อย');
+            set_info('ยินดีต้อนรับคุณ'.$row['fname']);
             redirect();
         } else {
             set_err("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!!");
