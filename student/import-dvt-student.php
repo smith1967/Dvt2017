@@ -88,8 +88,8 @@ function do_import_all_std(){
 function do_import_std() {
     global $db;
    //  transfer new data from tmp to student
-    $sql = "insert INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`typcode`,`end_edu_id`) 
-    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`typcode`,`end_edu_id` 
+    $sql = "insert INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`) 
+    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id` 
     FROM `student_tmp` 
     WHERE `edu_id`=2;";
    // echo "sql= ".$sql; exit();

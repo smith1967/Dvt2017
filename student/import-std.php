@@ -21,7 +21,7 @@ $subactive = 'import-std';
     <div class="col-md-8">
         <div class="panel panel-default">
         <?php
-            $school_id=$_SESSION['school_id'];
+            $school_id=$_SESSION['user']['school_id'];
             $data=do_show_std();
             //print_r($data);
         ?>
@@ -87,8 +87,8 @@ function do_delete($val) {
 function do_import_std() {
     global $db;
    //  transfer new data from tmp to student
-    $sql = "REPLACE INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`typcode`,`end_edu_id`) 
-    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`typcode`,`end_edu_id` 
+    $sql = "REPLACE INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`) 
+    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id` 
     FROM `student_tmp` 
     WHERE `edu_id`=2;";
    // echo "sql= ".$sql; exit();
