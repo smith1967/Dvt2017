@@ -18,52 +18,63 @@
                     'url' => 'home/index',
                     'cond' => true,
                 ),
+                'training' => array(
+                    'title' => 'ข้อมูลการฝึกงาน',
+                    'url' => 'training/list-training',
+                    'cond' => isset($_SESSION['user']),
+                ),
+                'school' => array(
+                    'title' => 'ข้อมูลสถานศึกษา',
+                    'url' => 'school/list-school',
+                    'cond' => isset($_SESSION['user']),
+                ),
+                'student' => array(
+                    'title' => 'ข้อมูลนักศึกษา',
+                    'url' => 'student/list-student',
+                    'cond' => isset($_SESSION['user']),
+                ),
                 'signup' => array(
                     'title' => 'ลงทะเบียน',
                     'url' => 'user/signup',
-                    'cond' => !isset($_SESSION['username']),
+                    'cond' => !isset($_SESSION['user']),
                 ),
-                'change-password' => array(
-                    'title' => 'แก้ไขรหัสผ่าน',
-                    'url' => 'user/change-password',
-                    'cond' => true,
-                ),
-//                'ireport' => array(
-//                    'title' => 'รายงานการใช้',
-//                    'url' => 'user/ireport',
-//                    'cond' => isset($_SESSION['username']),
+//                'change-password' => array(
+//                    'title' => 'แก้ไขรหัสผ่าน',
+//                    'url' => 'user/change-password',
+//                    'cond' => true,
 //                ),
+                'business' => array(
+                    'title' => 'ข้อมูลสถานประกอบการ',
+                    'url' => 'business/list-business',
+                    'cond' => isset($_SESSION['user']),
+                ),
                 'edit-user' => array(
                     'title' => 'แก้ไขข้อมูลผู้ใช้',
                     'url' => 'user/edit-user',
                     'cond' => is_auth(),
                 ),
-                'admin' => array(
-                    'title' => 'จัดการระบบ',
-                    'url' => 'admin/index',
-                    'cond' => is_admin(),
-                ),
-                'user-online' => array(
-                    'title' => 'ผู้ใช้ออนไลน์',
-                    'url' => 'admin/user-online',
-                    'cond' => is_admin(),
-                ),
+//                'admin' => array(
+//                    'title' => 'จัดการระบบ',
+//                    'url' => 'admin/index',
+//                    'cond' => is_admin(),
+//                ),
+
                 'logout' => array(
                     'title' => 'ออกระบบ',
                     'url' => 'user/logout',
-                    'cond' => isset($_SESSION['username']),
+                    'cond' => isset($_SESSION['user']),
                 ),
                 'login' => array(
                     'title' => 'เข้าระบบ',
                     'url' => 'user/login',
-                    'cond' => !isset($_SESSION['username']),
+                    'cond' => !isset($_SESSION['user']),
                 ),
             );
             $menu_class = "nav navbar-nav";
             echo gen_menu($menu_class, $menu, $active);
             ?> 
             <?php
-            echo isset($_SESSION['username']) ? '<p class="navbar-text navbar-right">คุณ' . $_SESSION['fname'] . ' กำลังอยู่ในระบบ</p>' : '';
+            echo isset($_SESSION['user']) ? '<p class="navbar-text navbar-right">คุณ' . $_SESSION['user']['fname'] . ' กำลังอยู่ในระบบ</p>' : '';
             ?>
 
         </div><!--/.nav-collapse -->
