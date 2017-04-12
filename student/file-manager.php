@@ -50,13 +50,13 @@ if (isset($_GET['action'])) {
             <?php
             //get file list in upload folder
             //ie(UPLOAD_DIR);
-//            $fstd="std_".substr($school_id,2,8);
+            $fstd="std_".substr($school_id,2,8);
             //echo "a=".$fstd."<br>";
             if ($handle = opendir(UPLOAD_DIR)) :
                 while (false !== ($entry = readdir($handle))) :
                     //echo "b".substr($entry,11,12)."<br>";
-//                    if ($entry != "." && $entry != ".." && strtolower(substr($entry,11,12))== $fstd ):
-                    if ($entry != "." && $entry != "..") :    
+                    if ($entry != "." && $entry != ".." && strtolower(substr($entry,11,12))== $fstd ):
+//                    if ($entry != "." && $entry != "..") :    
                         ?>
                         <tr>
                             <td> <?php echo $entry."\n"; ?></td>
