@@ -122,7 +122,18 @@ require_once INC_PATH . 'header.php';
 <?php
 // include footer
 require_once INC_PATH . 'footer.php';
+?>
+<script>
+   $(function() {
 
+      $( "#school_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_school.php",
+         minLength: 1
+      });
+   });
+</script> 
+
+<?php
 // function section
 
 function do_save() {
@@ -187,11 +198,8 @@ function do_validate($data) {
         set_err('ชือผู้ใช้นี้ถูกใช้ไปแล้ว');
         $valid = FALSE;
     }
-    if (!preg_match('/[a-zA-Z0-9_@]{5,}/', $data['username'])) {
-        set_err('ชื่อผู้ใช้ต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 5 ตัวอักษร');
-        $valid = FALSE;
-    }    
-    if (!preg_match('/[a-zA-Z0-9_@]{6,}/', $data['password'])) {
+  
+    if (!preg_match('/[a-zA-Z0-9_@$!]{6,}/', $data['password'])) {
         set_err('รหัสผ่านต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 6 ตัวอักษร');
         $valid = FALSE;
     }
@@ -224,7 +232,7 @@ function do_validate($data) {
         set_err('อีเมล์นี้ถูกใช้ไปแล้ว');
         $valid = FALSE;
     }    
-    if (!preg_match('/[0-9_-]{8,}/', $data['phone'])) {
+    if (!preg_match('/[0-9_-+]{8,}/', $data['phone'])) {
         set_err('กรุณาใส่หมายเลขโทรศัพท์');
         $valid = FALSE;
     }

@@ -1,10 +1,10 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "ผู้ดูแลระบบ";
-$active = 'admin';
+$title = "สถานประกอบการ";
+$active = 'busines';
 $subactive = 'home';
-is_admin('home/index');
+//is_admin('home/index');
 // check condition
 if (isset($_GET['action']) && $_GET['action'] == 'list-business') {
     $page = isset($_GET['page']) ? $_GET['page'] : 0;
@@ -26,7 +26,6 @@ require_once INC_PATH . 'header.php';
 
 
 <div class="container">
-    <?php include_once INC_PATH . 'submenu-business.php'; ?>
     <div class="page-header" style="margin-top: 0px;"><h4>จัดการข้อมูลลงทะเบียนผู้ใช้ใหม่</h4></div>
     <?php
     show_message();

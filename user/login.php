@@ -60,11 +60,15 @@ function do_login($data) {
 //    die($query);
     $result = mysqli_query($db, $query);
     if (mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_array($result);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         if (verify_password_hash($row['password'], $strHash)) {
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['fname'] = $row['fname'];
-            $_SESSION['lname'] = $row['lname'];
+            unset($row['password']);
+//            $_SESSION['username'] = $row['username'];
+//            $_SESSION['fname'] = $row['fname'];
+//            $_SESSION['lname'] = $row['lname'];
+            $_SESSION['user'] = $row;
+//            var_dump($_SESSION);
+//            die();
             set_info('ยินดีต้อนรับคุณ'.$row['fname']);
             redirect();
         } else {
