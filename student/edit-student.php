@@ -44,22 +44,18 @@ require_once INC_PATH . 'header.php';
                         <input type='text' class="form-control" readonly id="school_id" value="<?php echo getSchoolName($student['school_id']);?>">
                     </div>
                 </div>
-              
                 <div class="form-group">
                     <label class="control-label col-md-3 " for="citizen_id">รหัสประจำตัวประชาชน</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="citizen_id"name="citizen_id"value="<?php echo $student['citizen_id'] ?>"></div>       
                 </div>
-              
                 <div class="form-group">      
                     <label class="control-label col-md-3" for="std_name">ชื่อนักเรียน</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="std_name" name="std_name"value="<?php echo $student['std_name'] ?>"></div> 
                 </div>
-                
                 <div class="form-group">  
                     <label class="control-label col-md-3" for="dateofbirth">วันเดือนปีเกิด</label>
                     <div class="col-md-4 "><input type="date" id="dateofbirth" name="dateofbirth" value="<?php echo $student['dateofbirth'] ?>" ></div>
                 </div>       
-              
                 <div class="form-group">
                     <label class="control-label col-md-3" for="sex">เพศ</label>
                     <div class="col-md-4 ">
@@ -70,40 +66,30 @@ require_once INC_PATH . 'header.php';
                 $sql = "SELECT * FROM edu_type";
                 $def=$student['type_code'];
                 ?>
-                
                 <div class="form-group">  
                     <label class="control-label col-md-3" for="type_code">ประเภทวิชา</label>
                     <div class="col-md-4 ">
                     <select class="form-control" id="type_code" name="type_code">
                       <?php echo gen_option($sql, $def)  ?>
                     </select>
-                        
                    </div>   
                 </div>
-                
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="major_id">สาขาวิชา</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="major_id"name="major_id"value="<?php echo $student['major_id'] ?>"></div>
                     <?php echo getMajorName($student['major_id']) ?>
                 </div>
-                
                 <div class="form-group">
                     <label class="control-label col-md-3" for="minor_id">สาขางาน</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="minor_id"name="minor_id"value="<?php echo $student['minor_id'] ?>"></div>
                     <?php echo getMinorName($student['minor_id']) ?>
                 </div>               
-               
                 <div class="form-group">    
                     <label class="control-label col-md-3" for="end_edu_id">สถานะภาพการศึกษา</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="end_edu_id"name="end_edu_id"value="<?php echo $student['end_edu_id'] ?>"></div>   
                 </div>
-                
-                
-                 
                 <div class="form-group">
-                    
                         <div class="col-md-offset-3"><button type="submit" class="btn btn-primary" name="submit">แก้ไข</button></div>
-                    
                 </div>
         </div>
 
@@ -127,9 +113,9 @@ function do_update(){
             . "`minor_id`=".pq($data['minor_id']).","
             . "`major_id`=".pq($data['major_id']).","
             . "`end_edu_id`=".pq($data['end_edu_id']).","
-            . "`typcode`=".pq($data['typcode'])." "
-            . "WHERE `std_id`=".pq($data['std_id'])."";
-    
+            . "`type_code`=".pq($data['type_code'])." "
+            . "WHERE `std_id`=".$data['std_id']."";
+    //echo $query;
     mysqli_query($db,$query);
     if(mysqli_affected_rows($db) > 0){
         set_info('แก้ไขข้อมูลเรียบร้อย');
@@ -180,7 +166,7 @@ function do_validate($data) {
         $valid = false;
     }
     
-    if (!preg_match('/[0-9]{1,}/', $data['typcode'])) {
+    if (!preg_match('/[0-9]{1,}/', $data['type_code'])) {
         set_err('รหัสประเภทวิชาต้องเป็นตัวเลข');
         $valid = false;
     }
