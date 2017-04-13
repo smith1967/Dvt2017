@@ -2,8 +2,9 @@
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "เพิ่มข้อมูลครูฝึก";
-$active = 'business';
-//$subactive = 'edit-group-config';
+$active = 'trainer';
+$subactive = 'insert';
+
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
