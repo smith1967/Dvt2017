@@ -4,7 +4,7 @@ if (!defined('BASE_PATH'))
 $title = "โอนข้อมูล std เข้า table เฉพาะทวิภาคี";
 $active = 'admin';
 $subactive = 'import-std';
-//is_admin('home/index');
+is_admin('home/index');
 
  // do_import_all_std();
  //do_import_std();
