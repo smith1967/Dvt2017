@@ -21,7 +21,7 @@ require_once INC_PATH . 'header.php';
 ?>
 <script>
     $(document).ready(function () {
-        $("#business_id").focus();
+        $("#citizen_id").focus();
     });
 </script>
 <div class="container">
