@@ -84,11 +84,13 @@ require_once INC_PATH . 'header.php';
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="major_id">สาขาวิชา</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="major_id"name="major_id"value="<?php echo $student['major_id'] ?>"></div>
+                    <?php echo getMajorName($student['major_id']) ?>
                 </div>
                 
                 <div class="form-group">
                     <label class="control-label col-md-3" for="minor_id">สาขางาน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id"name="minor_id"value="<?php echo $student['minor_id'] ?>"></div>xxxxxx
+                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id"name="minor_id"value="<?php echo $student['minor_id'] ?>"></div>
+                    <?php echo getMinorName($student['minor_id']) ?>
                 </div>               
                
                 <div class="form-group">    
