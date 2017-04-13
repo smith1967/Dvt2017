@@ -83,7 +83,7 @@ function checkDelete(){
 function get_trainer($page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
-    $query = "SELECT * FROM trainer  LIMIT " . $start . "," . $limit . "";
+    $query = "SELECT * FROM trainer ORDER BY trainer_id ASC LIMIT " . $start . "," . $limit . "";
     $result = mysqli_query($db, $query);
     $trainerlist = array();
     while ($row = mysqli_fetch_array($result)) {
