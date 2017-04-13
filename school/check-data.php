@@ -172,7 +172,7 @@ function do_transfer_std($stdfile) {
      echo "school <br />";
     echo "ข้อมูลจำนวน ".$count." แถว <br>";
     echo "นำเข้าข้อมูลจำนวน ".$count2." แถว";
-    redirect('school/list-data_school');
+    redirect('school/list-data-school');
     
         /*
         if (strlen($line)) {
