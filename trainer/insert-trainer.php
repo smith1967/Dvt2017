@@ -25,6 +25,7 @@ require_once INC_PATH . 'header.php';
     });
 </script>
 <div class="container">
+    <?php include_once INC_PATH . 'submenu-trainer.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
