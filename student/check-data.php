@@ -18,7 +18,7 @@ if (!isset($_GET['filename']))
     </div>
     <?php
     show_message();
-   
+   //http://localhost/dvt2017/index.php?student/check-data&action=import&type=std&filename=2017-04-12_Std_20026101_2560_2.csv
     if (isset($_GET['action']) && $_GET['action'] == 'import' && $_GET['type'] == 'std') {
         $filename = UPLOAD_DIR . $_GET['filename'];
         do_transfer_std($filename);
@@ -55,14 +55,9 @@ function validate_std_file($filename) {
    // print_r(fgetcsv($handle));
     $col_names = fgetcsv($handle);
     $valid = TRUE;
-    // -- fields std
+    // -- fields บางส่วนของไฟล์ std
     $stdcol = array('years', 'semester', 'school_id', 'depart_id', 'people_id');
     //years,semester,school_id,depart_id,people_id,perfix_id,stu_fname,stu_lname,gender_id,birthday,nation_id,home_id,moo,street,tumbol_id,cripple_id,tall,weight,fat_fname,fat_lname,fat_crippl,fat_status,fat_salary,fat_occupa,mot_fname,mot_lname,mot_crippl,mot_status,mot_salary,mot_occupa,marry_stat,brother,study_brot,par_fname,par_lname,par_salary,par_occupa,start_year,level_id,schedu_id,grade_id,major_id,gpa,stu_expert,student_id,group_id,nickname,religion,b_provite,graduate,fat_tell,par_tell,std_blgr,std_edu_id,bud_edu_id,type_id,bud_typeid,major_name,minor_name,homecode,endyear,end_edu_id,end_status,work_id,job_id,job_place,j_position,job_salary,knowlageid,knowlage,job_search,typeschool,moemajors,curri_id,scoo,da_prename,ma_prename,add1,moo1,road1,tumb1,post1,post2,day_in,std_fname,std_lname
-
-//    $stdcol = array('code','pin_id','fname','lname','gro');
-//    code,pre_name,fname,lname,birt,pin_id,std_level,gro
-
-//     check header csv
 //print_r($col_names);
     foreach ($stdcol as $col) {
         if (!in_array($col, $col_names)) {
@@ -75,69 +70,48 @@ function validate_std_file($filename) {
     return $valid;
 }
 
-function validate_users_file($filename) {
-    $handle = fopen($filename, "r");
-    //print_r(fgetcsv($file));
-    $col_names = fgetcsv($handle);
-    //var_dump($col_names);
-    $valid = TRUE;
-// -- table cols
-    $dbcol = array('username', 'password', 'fname', 'lname', 'groupname');
-    // check header csv
-    foreach ($dbcol as $col) {
-        if (!in_array($col, $col_names)) {
-            $valid = FALSE;
-        }
-    }
-    fclose($handle);
-    return $valid;
-}
+//function validate_users_file($filename) {
+//    $handle = fopen($filename, "r");
+//    //print_r(fgetcsv($file));
+//    $col_names = fgetcsv($handle);
+//    //var_dump($col_names);
+//    $valid = TRUE;
+//// -- table cols
+//    $dbcol = array('username', 'password', 'fname', 'lname', 'groupname');
+//    // check header csv
+//    foreach ($dbcol as $col) {
+//        if (!in_array($col, $col_names)) {
+//            $valid = FALSE;
+//        }
+//    }
+//    fclose($handle);
+//    return $valid;
+//}
 
 function do_transfer_std($stdfile) {
-   // echo "ssss";exit();
+    //echo "ssss";exit();
     global $db;
-// -- fields std
-    //$stdcol = array('student_id', 'people_id', 'stu_fname', 'stu_lname', 'group_id');
-// -- table cols
-    //$dbcol = array('std_id', 'pid', 'fname', 'lname', 'groupname');
     /* insert data to table tmp */
     $handle = fopen($stdfile, "r");
-// get header column from file     
-    //$cols = fgetcsv($handle);
-   // $colindex = array();   // --- get index of array
-    //foreach ($stdcol as $value) {
-   //     $colindex[] = array_search($value, $cols);
-   // }
-    //$stdcharset = "";
+
     //ลบข้อมูล temp table
     $sql_t = "TRUNCATE TABLE student_tmp ";
     $res=mysqli_query($db, $sql_t);
-
-
     $num_row=0;
     $count =0;
 	$count2 =0;
     while (!feof($handle)) {
         $data_str = fgetcsv($handle);
-  //    print_r($data); exit(); //====================
+        //print_r($data_str); exit(); //====================
         if ($data_str[0]!=''){
-            $str_comma = implode(",", $data_str);
-        
- //       print_r($str_comma);exit(); //====================
- //       if (empty($stdcharset))
-        //    $stdcharset = mb_detect_encoding($str, "UTF-8", TRUE) ? "UTF-8" : "TIS-620";
-
-      //      $line = iconv("TIS-620", "UTF-8", $data) ;  //แปลง ansi เป็น utf-8
-    //  mb_internal_encoding("UTF-8");
+            $str_comma = implode(",", $data_str);       
+        //print_r($str_comma);exit(); //====================
             $line = iconv("TIS-620", "UTF-8", $str_comma);
             $data = explode(",", $line);
         }
+        $_SESSION['year']=$data[0];
         //    print_r($line); exit();
-     //   echo $line; exit();
-       //     $str_comma = explode(",", $str);
-        //die($line);
-
-//print_r($data);exit(); //====================
+        //print_r($data);exit(); //หัวตาราง ====================
 //std_edu_id =$data[53]=>1=ปกติ  2=ทวิภาคี
 
         $num_row++;
@@ -145,7 +119,7 @@ function do_transfer_std($stdfile) {
 			$count++;
 			$name=getSerName($data[5]).$data[6]."  ".$data[7];
 			$dofb=chDay1($data[9]);
-			$sex=convSex($data[8]);
+			$sex=convSexId($data[8]);
             $minor_id=getminorId($data[58]);
             $major_id=getmajorId($data[57]);
 			$strsql = "insert into student_tmp values(";
@@ -165,29 +139,7 @@ function do_transfer_std($stdfile) {
     }
     //echo "ข้อมูลจำนวน ".$count." แถว <br>";
     //echo "นำเข้าข้อมูลจำนวน ".$count2." แถว";
-        /*
-        if (strlen($line)) {
-            $row = array();
-            $row = explode(",", $line);
-            $val = array();
-            foreach ($colindex as $v) {
-                $val[] = pq($row[$v]);
-            }
-            $arr[] = '(' . implode(",", $val) . ')';    //  set of data array((1,2,3),(4,5,6),..);
-        }
-    }
-    fclose($handle);
-    $values = implode(",", $arr);                   // -- group set data  (1,2,3),(4,5,6),...
-    $cols = "(" . implode(",", $dbcol) . ")";
-    
 
-
-    
-
-    $query = "INSERT INTO stdtemp " . $cols . " VALUES " . $values;
-    //die($query);
-    mysqli_query($db, $query);
-    */
     if (mysqli_affected_rows($db)) {
         set_info('โอนข้อมูลนักเรียนทั้งหมด ใส่ตารางชั่วคราวจำนวน ' . $count2. ' รายการ');
         redirect('student/import-std');
@@ -198,54 +150,54 @@ function do_transfer_std($stdfile) {
     redirect('student/file-manager');
 }
 
-function do_transfer_users($usersfile) {
-    global $db;
-    $stdcol = array('student_id', 'people_id', 'stu_fname', 'stu_lname', 'group_id');
-// -- table cols
-    $dbcol = array('username', 'password', 'fname', 'lname', 'groupname');
-    /* insert data to table tmp */
-    $handle = fopen($usersfile, "r");
-// get header column from file     
-    $cols = fgetcsv($handle);
-    $colindex = array();   // --- get index of array
-    foreach ($dbcol as $value) {
-        $colindex[] = array_search($value, $cols);
-    }
-    $stdcharset = "";
-    while (!feof($handle)) {
-        $str = fgetcsv($handle);
-        $str_comma = implode(",", $str);
-        if (empty($stdcharset))
-            $stdcharset = mb_detect_encoding($str_comma, "UTF-8", TRUE) ? "UTF-8" : "TIS-620";
-        $line = ($stdcharset == 'TIS-620') ? iconv("tis-620", "utf-8", $str_comma) : $line = $str_comma;
-        //die($line);
-        if (strlen($line)) {
-            $row = array();
-            $row = explode(",", $line);
-            $val = array();
-            foreach ($colindex as $v) {
-                $val[] = pq($row[$v]);
-            }
-            $arr[] = '(' . implode(",", $val) . ')';    //  set of data array((1,2,3),(4,5,6),..);
-        }
-    }
-    fclose($handle);
-    $values = implode(",", $arr);                   // -- group set data  (1,2,3),(4,5,6),...
-    $cols = "(" . implode(",", $dbcol) . ")";
-    $sql = "TRUNCATE TABLE `users_temp`";
-    mysqli_query($db, $sql);
-    $query = "INSERT INTO users_temp " . $cols . " VALUES " . $values;
-   // die($query);
-    mysqli_query($db, $query);
-    if (mysqli_affected_rows($db)) {
-        set_info('โอนข้อมูลจำนวน ' . mysqli_affected_rows($db) . ' ใส่ตารางชั่วคราว');
-        //redirect('admin/file-manager');
-    } else {
-        set_err("การโอนข้อมูลใส่ตารางชั่วคราวผิดพลาด : " . mysqli_error($db));
-        //die();
-    }
-    redirect('student/file-manager');
-}
+//function do_transfer_users($usersfile) {
+//    global $db;
+//    $stdcol = array('student_id', 'people_id', 'stu_fname', 'stu_lname', 'group_id');
+//// -- table cols
+//    $dbcol = array('username', 'password', 'fname', 'lname', 'groupname');
+//    /* insert data to table tmp */
+//    $handle = fopen($usersfile, "r");
+//// get header column from file     
+//    $cols = fgetcsv($handle);
+//    $colindex = array();   // --- get index of array
+//    foreach ($dbcol as $value) {
+//        $colindex[] = array_search($value, $cols);
+//    }
+//    $stdcharset = "";
+//    while (!feof($handle)) {
+//        $str = fgetcsv($handle);
+//        $str_comma = implode(",", $str);
+//        if (empty($stdcharset))
+//            $stdcharset = mb_detect_encoding($str_comma, "UTF-8", TRUE) ? "UTF-8" : "TIS-620";
+//        $line = ($stdcharset == 'TIS-620') ? iconv("tis-620", "utf-8", $str_comma) : $line = $str_comma;
+//        //die($line);
+//        if (strlen($line)) {
+//            $row = array();
+//            $row = explode(",", $line);
+//            $val = array();
+//            foreach ($colindex as $v) {
+//                $val[] = pq($row[$v]);
+//            }
+//            $arr[] = '(' . implode(",", $val) . ')';    //  set of data array((1,2,3),(4,5,6),..);
+//        }
+//    }
+//    fclose($handle);
+//    $values = implode(",", $arr);                   // -- group set data  (1,2,3),(4,5,6),...
+//    $cols = "(" . implode(",", $dbcol) . ")";
+//    $sql = "TRUNCATE TABLE `users_temp`";
+//    mysqli_query($db, $sql);
+//    $query = "INSERT INTO users_temp " . $cols . " VALUES " . $values;
+//   // die($query);
+//    mysqli_query($db, $query);
+//    if (mysqli_affected_rows($db)) {
+//        set_info('โอนข้อมูลจำนวน ' . mysqli_affected_rows($db) . ' ใส่ตารางชั่วคราว');
+//        //redirect('admin/file-manager');
+//    } else {
+//        set_err("การโอนข้อมูลใส่ตารางชั่วคราวผิดพลาด : " . mysqli_error($db));
+//        //die();
+//    }
+//    redirect('student/file-manager');
+//}
 
 function getSerName($id){
 	if ($id==002){
@@ -278,4 +230,13 @@ function getminorId($s){
     $res=mysqli_query($db, $sql);
     $row = mysqli_fetch_assoc($res);
 	return $row['minor_id'];
+}
+function convSexId($s){
+    if ($s==1){
+        return "M";
+    }
+    else {
+        return "F";
+    }
+    
 }
