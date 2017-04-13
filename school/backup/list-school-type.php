@@ -1,16 +1,14 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "ผู้ดูแลระบบ";
-$active = 'admin';
+$title = "ข้อมูลสถานศึกษา";
+$active = 'school';
 $subactive = 'school_type';
 //is_admin('home/index');
 ?>
-<?php require_once INC_PATH . 'header.php'; ?>
-<div class="container">
-    <?php include_once INC_PATH . 'submenu-school.php'; ?>
+
 <?php
-show_message();
+
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $action = isset($_GET['action']) ? $_GET['action'] : "list";
 //    $group = isset($_GET['group']) ? $_GET['group'] : '';
@@ -48,11 +46,12 @@ if(isset($_GET['action'])){
 }else{
 
 ?>
-<script language="JavaScript" type="text/javascript">
 
-function checkDelete(){
-    return confirm('คุณแน่ใจหรือจะลบ?');
-}
+<?php require_once INC_PATH . 'header.php'; ?>
+<div class="container">
+    <?php include_once INC_PATH . 'submenu-school.php'; ?>
+    <?php show_message(); ?>
+
 </script>
     <?php echo pagination($total, $url, $page, $order, $limit) ?>
      <div class="table-responsive"> 
@@ -118,7 +117,7 @@ function do_update($type_name,$school_type_id) {
         redirect('school/list-school_type');
     }
         echo "school_type_id=".$school_type_id;
-        $query = "UPDATE school_type SET type_name='$type_name' WHERE school_type_id =" . pq($school_type_id);
+        $query = "UPDATE school_type SET type_name='$type_name' WHERE type_id =" . pq($school_type_id);
         $result=mysqli_query($db, $query);
         if ($result) {
             set_info('ปรับปรุงข้อมูลสำเร็จ');

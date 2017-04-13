@@ -34,12 +34,12 @@ if (!defined('BASE_PATH'))
             ),
             'list-school' => array(
                 'title' => 'รายชื่อสถานศึกษา',
-                'url' => 'school/list-data_school',
+                'url' => 'school/list-data-school',
                 'cond' => true,
             ),
             'school_type' => array(
                 'title' => 'ประเภทสถานศึกษา',
-                'url' => 'school/list-school_type',
+                'url' => 'school/list-school-type',
                 'cond' => true,
             ),
             'import-users-radius' => array(

@@ -12,7 +12,8 @@ $subactive = 'upload-std';
 
 //$school_id=$_SESSION['user']['school_id'];
 
-$school_id=1320026101;
+//$school_id=1320026101;
+$school_id=$_SESSION['user']['school_id'];
 $school_name= getSchoolName($school_id);
 //echo "school_id=".$school_id;
 ?>
@@ -46,7 +47,7 @@ if (isset($_GET['action'])) {
 
     <div class="page-header">
         <h3>โอนข้อมูลสถานศึกษา <?php echo $school_name ?></h3>
-        <?php echo "school_id=".$school_id ?>;
+        <?php //echo "school_id=".$school_id ?>
     </div>
     <div class="table-responsive col-md-6">
         <table class="table" >
@@ -54,14 +55,15 @@ if (isset($_GET['action'])) {
             <?php
             //get file list in upload folder
             //ie(UPLOAD_DIR);
-            $fsch="std_".substr($school_id,2,8);
-            echo "a=".$fsch."<br>";
+            $fsch="sch_".substr($school_id,2,8);
+           // echo "school=".$fsch."<br>";
             // echo "a=".$fsch."<br>";
             if ($handle = opendir(UPLOAD_DIR)) :
                 while (false !== ($entry = readdir($handle))) :
-                    echo "b".substr($entry,11,12)."<br>";
-                   // if ($entry != "." && $entry != ".." && strtolower(substr($entry,11,12))== $fstd ):
-                    if ($entry != "." && $entry != ".." ):
+                   // echo $entry."<br>";
+                   // echo "b".substr($entry,11,12)."<br>";
+                    if ($entry != "." && $entry != ".." && strtolower(substr($entry,11,12))== $fsch ):
+                   // if ($entry != "." && $entry != ".." ):
 //                    if ($entry != "." && $entry != "..") :    
                         ?>
                         <tr>

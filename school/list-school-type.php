@@ -1,14 +1,16 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "ข้อมูลสถานศึกษา";
+$title = "ข้อมูลประเภทสถานศึกษา";
 $active = 'school';
 $subactive = 'school_type';
 //is_admin('home/index');
 ?>
-
+<?php require_once INC_PATH . 'header.php'; ?>
+<div class="container">
+    <?php include_once INC_PATH . 'submenu-school.php'; ?>
 <?php
-
+show_message();
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $action = isset($_GET['action']) ? $_GET['action'] : "list";
 //    $group = isset($_GET['group']) ? $_GET['group'] : '';
@@ -22,7 +24,7 @@ $params = array(
 $params = http_build_query($params);
 $schoollist = get_school_type($page, $limit);
 //    $total = get_total();
-$url = site_url('school/list-school_type&') . $params;
+$url = site_url('school/list-school-type&') . $params;
 //    var_dump($schoollist);
 //    exit();
 $total = get_total();
@@ -41,17 +43,16 @@ if(isset($_GET['action'])){
       do_save($_GET['school_type_id']);
    }
    if($_GET['action']=='add_new'){
-    redirect('school/form_insert_school_type');//add input data
+    redirect('school/form-insert-school-type');//add input data
    }
 }else{
 
 ?>
+<script language="JavaScript" type="text/javascript">
 
-<?php require_once INC_PATH . 'header.php'; ?>
-<div class="container">
-    <?php include_once INC_PATH . 'submenu-school.php'; ?>
-    <?php show_message(); ?>
-
+function checkDelete(){
+    return confirm('คุณแน่ใจหรือจะลบ?');
+}
 </script>
     <?php echo pagination($total, $url, $page, $order, $limit) ?>
      <div class="table-responsive"> 
@@ -71,14 +72,14 @@ if(isset($_GET['action'])){
                        <td><?php echo $school['school_type_id']; ?></td>
                         <td><?php echo $school['type_name']; ?></td>
                         <td>
-                            <a href="<?php echo site_url('school/list-school_type') . '&action=delete&school_type_id=' . $school['school_type_id']; ?>" class="delete" >ลบ</a>
-                            <a href="<?php echo site_url('school/list-school_type') . '&action=edit&school_type_id=' . $school['school_type_id']; ?>" >แก้ไข</a>
+                            <a href="<?php echo site_url('school/list-school-type') . '&action=delete&school_type_id=' . $school['school_type_id']; ?>" class="delete" >ลบ</a>
+                            <a href="<?php echo site_url('school/list-school-type') . '&action=edit&school_type_id=' . $school['school_type_id']; ?>" >แก้ไข</a>
                         </td>                    
                     </tr>
                 <?php endforeach; ?>
             </tbody>
             <span class="col-sm-offset-11 col-sm-12">
-                <a href="<?php echo site_url('school/list-school_type') . '&action=add_new'; ?>" ><span style="height: 80%" class="glyphicon glyphicon-plus-sign"></span></a>    
+                <a href="<?php echo site_url('school/list-school-type') . '&action=add_new'; ?>" ><span style="height: 80%" class="glyphicon glyphicon-plus-sign"></span></a>    
                     
             <span>        
     </div>           
@@ -114,45 +115,45 @@ function do_update($type_name,$school_type_id) {
     if (empty($type_name)) {
         //echo "empty";
         set_err('กรุณาใส่ชื่อสถานศึกษา');
-        redirect('school/list-school_type');
+        redirect('school/list-school-type');
     }
         echo "school_type_id=".$school_type_id;
-        $query = "UPDATE school_type SET type_name='$type_name' WHERE type_id =" . pq($school_type_id);
+        $query = "UPDATE school_type SET type_name='$type_name' WHERE school_type_id =" . pq($school_type_id);
         $result=mysqli_query($db, $query);
         if ($result) {
             set_info('ปรับปรุงข้อมูลสำเร็จ');
         }else{
             set_err('ปรับปรุงข้อมูลไม่สำเร็จ');
         }
-        redirect('school/list-school_type');
+        redirect('school/list-school-type');
 }
 
 function do_delete($school_type_id) {
     global $db;
     if (empty($school_type_id)) {
         set_err('ค่าพารามิเตอร์รหัสสถานศึกษาไม่ถูกต้อง');
-        redirect('school/list-school_type');
+        redirect('school/list-school-type');
     }
     $query = "DELETE FROM school_type WHERE school_type_id =" . pq($school_type_id);
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db)) {
         set_info('ลบข้อมูลสำเร็จ');
     }
-    redirect('school/list-school_type');
+    redirect('school/list-school-type');
 }
 
 function do_save($type_id) {
     global $db;
     if (empty($school_type_id)) {
         set_err('ค่าพารามิเตอร์รหัสสถานศึกษาไม่ถูกต้อง');
-        redirect('school/list-school_type');
+        redirect('school/list-school-type');
     }
     $query = "DELETE FROM school_type WHERE school_type_id =" . pq($school_type_id);
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db)) {
         set_info('ลบข้อมูลสำเร็จ');
     }
-    redirect('school/list-school_type');
+    redirect('school/list-school-type');
 }
 
 function do_edit($school_type_id) {

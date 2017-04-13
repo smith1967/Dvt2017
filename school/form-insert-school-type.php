@@ -88,10 +88,10 @@ function do_save() {
     mysqli_query($db, $sql);
     if (mysqli_affected_rows($db) > 0) {
         $_SESSION['info'] = "บันทึกเรียบร้อยครับ";
-        redirect('school/list-school_type');
+        redirect('school/list-school-type');
     } else {
         $_SESSION['error'] = "บันทึกไม่สำเร็จ กรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql;
-        redirect('school/form_insert_school_type');
+        redirect('school/form-insert-school-type');
     }
     /* close statement and connection */
     //redirect();

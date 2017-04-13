@@ -1,10 +1,6 @@
 <?php
-//session_start();
-$_SESSION['school_id'] = 1320026101;
-//แก้ไขรับ  แบบ Auto
 global $school_id;
-$school_id = $_SESSION['school_id'];
-
+$school_id=$_SESSION['user']['school_id'];
 //$check=$_GET['action'];
 if (!defined('BASE_PATH'))exit('No direct script access allowed');
 $title = "อัพโหลดไฟล์และตรวจสอบข้อมูล";
@@ -12,6 +8,7 @@ $active = 'school';
 $subactive = 'list-school';
 // is_admin('home/index');
 ?>
+
 <?php require_once INC_PATH . 'header.php';?>
 <div class='container'>
     <?php include_once INC_PATH . 'submenu-school.php';?>
@@ -54,7 +51,8 @@ if (isset($_GET['action'])) {
         </table>
         </div>
     </div>  
-      <?php require_once INC_PATH . 'footer.php';
+
+<?php require_once INC_PATH . 'footer.php';
 
 
 function do_delete($school_id) {
@@ -72,15 +70,13 @@ function do_delete($school_id) {
     redirect('school/list-school');
 }
 
-
 function do_update() {
 global $db,$school_id;
 $data = &$_POST;
+
  $school_name= $data['school_name'];
- echo "school_name=".$school_name."<br>";
  $school_type_id= $data['school_type_id'];
  $address_no= $data['address_no'];
-  echo "school_name=".$address_no."<br>";
  $road= $data['road'];
  $tumbon= $data['tumbon'];
  $aumphur= $data['aumphur'];
@@ -90,22 +86,19 @@ $data = &$_POST;
  $fax= $data['fax'];
  $zone= $data['zone'];
   //	var_dump($data);
-   
-// 	die();
+  // 	die();
     foreach ($_POST as $k => $v) {
     $k = pq($v);
 		// 		set variable to form
 	}
 	//$	id = $_SESSION['user']['id'];
-//	echo "name=" . $name;
-    //$sql = "UPDATE school SET school_type_id =$school_type_id,address_no='$address_no' WHERE school_id =$school_id ";
 	 $sql = "UPDATE school SET school_name='$school_name',school_type_id =$school_type_id,address_no ='$address_no',";
 	 $sql .= "road='$road',tumbon='$tumbon',aumphur ='$aumphur',province = '$province',postcode ='$postcode',";
 	 $sql .= "phone = '$phone',fax='$fax',zone='$zone' WHERE school_id =$school_id";
 	 $result = mysqli_query($db, $sql);
 	if ($result) {
 		$_SESSION['info'][] = "แก้ไขเรียบร้อยครับ";
-		redirect('school/list-data_school');
+		redirect('school/list-data-school');
 	}else {
 		$_SESSION['err'][] = "แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql;
 		//redirect('school/list-data_school');
@@ -257,7 +250,7 @@ $row = mysqli_fetch_array($result);
     <div class="table-responsive col-md-12">
         <table class="table table-hover">
             <thead><th>รหัส</th><th>ชื่อ</th><th>ประเภท</th><th>ที่อยู่</th><th>ถนน</th><th>ตำบล</th>
-            <th>อำเภอ</th><th>จังหวัด</th><th>รหัสไปรษณีย์</th><th>โทรศัพท์</th><th>โทรสาร</th><th>ภาค</th><th>แก้ไข</th><th>ลบ</th></thead>
+            <th>อำเภอ</th><th>จังหวัด</th><th>รหัสไปรษณีย์</th><th>โทรศัพท์</th><th>โทรสาร</th><th>ภาค</th><th>แก้ไข</th></thead>
             <tbody>   <tr>
                     <td> <?php echo $row['school_id'];?></td>
                     <td> <?php echo $row['school_name'];?></td>
@@ -271,8 +264,8 @@ $row = mysqli_fetch_array($result);
                     <td> <?php echo $row['phone'];?> </td>
                     <td> <?php echo $row['fax'];?> </td>
                     <td> <?php echo $row['zone'];?> </td>
-                    <td class="text-center"><a href="index.php?school/list-data_school&action=edit"><span class="glyphicon glyphicon-pencil"></span></a></td>
-                    <td class="text-center"><a href="index.php?school/list-data_school&action=del11"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td class="text-center"><a href="index.php?school/list-data-school&action=edit"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                    
                 </tr>
                 </tbody>
 
