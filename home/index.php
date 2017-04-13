@@ -7,6 +7,7 @@ $active = 'home';   // active menu
 
 <?php require_once INC_PATH . 'header.php'; ?>
 <div class='container'>
+    <?php show_message() ?>
     <div class="page-header">
         <h1>ระบบฐานข้อมูลความร่วมมือ สำนักงานคณะกรรมการการอาชีวศึกษา</h1>
     </div>

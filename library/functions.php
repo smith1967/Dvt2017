@@ -1,5 +1,6 @@
 <?php
-
+include_once 'password_hash.php';
+include_once 'student_function.php';
 function hs($s) {
     return htmlspecialchars($s);
 }
@@ -11,6 +12,9 @@ function pq($s) {
 }
 
 function site_url($url = '', $direct = false) {
+    $res = substr($url, 0, 1);
+    if ($res == '/')
+        $url = substr($url, 1);
     if (!$direct)
         return SITE_URL . 'index.php?' . $url;
     else
@@ -21,7 +25,7 @@ function redirect($url = '') {
     $url = site_url($url);
     header('Location: ' . $url);
     exit;
-    echo '<meta http-equiv="Refresh" content="0; url=' . $url . '" />';
+//    echo '<meta http-equiv="Refresh" content="0; url=' . $url . '" />';
 //echo '<meta http-equiv="refresh" content="0" url="'.$url.'">';
 //echo "<script>window.location.href='".$url."'</script>";
 }
@@ -286,4 +290,27 @@ function humanTime($seconds) {
     $seconds -=($minute * 60);
 
     return sprintf("%d:%02d:%02d", $hour, $minute, $seconds);
+}
+
+function set_var(&$param) {
+    if(isset($param)){
+        echo $param;
+    }  else {
+        echo '';
+    }
+}
+
+function get_param($param) {
+
+//    $param = array(
+//        'action' => 'test',
+//        'filename' => 'filetest',
+//    );
+    $params = '';
+    if(is_array($param)){
+        foreach ($param as $key => $value) {
+            $params .= '&'.$key.'?'.$value; 
+        }
+        return $params;
+    }
 }

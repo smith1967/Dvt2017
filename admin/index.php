@@ -17,9 +17,8 @@ if (isset($_POST)) {
         do_delete($data);
     }
 }
+require_once INC_PATH . 'header.php'; 
 ?>
-<?php require_once INC_PATH . 'header.php'; ?>
-
 <script>
     $(document).ready(function() {
         $("#sel_gid").change(function() {
