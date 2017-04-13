@@ -86,6 +86,7 @@ function validate_std_file($filename) {
 //    }
 //    fclose($handle);
 //    return $valid;
+//huyvf\iy
 //}
 
 function do_transfer_std($stdfile) {

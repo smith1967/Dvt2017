@@ -68,13 +68,13 @@ require_once INC_PATH . 'header.php';
                 </div>
                 <?php
                 $sql = "SELECT * FROM edu_type";
-                $def=$student['typcode'];
+                $def=$student['type_code'];
                 ?>
                 
                 <div class="form-group">  
-                    <label class="control-label col-md-3" for="typcode">ประเภทวิชา</label>
+                    <label class="control-label col-md-3" for="type_code">ประเภทวิชา</label>
                     <div class="col-md-4 ">
-                    <select class="form-control" id="typcode" name="typcode">
+                    <select class="form-control" id="type_code" name="type_code">
                       <?php echo gen_option($sql, $def)  ?>
                     </select>
                         
