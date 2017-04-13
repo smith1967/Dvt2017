@@ -44,9 +44,9 @@ $auhtor = "it-dev";
 $author_email = "smith@cstc.ac.th";
 // database parameter
 $host = 'localhost';
-$user = 'dvt';
-$password = '123456';
-$database = 'dvt';
+$user = 'root';
+$password = '';
+$database = 'dvt2017';
 $charset = 'utf8';
 ///////////////////////////////////////////////////////////
 define('SITE_URL', $site_url);
