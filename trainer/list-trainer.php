@@ -35,19 +35,11 @@ function checkDelete(){
     return confirm('คุณแน่ใจหรือจะลบ?');
 }
 </script>
-<?php
-if (!defined('BASE_PATH'))
-    exit('No direct script access allowed');
-$title = "ผู้ดูแลระบบ";
-$active = 'admin';
-$subactive = 'list-user';
-//is_admin('home/index');
-?>
 
 <?php require_once INC_PATH . 'header.php'; ?>
 
 <div class="container">
-    <?php include_once INC_PATH . 'submenu-admin.php'; ?>
+    <?php include_once INC_PATH . 'submenu-trainer.php'; ?>
     <?php
     show_message();
     ?> 
@@ -73,11 +65,10 @@ $subactive = 'list-user';
                         <td><?php echo $trainer['trainer_id']; ?></td>
                         <td><?php echo $trainer['trainer_name']; ?></td>
                         <td><?php echo $trainer['phone']; ?></td>
-                        <td><?php echo $trainer['educational']; ?></td>
-                        <td>
-                            
+                        <td><?php echo $trainer['educational_id']; ?></td>
+                        <td>                            
                              <a href="<?php echo site_url('trainer/list-trainer') . '&action=delete&trainer_id=' . $trainer['trainer_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
-                             <a href="<?php echo site_url('trainer/form_update_trainer') . '&action=edit&trainer_id=' . $trainer['trainer_id']; ?>" >แก้ไข</a>
+                             <a href="<?php echo site_url('trainer/edit-trainer') . '&action=edit&trainer_id=' . $trainer['trainer_id']; ?>" >แก้ไข</a>
                         </td>                    
                     </tr>
                 <?php endforeach; ?>

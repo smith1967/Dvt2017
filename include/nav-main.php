@@ -25,7 +25,7 @@
                 ),
                 'school' => array(
                     'title' => 'ข้อมูลสถานศึกษา',
-                    'url' => 'school/list-school',
+                    'url' => 'school/list-school-type',
                     'cond' => isset($_SESSION['user']),
                 ),
                 'student' => array(
