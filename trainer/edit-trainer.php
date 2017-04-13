@@ -1,12 +1,13 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "เพิ่มข้อมูลครูฝึก";
-$active = 'business';
+$title = "แก้ไขข้อมูลครูฝึก";
+$active = 'trainer';
+$subactive = 'edit';
 //$subactive = 'edit-group-config';
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    var_dump($data);
+//    var_dump($data);
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
     foreach ($_POST as $k => $v) {
         $$k = $v;  // set variable to form
@@ -14,17 +15,27 @@ if (isset($_POST['submit'])) {
     if (!$valid) {
         
     } else {
-        do_insert();
+        do_update();
     }
+}
+if(!isset($_GET['trainer_id']))
+    redirect('trainer/list-trainer');
+if ($_GET['trainer_id']) {
+    $trainer = get_trainer($_GET['trainer_id']);
+    foreach ($trainer as $key => $value) {
+        $$key = $value;
+    }
+//    var_dump($trainer);
 }
 require_once INC_PATH . 'header.php';
 ?>
 <script>
     $(document).ready(function () {
-        $("#business_id").focus();
+        $("#trainer_name").focus();
     });
 </script>
 <div class="container">
+    <?php include_once INC_PATH . 'submenu-trainer.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -32,17 +43,12 @@ require_once INC_PATH . 'header.php';
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
 
-                    <div class="form-group">
-                        <label for="trainer_id" class="col-md-3 control-label">รหัสครูฝึก</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="trainer_id" name="trainer_id"value="<?php set_var($trainer_id); ?>">
-                        </div>
-                    </div>
+                    <input type="hidden" class="form-control" id="trainer_id" name="trainer_id" value="<?php set_var($trainer_id); ?>">
 
                     <div class="form-group">
                         <label for="trainer_citizen" class="col-md-3 control-label">รหัสบัตรประชาชน</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="trainer_citizen" name="trainer_citizen"value="<?php set_var($trainer_citizen); ?>">
+                            <input type="text" class="form-control" id="trainer_citizen" readonly="" name="trainer_citizen"value="<?php set_var($trainer_citizen); ?>">
                         </div>
                     </div>    
 
@@ -62,7 +68,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="address" class="col-md-3 control-label">ที่อยู่</label>
                         <div class="col-md-4">
-                            <textarea class="form-control" id="address" rows="3" name="address" ><?php set_var($address); ?></textarea>
+                            <textarea class="form-control" id="address" rows="3" name="address"><?php trim(set_var($address)); ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -72,19 +78,19 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="educational" class="col-md-3 control-label">วุฒิการศึกษาสูงสุด</label>
+                    <div class="form-group"> 
+                        <label class="control-label col-md-3" for="educational_id">วุฒิการศึกษาสูงสุด</label>
                         <div class="col-md-2">
-                            <select type="text" class="form-control" id="educational" name="educational"value="<?php set_var($educational); ?>">
-                                <option value="1">ปวช.</option>
-                                <option value="2">ปวส.</option>
-                                <option value="3">ปริญญาตรี</option>
-                                <option value="4">ปริญญาโท</option>
-                                <option value="5">ปริญญาเอก</option>
-                                <option value="6">อื่นๆ</option>
-                            </select>
+                            <select class='form-control' id="educational_id" name="educational_id">
+                                <?php
+                                $def = isset($educational_id) ? $educational_id : '2';
+                                $sql = "SELECT educational_id,educational_name FROM educational ORDER BY educational_id ASC";
+                                echo gen_option($sql, $def)
+                                ?>
+                            </select>              
                         </div>
-                    </div>
+                    </div>             
+
 
                     <div class="form-group">
                         <label for="certificate_date" class="col-md-3 control-label">วันที่ออกใบรับฝึกงาน</label>
@@ -93,20 +99,22 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="property" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
+                    <div class="form-group"> 
+                        <label class="control-label col-md-3" for="trainer_property_id">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="property"name="property"value="<?php set_var($property); ?>">
-                                <option value="P">ผ่านการฝึกอบรม</option>
-                                <option value="E">มีประสบการณ์</option>
-                                <option value="N">ไม่มีประสบการณ์</option>
-                            </select>
+                            <select class='form-control' id="educational_id" name="trainer_property_id">
+                                <?php
+                                $def = isset($trainer_property_id) ? $trainer_property_id : 'E';
+                                $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                echo gen_option($sql, $def)
+                                ?>
+                            </select>              
                         </div>
                     </div>
 
 
                     <div class="form-group">
-                        <div class="col-md-offset-3 col-md-8">
+                        <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn btn-sm-primary" name="submit">บันทึกข้อมูล</button>
                         </div>
                     </div>
@@ -130,11 +138,11 @@ require_once INC_PATH . 'header.php';
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['trainer_id'])) {
-        set_err('กรุณากรอกรหัสครูฝึก');
-        $valid = false;
-    }
-    if (check_pid($data['trainer_citizen'])) {
+//    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['trainer_id'])) {
+//        set_err('กรุณากรอกรหัสสครูฝึก');
+//        $valid = false;
+//    }
+    if (!preg_match('/[a-zA-Z0-9_]{1,13}/', $data['trainer_citizen'])) {
         set_err('กรุณากรอกเลขบัตรประชาชน กรอกได้ 13 ตัว');
         $valid = false;
     }
@@ -142,7 +150,7 @@ function do_validate($data) {
         set_err('กรุณากรอกชื่อครูฝึก');
         $valid = false;
     }
-    if (!preg_match('/[0-9-]{1,}/', $data['phone'])) {
+    if (!preg_match('/[0-9]{1,}/', $data['phone'])) {
         set_err('กรุณากรอกเบอร์โทรศัพท์');
         $valid = false;
     }
@@ -150,39 +158,60 @@ function do_validate($data) {
         set_err('กรุณากรอกที่อยู่');
         $valid = false;
     }
-    if (empty($data['business_id'])) {
+    if (!preg_match('/[0-9]{1,}/', $data['trainer_id'])) {
         set_err('กรุณากรอกรหัสสถานประกอบการ');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['educational'])) {
-        set_err('เลือกวุฒิการศึกษา');
-        $valid = false;
-    }
-    if (!preg_match('/[0-9]{1,}/', $data['certificate_date'])) {
-        set_err('กรุณาเลือกวันที่ออกใบรับฝึกงาน');
-        $valid = false;
-    }
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['property'])) {
-        set_err('กรุณาเลือคุณสมบัติของครูฝึก');
-        $valid = false;
-    }
+//    if (!preg_match('/[0-9]{1,}/', $data['educational'])) {
+//        set_err('เลือกวุฒิการศึกษา');
+//        $valid = false;
+//    }
+//    if (!preg_match('/[0-9]{1,}/', $data['certificate_date'])) {
+//        set_err('กรุณาเลือกวันที่ออกใบรับฝึกงาน');
+//        $valid = false;
+//    }
+//    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['property'])) {
+//        set_err('กรุณาเลือคุณสมบัติของครูฝึก');
+//        $valid = false;
+//    }
 
     return $valid;
 }
 
-function do_insert() {
+function do_update() {
     global $db;
     $data = &$_POST;
-    $query = "INSERT INTO trainer (`trainer_id`, `trainer_citizen`, `trainer_name`, `phone`, `address`, `business_id`, `educational`, `certificate_date`, `property`) VALUES (" . pq($data['trainer_id']) . "," . pq($data['trainer_citizen']) . "," . pq($data['trainer_name']) . "," . pq($data['phone']) . "," . pq($data['address']) . "," . pq($data['business_id']) . "," . pq($data['educational']) . "," . pq($data['certificate_date']) . "," . pq($data['property']) . ")";
-//    var_dump($query);
-//    die();
-//    $query = "INSERT INTO group_config (groupname, group_desc, upload, download) VALUES (".pq($data['groupname']).", ".pq($data['group_desc']).", ".pq($data['upload']).", ".pq($data['download']).");";
-    mysqli_query($db, $query);
-    if (mysqli_affected_rows($db) > 0) {
-        set_info('เพิ่มข้อมูลสำเร็จ');
+    //print_r($data['property']);
+    $arr_pro = $data['property'];
+    $pro = implode(",", $arr_pro);
+    //echo $pro;
+    //exit();`trainer_id`, `trainer_citizen`, `trainer_name`, `phone`, `address`, `business_id`, `educational`, `certificate_date`, `property
+    $query = "UPDATE trainer SET
+	trainer_name=" . pq($data['trainer_name']) . ","
+            . "phone=" . pq($data['phone']) . ","
+            . "address=" . pq($data['address']) . ","
+            . "business_id=" . pq($data['business_id']) . ","
+            . "educational_id=" . pq($data['educational_id']) . ","
+            . "certificate_date=" . pq($data['certificate_date']) . ","
+            . "trainer_property_id=" . pq($data['trainer_property_id'])
+            . " WHERE trainer_id = " . pq($data['trainer_id']);
+    //echo $query; exit();
+    $result = mysqli_query($db, $query);
+    if (mysqli_affected_rows($db) == 0) {
+        set_err('ไม่สามารถแก้ไขข้อมูล');
     } else {
-        set_err('ไม่สามารถเพิ่มข้อมูล ' . mysqli_error($db));
+        set_info('แก้ไขข้อมูลสำเร็จ');
     }
     redirect('trainer/list-trainer');
 }
+
+function get_trainer($trainer_id = NULL) {
+    global $db;
+    $sql = "SELECT * FROM trainer where trainer_id = '$trainer_id';";
+    $rs = mysqli_query($db, $sql);
+    $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
+    return $row;
+}
 ?>
+</body>
+</html>
