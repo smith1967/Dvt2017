@@ -36,9 +36,9 @@ require_once INC_PATH . 'header.php';
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
                     <div class="form-group">
-                        <label for="do_school_vg_id" class="col-md-2 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="business_id" name="do_school_vg_id">
+                        <label for="do_school_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" id="do_school_vg_id" name="do_school_vg_id">
                         </div>
                     </div>
                     <div class="form-group">
@@ -57,20 +57,11 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="school_id" class="col-md-3 control-label">ชื่อสถานศึกษา</label>
-                        <div class="col-md-2">
-                            <?php
-                            $sql = "select * from school";
-                            $def = "school_id";
-                            ?>
-                            <select class="form-control" id="vg_id" name="school_id">
-                                <?php
-                                echo gen_option($sql, $def);
-                                ?>
-
-                            </select>
+                        <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="school_id" name="school_id" placeholder="School ID" value='<?php echo isset($school_id) ? $school_id : ''; ?>'>
                         </div>
-                    </div>     
+                    </div>  
                     <div class="form-group">
                         <label for="date_vg" class="col-md-2 control-label">วันที่เข้าร่วม กรอ.</label>
                         <div class="col-md-3">
@@ -89,7 +80,15 @@ require_once INC_PATH . 'header.php';
     </div>
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
+<script>
+   $(function() {
 
+      $( "#school_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_school.php",
+         minLength: 1
+      });
+   });
+</script>
 <?php
 
 function do_validate($data) {
@@ -130,5 +129,5 @@ function do_insert() {
     } else {
         set_err('ไม่สามารถเพิ่มข้อมูล ' . mysqli_error($db));
     }
-    redirect('DoSchoolVg/list-DoSchoolVg');
+    redirect('do_school_vg/list-do_school_vg');
 }
