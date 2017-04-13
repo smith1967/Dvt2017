@@ -12,9 +12,7 @@ if (isset($_POST['submit'])) {
     foreach ($_POST as $k => $v) {
         $$k = $v;  // set variable to form
     }
-    if (!$valid) {
-        
-    } else {
+    if ($valid) {
         do_update();
     }
 }

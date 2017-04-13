@@ -2,19 +2,19 @@
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "เพิ่มข้อมูลครูฝึก";
-$active = 'business';
-//$subactive = 'edit-group-config';
+$active = 'trainer';
+$subactive = 'insert';
+
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
-    foreach ($_POST as $k => $v) {
-        $$k = $v;  // set variable to form
-    }
-    if (!$valid) {
-        
-    } else {
+    if ($valid) {
         do_insert();
+    } else {
+        foreach ($_POST as $k => $v) {
+            $$k = $v;  // set variable to form
+        }
     }
 }
 require_once INC_PATH . 'header.php';
@@ -25,6 +25,7 @@ require_once INC_PATH . 'header.php';
     });
 </script>
 <div class="container">
+    <?php include_once INC_PATH . 'submenu-trainer.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">

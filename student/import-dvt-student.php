@@ -22,9 +22,17 @@ $subactive = 'import-dvt-student';
        do_import_std();
     }   
     
+    else if (isset($_GET['action']) && $_GET['action'] == 'delete_dvt_std' ){
+        do_delete();
+    }
+    
    
     ?>     
-<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<?php $importlink = site_url('student/import-dvt-student') . '&action=delete_dvt_std';?>
+<p>ข้อมูลไม่ถูกต้องต้องการยกเลิกข้อมูลในฐานข้อมูลทั้งหมด <a href="<?php echo $importlink ?>"><button type="button" class="btn btn-danger">ยกเลิกข้อมูล</button></a></p>
     <div class="col-md-8">
         <div class="panel panel-default">
        
@@ -66,7 +74,7 @@ function do_import_all_std(){
             echo '<div class="alert alert-danger">';
             echo "ข้อมูลในตารางนับจำนวนนักเรียนมีอยู่แล้วในระบบ ไม่สามารถส่งข้อมูลขึ้นระบบได้";
             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
+            //echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
             echo '<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
             echo '</div>';
         }else{
@@ -88,8 +96,8 @@ function do_import_all_std(){
 function do_import_std() {
     global $db;
    //  transfer new data from tmp to student
-    $sql = "insert INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`) 
-    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id` 
+    $sql = "insert INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year`) 
+    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year` 
     FROM `student_tmp` 
     WHERE `edu_id`=2;";
    // echo "sql= ".$sql; exit();
@@ -103,14 +111,14 @@ function do_import_std() {
             echo '<div class="alert alert-danger">';
             echo "ข้อมูลนักเรียนมีอยู่แล้วในระบบ ไม่สามารถส่งข้อมูลขึ้นระบบได้";
             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
+            //echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
             echo '<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
             echo '</div>';
         }else{
             echo '<div class="alert alert-danger">';
             echo $err;
             echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-            echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
+            //echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
             echo '<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
             echo '</div>';
         }
@@ -126,5 +134,20 @@ function do_import_std() {
    // redirect('student/import-std');
 }
 
+function do_delete(){
+    global $db;
+    $school_id = $_SESSION['user']['school_id'];
+    $year = $_SESSION['year'];
+    $sql = "DELETE FROM `student` WHERE `school_id` = '$school_id' AND `edu_year` = '$year' ";
+    $result = mysqli_query($db, $sql);
+    $sql2 = "DELETE FROM `sum_of_student` WHERE `school_id` = '$school_id' AND `edu_year` = '$year' ";
+    $result2 = mysqli_query($db, $sql2);
+//        echo $sql."<br>";
+//         echo $sql2."<br>";
+//          echo exit()."<br>";
+    if ($result >0 && $result2>0){
+        redirect('student/file-manager');
+    }
+}
 
 

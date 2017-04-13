@@ -1,9 +1,9 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "แก้ไขข้อมูลสถานะต่าง ๆ";
+$title = "แก้ไขข้อมูลสถานประกอบการ";
 $active = 'business';
-//$subactive = 'edit-group-config';
+$subactive = 'edit';
 if ($_GET['business_id']) {
     $property = array();
     $business = get_business($_GET['business_id']);
