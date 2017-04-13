@@ -6,50 +6,50 @@ if (!defined('BASE_PATH'))
     <div>
         <ol class="breadcrumb">
             <li><a href="<?php echo site_url() ?>">หน้าหลัก</a></li>
-            <li class='active'>จัดการข้อมูลสถานประกอบการ</li>
+            <li class='active'>จัดการข้อมูลการฝึกงาน</li>
         </ol>
     </div>
     <div class='submenu'>
         <?php
         $submenu = array(
-//            'home' => array(
-//                'title' => 'หน้าหลัก',
-//                'url' => 'business/index',
-//                'cond' => true,
-//            ),
             'list' => array(
-                'title' => 'รายชื่อสถานประกอบการ',
-                'url' => 'business/list-business',
-                'cond' => true,
-            ),
-            'edit' => array(
-                'title' => 'แก้ไขข้อมูลสถานประกอบการ',
-                'url' => 'business/edit-business',
+                'title' => 'รายการฝึกงาน',
+                'url' => 'training/list-training',
                 'cond' => true,
             ),
             'insert' => array(
-                'title' => 'เพิ่มสถานประกอบการ',
-                'url' => 'business/insert-business',
+                'title' => 'เพิ่มข้อมูล',
+                'url' => 'training/insert-training',
                 'cond' => true,
             ),
-//            'edit-business' => array(
+            'edit' => array(
+                'title' => 'แก้ไขข้อมูล',
+                'url' => 'training/edit-training',
+                'cond' => true,
+            ),
+//            'check-data' => array(
+//                'title' => 'ตรวจสอบข้อมูล',
+//                'url' => 'admin/check-data',
+//                'cond' => true,
+//            ),
+//            'list-user' => array(
 //                'title' => 'รายชื่อผู้ใช้',
-//                'url' => 'business/list-user',
+//                'url' => 'admin/list-user',
 //                'cond' => false,
 //            ),
 //            'import-std-radius' => array(
 //                'title' => 'โอน/ลบข้อมูล std',
-//                'url' => 'business/import-std-radius',
+//                'url' => 'admin/import-std-radius',
 //                'cond' => true,
 //            ),
 //            'import-users-radius' => array(
 //                'title' => 'โอน/ลบข้อมูล users',
-//                'url' => 'business/import-users-radius',
+//                'url' => 'admin/import-users-radius',
 //                'cond' => true,
 //            ),
 //            'edit-group-config' => array(
 //                'title' => 'ตั้งค่ากลุ่มผู้ใช้',
-//                'url' => 'business/edit-group-config',
+//                'url' => 'admin/edit-group-config',
 //                'cond' => true,
 //            ),
 //            'rep-alluser' => array(

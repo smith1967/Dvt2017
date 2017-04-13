@@ -9,13 +9,12 @@ if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
-    foreach ($_POST as $k => $v) {
-        $$k = $v;  // set variable to form
-    }
-    if (!$valid) {
-        
-    } else {
+    if ($valid) {
         do_insert();
+    } else {
+        foreach ($_POST as $k => $v) {
+            $$k = $v;  // set variable to form
+        }
     }
 }
 require_once INC_PATH . 'header.php';
