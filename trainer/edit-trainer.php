@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
 }
 if(!isset($_GET['trainer_id']))
     redirect('trainer/list-trainer');
+    
 if ($_GET['trainer_id']) {
     $trainer = get_trainer($_GET['trainer_id']);
     foreach ($trainer as $key => $value) {
