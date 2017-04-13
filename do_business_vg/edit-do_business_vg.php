@@ -53,6 +53,7 @@ require_once INC_PATH . 'header.php';
                      <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
                         <div class="col-md-2">
+                        
                             <?php
                             $sql = "select * from vocation_group";
                             $def = $DoBusinessVg['vg_id'];

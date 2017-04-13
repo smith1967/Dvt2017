@@ -21,7 +21,7 @@ $params = array(
 $params = http_build_query($params);
 $DoSchoolVg = get_DoSchoolVg($page, $limit);
 //    $total = get_total();
-$url = site_url('DoSchoolVg/list-DoSchoolVg&') . $params;
+$url = site_url('do_school_vg/list-do_school_vg&') . $params;
 //    var_dump($businesslist);
 //    exit();
 $total = get_total();
@@ -53,7 +53,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <th>ชื่อสถานศึกษา</th>
                     <th>วันที่เข้าร่วม กรอ.</th>
                     <th colspan="2">จัดการ</th>
-                    <th><a href="<?php echo site_url('DoSchoolVg/DoSchoolVg'); ?>" >เพิ่มข้อมูล</a></th>
+                    <th><a href="<?php echo site_url('do_school_vg/insert-do_school_vg'); ?>" >เพิ่มข้อมูล</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -66,8 +66,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <td><?php echo getSchoolName($doschool['school_id']); ?></td>
                         <td><?php echo $doschool['date_vg']; ?></td>
                         <td>
-                            <a href="<?php echo site_url('DoSchoolVg/list-DoSchoolVg') . '&action=delete&do_school_vg_id=' . $doschool['do_school_vg_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
-                            <a href="<?php echo site_url('DoSchoolVg/from_edit_DoSchoolVg') . '&action=edit&do_school_vg_id=' . $doschool['do_school_vg_id']; ?>" >แก้ไข</a>
+                            <a href="<?php echo site_url('do_school_vg/list-do_school_vg').'&action=delete&do_school_vg_id=' . $doschool['do_school_vg_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
+                            <a href="<?php echo site_url('do_school_vg/edit-do_school_vg').'&action=edit&do_school_vg_id=' . $doschool['do_school_vg_id']; ?>" >แก้ไข</a>
 
                         </td>                    
                     </tr>
@@ -78,16 +78,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>
-<?php
 
-function getSchoolName($school_id){
-    global $db;
-    $query = "SELECT * FROM school where school_id='".$school_id."'";
-    //echo $query;
-    $rs = mysqli_query($db, $query);
-    $row = mysqli_fetch_array($rs);
-    return $row['school_name'];
-}
+<?php
 function getvocationgroup($vg_id){
     global $db;
     $query = "SELECT * FROM vocation_group where vg_id='".$vg_id."'";
@@ -120,13 +112,13 @@ function do_delete($do_school_vg_id) {
     global $db;
     if (empty($do_school_vg_id)) {
         set_err('ค่าพารามิเตอร์ไม่ถูกต้อง');
-        redirect('DoSchoolVg/list-DoSchoolVg');
+        redirect('do_school_vg/list-do_school_vg');
     }
     $query = "DELETE FROM do_school_vg WHERE do_school_vg_id =" . pq($do_school_vg_id);
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db)) {
         set_info('ลบข้อมูลสำเร็จ');
     }
-    redirect('DoSchoolVg/list-DoSchoolVg');
+    redirect('do_school_vg/list-do_school_vg');
 }
 ?>
