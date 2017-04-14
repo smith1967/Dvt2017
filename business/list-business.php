@@ -2,8 +2,8 @@
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "ผู้ดูแลระบบ";
-$active = 'admin';
-$subactive = 'list-business';
+$active = 'business';
+$subactive = 'list';
 //is_admin('home/index');
 ?>
 <?php
@@ -30,11 +30,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     do_delete($_GET['business_id']);
 }
 ?>
-<script language="JavaScript" type="text/javascript">
-function checkDelete(){
-    return confirm('คุณแน่ใจหรือจะลบ?');
-}
-</script>
 <?php require_once INC_PATH . 'header.php'; ?>
 
 <div class="container">

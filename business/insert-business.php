@@ -26,6 +26,7 @@ require_once INC_PATH . 'header.php';
     });
 </script>
 <div class="container">
+     <?php include_once INC_PATH . 'submenu-business.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -126,9 +127,9 @@ require_once INC_PATH . 'header.php';
 
 
                     <div class="form-group">
-                        <label for="mou" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
+                        <label for="do_mou" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="mou"name="mou"value="<?php set_var($mou); ?>">
+                            <select class="form-control" id="do_mou"name="do_mou"value="<?php set_var($do_mou); ?>">
                                 <option value="0">ไม่เคยจัด</option>
                                 <option value="1">เคยร่วมจัด</option>
                             </select>
@@ -206,35 +207,35 @@ require_once INC_PATH . 'header.php';
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['business_id'])) {
+    if (empty($data['business_id'])) {
         set_err('กรุณากรอกรหัสสถานประกอบการ');
         $valid = false;
     }
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['business_name'])) {
+    if (empty($data['business_name'])) {
         set_err('กรุณากรอกชื่อสถานประกอบการ');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['address_no'])) {
+    if (empty($data['address_no'])) {
         set_err('กรุณากรอกเลขที่');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['tumbon'])) {
+    if (empty($data['tumbon'])) {
         set_err('กรุณากรอกตำบล');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['aumphur'])) {
+    if (empty($data['aumphur'])) {
         set_err('กรุณากรอกอำเภอ');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['province'])) {
+    if (empty($data['province'])) {
         set_err('กรุณากรอกจังหวัด');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['postcode'])) {
+    if (empty($data['postcode'])) {
         set_err('กรุณากรอกรหัสไปรษณีย์');
         $valid = false;
     }
-    if (!preg_match('/[0-9]{1,}/', $data['contact'])) {
+    if (empty($data['contact'])) {
         set_err('กรุณากรอกชื่อผู้ประสานงาน');
         $valid = false;
     }
@@ -257,7 +258,7 @@ function do_insert() {
     $query = "INSERT INTO business ("
             . "`business_id`,"
             . " `business_name`,"
-            . " `Job_description`,"
+            . " `job_description`,"
             . " `amount_emp`,"
             . " `address_no`,"
             . " `road`,"
@@ -269,7 +270,7 @@ function do_insert() {
             . " `email`,"
             . " `contact`,"
             . " `contact_phone`,"
-            . " `mou`,"
+            . " `do_mou`,"
             . " `registration_date`,"
             . " `capital`,"
             . " `country`,"
@@ -290,7 +291,7 @@ function do_insert() {
             . pq($data['email']) . ","
             . pq($data['contact']) . ","
             . pq($data['contact_phone']) . ","
-            . pq($data['mou']) . ","
+            . pq($data['do_mou']) . ","
             . pq($data['registration_date']) . ","
             . pq($data['capital']) . ","
             . pq($data['country']) . ","
