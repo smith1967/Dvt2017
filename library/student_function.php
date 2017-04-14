@@ -1,24 +1,24 @@
 <?php
-function getSchoolName($id){
+function getSchoolName($school_id){
     global $db;
-    $query = "SELECT * FROM school where school_id='".$id."'";
+    $query = "SELECT * FROM school where school_id='".$school_id."'";
     //echo $query;
     $rs = mysqli_query($db, $query);
     $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
     return $row['school_name'];
 }
-function getMajorName($id){
+function getMajorName($major_id){
     global $db;
-    $query = "SELECT * FROM major where major_id='".$id."'";
+    $query = "SELECT * FROM major where major_id='".$major_id."'";
     //echo $query;
     $rs = mysqli_query($db, $query);
     $row = mysqli_fetch_array($rs);
     return $row['major_name'];
 }
 
-function getMinorName($id){
+function getMinorName($minor_id){
     global $db;
-    $query = "SELECT * FROM minor where minor_id='".$id."'";
+    $query = "SELECT * FROM minor where minor_id='".$minor_id."'";
     //echo $query;
     $rs = mysqli_query($db, $query);
     $row = mysqli_fetch_array($rs);
