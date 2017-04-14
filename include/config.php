@@ -7,7 +7,7 @@
  *     2. testing
  *     3. production
  */
-define('ENVIRONMENT', '1');
+define('ENVIRONMENT', '2');
 if (defined('ENVIRONMENT'))
 {
 	switch (ENVIRONMENT)
@@ -51,8 +51,9 @@ $charset = 'utf8';
 //GRANT ALL PRIVILEGES ON dvt2017.* TO dvt@localhost IDENTIFIED BY '123456';
 ///////////////////////////////////////////////////////////
 define('SITE_URL', $site_url);
-define('INC_PATH', str_replace('\\','/',dirname(__FILE__)).'/');
-define('BASE_PATH', dirname(INC_PATH).'/');
+define('INCLUDE_PATH', str_replace('\\','/',dirname(__FILE__)).'/');
+define('BASE_PATH', dirname(INCLUDE_PATH).'/');
+define('INC_PATH', BASE_PATH.'includes/');
 define('LIB_PATH', BASE_PATH.'library/');
 define('BOOTSTRAP_PATH', BASE_PATH.'bootstrap/');
 define('UPLOAD_DIR', BASE_PATH . 'upload/');
