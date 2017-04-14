@@ -1,9 +1,9 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "เพิ่มข้อมูลสถานประกอบการ";
-$active = 'business';
-//$subactive = 'edit-group-config';
+$title = "แก้ไขข้อมูลสถานศึกษา";
+$active = 'school';
+$subactive = 'list-school';
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
