@@ -2,8 +2,8 @@
 <?php
 /* if (!defined('BASE_PATH'))
   exit('No direct script access allowed'); */
-$title = "เพิ่มข้อมูลสถานประกอบการ";
-$active = 'business';
+$title = "เพิ่มข้อมูลการร่วมมือ กรอ";
+$active = 'do_vg_school';
 //$subactive = 'edit-group-config';
 if (isset($_POST['submit'])) {
     $data = $_POST;
@@ -30,16 +30,18 @@ require_once INC_PATH . 'header.php';
             <form method="post" class="form-horizontal" action=""> 
                 <div class="form-group">
                     <label class="control-label col-md-3" for="dovg_school_id">รหัสการร่วมมือ กรอ กับสถานศึกษา</label>
-                    <div class="col-md-3"><input type="text" class="form-control" id="dovg_school_id" name="dovg_school_id" value="<?php set_var($dovg_school_id) ?>"></div>
+                    <div class="col-md-3"><input type="text" class="form-control" id="do_vg_school_id" name="do_vg_school_id" value="<?php set_var($do_vg_school_id) ?>"></div>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3" for="dovg_id">รหัส กรอ</label>
-                    <div class="col-md-3"><input type="text" class="form-control" id="dovg_id" name="dovg_id" value="<?php set_var($dovg_id) ?>"></div>
+                    <div class="col-md-3"><input type="text" class="form-control" id="do_vg_id" name="do_vg_id" value="<?php set_var($do_vg_id) ?>"></div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-md-3" for="school_id">รหัส สถานศึกษา</label>
-                    <div class="col-md-3"><input type="text" class="form-control" id="school_id" name="school_id" value="<?php set_var($school_id) ?>"></div>
-                </div>
+                 <div class="form-group">
+                        <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="school_id" name="school_id" placeholder="School ID" value='<?php echo isset($school_id) ? $school_id : ''; ?>'>
+                        </div>
+                    </div>  
                 <div class="form-group">
                     <div class="col-md-offset-4"><button type="submit" class="btn btn-primary"name="submit">บันทึกข้อมูล</button></div>
                 </div>
@@ -50,17 +52,25 @@ require_once INC_PATH . 'header.php';
 
 
 <?php require_once INC_PATH . 'footer.php'; ?>
+<script>
+   $(function() {
 
+      $( "#school_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_school.php",
+         minLength: 1
+      });
+   });
+</script>
 <?php
 
 function do_insert() {
     global $db;
     $data = &$_POST;
-    $query = "INSERT INTO do_vg_school (`dovg_school_id`,`dovg_id`,`school_id`) VALUES (" . pq($data['dovg_school_id']) . "," . pq($data['dovg_id']) . "," . pq($data['school_id']) . ")";
+    $query = "INSERT INTO do_vg_school (`do_vg_school_id`,`do_vg_id`,`school_id`) VALUES (" . pq($data['do_vg_school_id']) . "," . pq($data['do_vg_id']) . "," . pq($data['school_id']) . ")";
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db) > 0) {
         set_info('บันทึกข้อมูลเรียบร้อย');
-        redirect('rain/do_vg_school');
+        redirect('do_vg_school/list-do_vg_school');
     } else {
         set_err('บันทึกข้อมูลไม่สำเร็จ ' . mysqli_error($db));
     }
@@ -70,24 +80,12 @@ function do_insert() {
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (!preg_match('/[0-9]{1,}/', $data['dovg_school_id'])) {
-        set_err('กรุณากรอกเฉพาะตัวเลข');
+    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['do_vg_school_id'])) {
+        set_err('กรุณากรอกรหัสการร่วมมือ กรอ กับสถานศึกษา');
         $valid = false;
     }
-    if (empty($data['dovg_school_id'])) {
-        set_err('กรุณากรอกรหัสการร่วมมือระหว่างกรอ.และสถานศึกษา');
-        $valid = false;
-    }
-    if (!preg_match('/[0-9]{1,}/', $data['dovg_id'])) {
-        set_err('กรุณากรอกเฉพาะตัวเลข');
-        $valid = false;
-    }
-    if (empty($data['dovg_id'])) {
+    if (empty($data['do_vg_id'])) {
         set_err('กรุณากรอกรหัส กรอ');
-        $valid = false;
-    }
-    if (!preg_match('/[0-9]{1,}/', $data['school_id'])) {
-        set_err('กรุณากรอกเฉพาะตัวเลข');
         $valid = false;
     }
     if (empty($data['school_id'])) {
@@ -96,4 +94,5 @@ function do_validate($data) {
     }
     return $valid;
 }
+
 ?>
