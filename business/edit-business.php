@@ -4,31 +4,38 @@ if (!defined('BASE_PATH'))
 $title = "แก้ไขข้อมูลสถานประกอบการ";
 $active = 'business';
 $subactive = 'edit';
-if ($_GET['business_id']) {
-    $property = array();
-    $business = get_business($_GET['business_id']);
-    $property = explode(',', $business['property_id']);
-//    var_dump($business);
-//    exit();
-}
+
 if (isset($_POST['submit'])) {
     $data = $_POST;
-//    var_dump($data);
-//    exit();
-    $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
+    var_dump($data);
     foreach ($_POST as $k => $v) {
         $$k = $v;  // set variable to form
     }
+//    $property = $business['property'];
+    $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
+
     if ($valid) {
         do_editbusiness();
     }
+}else if ($_GET['business_id']) {
+    $property = array();
+    $business = get_business($_GET['business_id']);
+    $property = explode(',', $business['property_id']);    
+    foreach ($business as $key => $value) {
+        $$key = $value;
+    }
+
+//    var_dump($business);
+//    exit();
+}  else {
+    redirect('business/list-business');
 }
 require_once INC_PATH . 'header.php';
 ?>
 
 <div class="container">
-    <?php include_once INC_PATH . 'submenu-trainer.php'; ?>
-    <?php show_message() ?>    
+     <?php include_once INC_PATH . 'submenu-business.php'; ?>
+    <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">แก้ไขข้อมูลสถานประกอบการ</div>
@@ -37,55 +44,52 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="business_id" class="col-md-2 control-label">รหัส</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="business_id" name="business_id"value="<?php echo $business['business_id']; ?>">
-                            <?php echo $business['business_id']; ?>
+                            <input type="text" class="form-control" id="business_id" name="business_id"value="<?php set_var($business_id); ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="business_name" class="col-md-2 control-label">ชื่อสถานประกอบการ</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="business_name"name="business_name"value=" <?php set_var($business['business_name']); ?>">
+                            <input type="text" class="form-control" id="business_name"name="business_name"value="<?php set_var($business_name); ?>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="amount_emp" class="col-md-2 control-label">จำนวนพนักงาน</label>
                         <div class="col-md-1">
-                            <input type="text" class="form-control" id="amount_emp" name="amount_emp"value=" <?php set_var($business['amount_emp']); ?>">
+                            <input type="text" class="form-control" id="amount_emp" name="amount_emp"value="<?php set_var($amount_emp); ?>">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="Job_description" class="col-md-2 control-label">รายละเอียด</label>
+                        <label for="job_description" class="col-md-2 control-label">รายละเอียด</label>
                         <div class="col-md-4">
-                            <textarea class="form-control" id="Job_description" rows="3" name="Job_description">
-                                <?php set_var($business['Job_description']); ?>
-                            </textarea>
+                            <textarea class="form-control" id="job_description" rows="3" name="job_description"value="<?php set_var($job_description); ?>"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="address"class="col-md-2 control-label">ที่ตั้ง</label>
+                        <label for="" class="col-md-2 control-label">ที่ตั้ง</label>
                     </div>
 
                     <div class="form-group">
                         <label for="address_no" class="col-md-3 control-label">เลขที่</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="address_no" name="address_no" value="<?php set_var($business['address_no']); ?>">
+                            <input type="text" class="form-control" id="address_no" name="address_no"value="<?php set_var($address_no); ?>">
                         </div>
                         <label for="road" class="col-md-2 control-label">ถนน</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="road"name="road" value="<?php set_var($business['road']); ?>">
+                            <input type="text" class="form-control" id="road" name="road"value="<?php set_var($road); ?>">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="tumbon" class="col-md-3 control-label">ตำบล</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="tumbon" name="tumbon"value="<?php set_var($business['tumbon']); ?>">
+                            <input type="text" class="form-control" id="tumbon"name="tumbon"value="<?php set_var($tumbon); ?>">
                         </div>
                         <label for="aumphur" class="col-md-2 control-label">อำเภอ</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="aumphur" name="aumphur"value="<?php set_var($business['aumphur']); ?>">
+                            <input type="text" class="form-control" id="aumphur" name="aumphur"value="<?php set_var($aumphur); ?>">
                         </div>
                     </div>
 
@@ -93,11 +97,11 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="province" class="col-md-3 control-label">จังหวัด</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="province"name="province"value="<?php set_var($business['province']); ?>">
+                            <input type="text" class="form-control" id="province"name="province"value="<?php set_var($province); ?>">
                         </div>
                         <label for="postcode" class="col-md-2 control-label">รหัสไปรษณีย์</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="postcode" name="postcode" value="<?php set_var($business['postcode']); ?>">
+                            <input type="text" class="form-control" id="postcode" name="postcode"value="<?php set_var($postcode); ?>">
                         </div>
                     </div>
 
@@ -105,27 +109,27 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="land" class="col-md-3 control-label">ประเทศ</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="land"name="land" value="<?php set_var($business['land']); ?>">
+                            <input type="text" class="form-control" id="land" placeholder="ประเทศไทย" name="land" value="ประเทศไทย">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="email" class="col-md-2 control-label">E-mail</label>
                         <div class="col-md-3">
-                            <input type="email" class="form-control" id="email" name="email" value="<?php set_var($business['email']); ?>">
+                            <input type="email" class="form-control" id="email" placeholder="Kidakarn@gmail.com"name="email"value="<?php set_var($email); ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="contact" class="col-md-2 control-label">ชื่อผู้ประสานงาน</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="contact"name="contact"value="<?php set_var($business['contact']); ?>">
+                            <input type="text" class="form-control" id="contact"name="contact"value="<?php set_var($contact); ?>">
                         </div>
                     </div>  
 
                     <div class="form-group">
                         <label for="contact_phone" class="col-md-2 control-label">เบอร์โทรศัพท์</label>
                         <div class="col-md-3">
-                            <input type="text" class="form-control" id="contact_phone" name="contact_phone"value="<?php set_var($business['contact_phone']); ?>">
+                            <input type="text" class="form-control" id="contact_phone" name="contact_phone" placeholder="xxx-xxx-xxxx"value="<?php set_var($contact_phone); ?>">
                         </div>
                     </div> 
 
@@ -133,7 +137,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="mou" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="mou" name="mou"value="<?php set_var($business['mou']); ?>">
+                            <select class="form-control" id="mou"name="mou"value="<?php set_var($mou); ?>">
                                 <option value="0">ไม่เคยจัด</option>
                                 <option value="1">เคยร่วมจัด</option>
                             </select>
@@ -143,7 +147,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="registration_date" class="col-md-2 control-label">วันที่จดทะเบียน</label>
                         <div class="col-md-3">
-                            <input type="date" class="form-control" id="registration_date"name="registration_date"value="<?php set_var($business['registration_date']); ?>">
+                            <input type="date" class="form-control" id="registration_date" placeholder="yyyy/mm/dd" name="registration_date"value="<?php set_var($registration_date); ?>">
                         </div>
                     </div> 
 
@@ -151,23 +155,20 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="capital" class="col-md-2 control-label">ทุนการจดทะเบียน</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="capital" name="capital"value="<?php set_var($business['capital']); ?>">
+                            <input type="text" class="form-control" id="capital"name="capital"value="<?php set_var($capital); ?>">
                         </div>
                     </div>       
-
-
-
                     <div class="form-group">
                         <label for="country" class="col-md-2 control-label">ประเทศต้นสังกัด</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="country" name="country" value="<?php set_var($business['country']); ?>">
+                            <input type="text" class="form-control" id="country" name="country"value="<?php set_var($country); ?>">
                         </div>
                     </div>  
 
                     <div class="form-group">
                         <label for="tax_break" class="col-md-2 control-label">การลดหย่อนภาษี</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="tax_break" name="tax_break"value="<?php set_var($business['tax_break']); ?>">
+                            <select class="form-control" id="tax_break"name="tax_break">
                                 <option>ใช้สิทธิ์</option>
                                 <option>กำลังดำเนินการ</option>
                                 <option>ไม่ใช้สิทธิ์</option>
@@ -175,13 +176,11 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>   
                     <div class="form-group">
-
-                        <label for="tax_break" class="col-md-6 control-label"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับคุณลักษณะของสถานประกอบการ</label>
+                        <label for="tax_break" class="col-md-5 control-label"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับคุณลักษณะของสถานประกอบการ</label>
 
                     </div> 
 
                     <?php
-//                    var_dump($property);
                     $sql = "select * from business_property order by property_id ASC";
                     $result = mysqli_query($db, $sql);
                     while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
@@ -199,17 +198,15 @@ require_once INC_PATH . 'header.php';
 
                     <?php } ?>
 
-
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" class="btn btn-sm btn-primary" name ="submit" >บันทึกข้อมูล</button>
-                </div>
-            </div>
-            </form>
-        </div>    
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-sm-primary" name="submit">บันทึกข้อมูล</button>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>
     </div>
-</div>
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
 
@@ -280,27 +277,26 @@ function do_editbusiness() {
             . "email=" . pq($data['email']) . ","
             . "contact=" . pq($data['contact']) . ","
             . "contact_phone=" . pq($data['contact_phone']) . ","
-            . "mou=" . pq($data['mou']) . ","
+            . "do_mou=" . pq($data['do_mou']) . ","
             . "registration_date=" . pq($data['registration_date']) . ","
             . "capital=" . pq($data['capital']) . ","
             . "country=" . pq($data['country']) . ","
             . "tax_break=" . pq($data['tax_break']) . ","
             . "property_id='" . $pro . "'
     where business_id = '" . $data['business_id'] . "'";
-    //echo $query; exit();
+//    echo $query; exit();
     $result = mysqli_query($db, $query);
-    if (mysqli_affected_rows($db) == 0) {
-        set_err('ไม่สามารถแก้ไขข้อมูล');
+    if (mysqli_affected_rows($db) > 0) {
+        set_info('แก้ไขข้อมูลสำเร็จ'); 
     } else {
-        set_info('แก้ไขข้อมูลสำเร็จ');
+       set_err('ไม่สามารถแก้ไขข้อมูล');
     }
     redirect('business/list-business');
 }
 
 function get_business($business_id = NULL) {
     global $db;
-    $sql = "SELECT * FROM business where business_id = '$business_id';
-";
+    $sql = "SELECT * FROM business where business_id = '$business_id';";
     $rs = mysqli_query($db, $sql);
     $row = mysqli_fetch_array($rs);
     return $row;
