@@ -45,8 +45,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="do_vg_school_id" class="col-md-3 control-label">รหัสการร่วมมือ กรอ กับสถานศึกษา</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="do_vg_school_id" name="do_vg_school_id"value="<?php set_var($do_vg_school_id); ?>">
-                            <?php set_var($do_vg_school_id); ?>
+                            <input type="text" class="form-control" readonly="" id="do_vg_school_id" name="do_vg_school_id"value="<?php set_var($do_vg_school_id); ?>">
                         </div>
                     </div>
                     <div class="form-group">
