@@ -70,14 +70,12 @@ require_once INC_PATH . 'header.php';
                         <label for="minor_id" class="col-md-3 control-label">ชื่อสาขางานที่ลงนาม</label>
                         <div class="col-md-2">
                             <?php
-                            $sql = "select * from minor";
-                            $def = $doems['minor_id'];
+                            $sql = "select * from minor";                        
                             ?>
                             <select class="form-control" id="minor_id" name="minor_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $minor_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>     

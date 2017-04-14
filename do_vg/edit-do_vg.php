@@ -50,17 +50,14 @@ require_once INC_PATH . 'header.php';
                     </div>                   
                      <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
-                        <div class="col-md-2">
-                        
+                        <div class="col-md-2">                       
                             <?php
-                            $sql = "select * from vocation_group";
-                            $def = $dovg['vg_id'];
+                            $sql = "select * from vocation_group";                 
                             ?>
                             <select class="form-control" id="vg_id" name="vg_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $vg_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>
