@@ -36,56 +36,38 @@ require_once INC_PATH . 'header.php';
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
                     <div class="form-group">
-                        <label for="do_ems_id" class="col-md-2 control-label">รหัสการลงนาม</label>
+                        <label for="do_ems_id" class="col-md-3 control-label">รหัสการลงนาม</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="do_ems_id" name="do_ems_id">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="business_id" class="col-md-3 control-label">ชื่อสถานประกอบการ</label>
-                        <div class="col-md-2">
-                            <?php
-                            $sql = "select * from business";
-                            $def = "business_id";
-                            ?>
-                            <select class="form-control" id="business_id" name="business_id">
-                                <?php
-                                echo gen_option($sql, $def);
-                                ?>
-
-                            </select>
+                   <div class="form-group">
+                        <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="business_id" name="business_id" placeholder="Business ID" value='<?php echo isset($business_id) ? $business_id : ''; ?>'>
                         </div>
-                    </div> 
+                    </div>
                     <div class="form-group">
-                        <label for="school_id" class="col-md-3 control-label">ชื่อสถานศึกษา</label>
-                        <div class="col-md-2">
-                            <?php
-                            $sql = "select * from school";
-                            $def = "school_id";
-                            ?>
-                            <select class="form-control" id="vg_id" name="school_id">
-                                <?php
-                                echo gen_option($sql, $def);
-                                ?>
-
-                            </select>
+                        <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="school_id" name="school_id" placeholder="School ID" value='<?php echo isset($school_id) ? $school_id : ''; ?>'>
                         </div>
-                    </div>     
+                    </div>  
                     <div class="form-group">
-                        <label for="do_date" class="col-md-2 control-label">วันที่ลงนาม</label>
+                        <label for="do_date" class="col-md-3 control-label">วันที่ลงนาม</label>
                         <div class="col-md-3">
                             <input type="date" class="form-control" id="do_date" placeholder="yyyy/mm/dd" name="do_date">
                         </div>
                     </div> 
                     <div class="form-group">
-                        <label for="major_id" class="col-md-3 control-label">ชื่อสาขาวิชาที่ลงนาม</label>
+                        <label for="minor_id" class="col-md-3 control-label">ชื่อสาขางานที่ลงนาม</label>
                         <div class="col-md-2">
                             <?php
-                            $sql = "select * from major";
-                            $def = "major_id";
+                            $sql = "select * from minor";
+                            $def = "minor_id";
                             ?>
-                            <select class="form-control" id="major_id" name="major_id">
+                            <select class="form-control" id="minor_id" name="minor_id">
                                 <?php
                                 echo gen_option($sql, $def);
                                 ?>
@@ -119,7 +101,24 @@ require_once INC_PATH . 'header.php';
     </div>
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
+<script>
+   $(function() {
 
+      $( "#business_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
+         minLength: 1
+      });
+   });
+</script>
+<script>
+   $(function() {
+
+      $( "#school_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_school.php",
+         minLength: 1
+      });
+   });
+</script>
 <?php
 
 function do_validate($data) {
@@ -148,14 +147,14 @@ function do_insert() {
             . " `business_id`,"
             . " `school_id`,"
             . " `do_date`,"
-            . " `major_id`,"
+            . " `minor_id`,"
             . " `ems_id`)"
             . " VALUES ("
             . pq($data['do_ems_id']) . ","
             . pq($data['business_id']) . ","
             . pq($data['school_id']) . ","
             . pq($data['do_date']) . ","
-            . pq($data['major_id']) . ","
+            . pq($data['minor_id']) . ","
             . pq($data['ems_id']) . ");";
 
 //$query = "INSERT INTO group_config (groupname, group_desc, upload, download) VALUES (".pq($data['groupname']).", ".pq($data['group_desc']).", ".pq($data['upload']).", ".pq($data['download']).");";
@@ -165,5 +164,5 @@ function do_insert() {
     } else {
         set_err('ไม่สามารถเพิ่มข้อมูล ' . mysqli_error($db));
     }
-    redirect('doems/list-doems');
+    redirect('do_ems/list-do_ems');
 }
