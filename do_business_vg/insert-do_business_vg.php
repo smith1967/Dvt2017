@@ -47,13 +47,11 @@ require_once INC_PATH . 'header.php';
                         <div class="col-md-2">
                             <?php
                             $sql = "select * from vocation_group";
-                            $def = "vg_id";
                             ?>
                             <select class="form-control" id="vg_id" name="vg_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $vg_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>

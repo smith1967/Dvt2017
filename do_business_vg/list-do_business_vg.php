@@ -1,9 +1,9 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "ผู้ดูแลระบบ";
-$active = 'admin';
-$subactive = 'list-user';
+$title = "สถานประกอบการทำกรอ.";
+$active = 'business';
+$subactive = 'list-do_business_vg';
 //is_admin('home/index');
 ?>
 <?php
@@ -30,11 +30,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     do_delete($_GET['do_business_vg_id']);
 }
 ?>
-<script language="JavaScript" type="text/javascript">
-    function checkDelete() {
-        return confirm('คุณแน่ใจหรือจะลบ?');
-    }
-</script>
+
 <?php require_once INC_PATH . 'header.php'; ?>
 
 <div class="container">
@@ -46,9 +42,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     <div class="table-responsive"> 
         <table class="table table-striped table-condensed table-hover">
             <thead>
-                <tr>
-
-                 
+                <tr>                
                     <th>ชื่อกลุ่มอาชีพ</th>
                     <th>ชื่อสถานประกอบการ</th>
                     <th>วันที่เข้าร่วม กรอ.</th>
