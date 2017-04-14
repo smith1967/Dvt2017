@@ -59,7 +59,10 @@ function do_login($data) {
     $query = "SELECT * FROM user WHERE username = " . pq($data['username']);
 //    die($query);
     $result = mysqli_query($db, $query);
-    if (mysqli_num_rows($result) > 0) {
+//    echo mysqli_error($db);
+//    var_dump($result);
+//    die();
+    if ($result) {
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         if (verify_password_hash($row['password'], $strHash)) {
             unset($row['password']);
