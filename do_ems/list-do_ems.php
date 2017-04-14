@@ -11,7 +11,7 @@ $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $action = isset($_GET['action']) ? $_GET['action'] : "list";
 //    $group = isset($_GET['group']) ? $_GET['group'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : '';
-$limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+$limit = isset($_GET['limit']) ? $_GET['limit'] : 40;
 
 $params = array(
     'action' => $action,
@@ -19,9 +19,9 @@ $params = array(
 //        'group' => $group
 );
 $params = http_build_query($params);
-$doems = get_doems($page, $limit);
+$DoBusinessVg = get_DoBusinessVg($page, $limit);
 //    $total = get_total();
-$url = site_url('doems/list-doems&') . $params;
+$url = site_url('do_ems/list-do_ems&') . $params;
 //    var_dump($businesslist);
 //    exit();
 $total = get_total();
@@ -53,7 +53,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <th>สาขาวิชาที่ลงนาม</th>
                     <th>กลุ่มต้นแบบสานพลังประชารัฐ</th>
                     <th colspan="2">จัดการ</th>
-                    <th><a href="<?php echo site_url('doems/doems'); ?>" >เพิ่มข้อมูล</a></th>
+                    <th><a href="<?php echo site_url('do_ems/insert-do_ems'); ?>" >เพิ่มข้อมูล</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -67,8 +67,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <td><?php echo getMajorName($doems1['major_id']); ?></td>
                         <td><?php echo getEMSName($doems1['ems_id']); ?></td>
                         <td>
-                            <a href="<?php echo site_url('doems/list-doems') . '&action=delete&do_ems_id=' . $doems1['do_ems_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
-                            <a href="<?php echo site_url('doems/from_edit_doems') . '&action=edit&do_ems_id=' . $doems1['do_ems_id']; ?>" >แก้ไข</a>
+                            <a href="<?php echo site_url('do_ems/list-do_ems') . '&action=delete&do_ems_id=' . $doems1['do_ems_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
+                            <a href="<?php echo site_url('do_ems/edit-do_ems') . '&action=edit&do_ems_id=' . $doems1['do_ems_id']; ?>" >แก้ไข</a>
 
                         </td>                    
                     </tr>
@@ -138,13 +138,13 @@ function do_delete($do_ems_id) {
     global $db;
     if (empty($do_ems_id)) {
         set_err('ค่าพารามิเตอร์ไม่ถูกต้อง');
-        redirect('doems/list-doems');
+        redirect('do_ems/list-do_ems');
     }
     $query = "DELETE FROM do_ems WHERE do_ems_id =" . pq($do_ems_id);
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db)) {
         set_info('ลบข้อมูลสำเร็จ');
     }
-    redirect('doems/list-doems');
+    redirect('do_ems/list-do_ems');
 }
 ?>
