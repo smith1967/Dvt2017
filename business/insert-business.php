@@ -4,17 +4,17 @@ if (!defined('BASE_PATH'))
 $title = "เพิ่มข้อมูลสถานประกอบการ";
 $active = 'business';
 $property = array();
+$benefit = array();
 //$subactive = 'edit-group-config';
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
+//    die();
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
-//    var_dump($property);
-    if (!$valid) {
     foreach ($_POST as $k => $v) {
         $$k = $v;
-    }        
-    } else {
+    }  //    var_dump($property);
+    if ($valid) {
         do_insert();
     }
 }
@@ -45,7 +45,18 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="business_name"name="business_name"value="<?php set_var($business_name); ?>">
                         </div>
                     </div>
-
+                    <?php 
+                        $business_opt = array('ไม่ระบุ'=>'ไม่ระบุ', 'เล็ก'=>'เล็ก', 'กลาง'=>'กลาง', 'ใหญ่'=>'ใหญ่');
+                    ?>
+                    <div class="form-group">
+                        <label for="business_size" class="col-md-2 control-label">ขนาดสถานประกอบการ</label>
+                        <div class="col-md-2">
+                            <select class="form-control" id="do_mou" name="business_size">
+                                <?php echo gen_option($business_opt, $business_size) ?>
+                            </select>
+                        </div>
+                    </div>    
+                    
                     <div class="form-group">
                         <label for="amount_emp" class="col-md-2 control-label">จำนวนพนักงาน</label>
                         <div class="col-md-1">
@@ -56,7 +67,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="job_description" class="col-md-2 control-label">รายละเอียด</label>
                         <div class="col-md-4">
-                            <textarea class="form-control" id="job_description" rows="3" name="job_description"value="<?php set_var($job_description); ?>"></textarea>
+                            <textarea class="form-control" id="job_description" rows="3" name="job_description"><?php set_var($job_description); ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -64,7 +75,7 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group">
-                        <label for="address_no" class="col-md-3 control-label">เลขที่</label>
+                        <label for="address_no" class="col-md-2 control-label">เลขที่</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="address_no" name="address_no"value="<?php set_var($address_no); ?>">
                         </div>
@@ -75,7 +86,7 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group">
-                        <label for="tumbon" class="col-md-3 control-label">ตำบล</label>
+                        <label for="tumbon" class="col-md-2 control-label">ตำบล</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="tumbon"name="tumbon"value="<?php set_var($tumbon); ?>">
                         </div>
@@ -84,10 +95,8 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="aumphur" name="aumphur"value="<?php set_var($aumphur); ?>">
                         </div>
                     </div>
-
-
                     <div class="form-group">
-                        <label for="province" class="col-md-3 control-label">จังหวัด</label>
+                        <label for="province" class="col-md-2 control-label">จังหวัด</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="province"name="province"value="<?php set_var($province); ?>">
                         </div>
@@ -96,15 +105,18 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="postcode" name="postcode"value="<?php set_var($postcode); ?>">
                         </div>
                     </div>
-
-
                     <div class="form-group">
-                        <label for="land" class="col-md-3 control-label">ประเทศ</label>
+                        <label for="land" class="col-md-2 control-label">ประเทศ</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="land" placeholder="ประเทศไทย" name="land" value="ประเทศไทย">
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label for="capital" class="col-md-2 control-label">พิกัดแผนที่</label>
+                        <div class="col-md-2">
+                            <input type="text" class="form-control" placeholder="หาจาก google maps" id="capital" name="capital" value="<?php set_var($locattion); ?>">
+                        </div>
+                    </div> 
                     <div class="form-group">
                         <label for="email" class="col-md-2 control-label">E-mail</label>
                         <div class="col-md-3">
@@ -125,13 +137,14 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div> 
 
-
+                    <?php 
+                        $do_mou_opt = array('N'=>'ไม่เคยทำ', 'Y'=>'เคยร่วมจัดทำ');
+                    ?>
                     <div class="form-group">
-                        <label for="do_mou" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
+                        <label for="do_mou" class="col-md-2 control-label">ทำความร่วมมือจัดอาชีวศึกษา</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="do_mou"name="do_mou"value="<?php set_var($do_mou); ?>">
-                                <option value="0">ไม่เคยจัด</option>
-                                <option value="1">เคยร่วมจัด</option>
+                            <select class="form-control" id="do_mou" name="do_mou">
+                                <?php echo gen_option($do_mou_opt, $do_mou) ?>
                             </select>
                         </div>
                     </div>                       
@@ -142,8 +155,6 @@ require_once INC_PATH . 'header.php';
                             <input type="date" class="form-control" id="registration_date" placeholder="yyyy/mm/dd" name="registration_date"value="<?php set_var($registration_date); ?>">
                         </div>
                     </div> 
-
-
                     <div class="form-group">
                         <label for="capital" class="col-md-2 control-label">ทุนการจดทะเบียน</label>
                         <div class="col-md-2">
@@ -156,22 +167,17 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="country" name="country"value="<?php set_var($country); ?>">
                         </div>
                     </div>  
-
+                    <?php $tax_break_opt = array('ใช้สิทธิ์'=>'ใช้สิทธิ์', 'กำลังดำเนินการ'=>'กำลังดำเนินการ', 'ไม่ใช้สิทธิ์'=>'ไม่ใช้สิทธิ์') ?>
                     <div class="form-group">
                         <label for="tax_break" class="col-md-2 control-label">การลดหย่อนภาษี</label>
                         <div class="col-md-2">
-                            <select class="form-control" id="tax_break"name="tax_break"value="<?php set_var($tax_break); ?>">
-                                <option>ใช้สิทธิ์</option>
-                                <option>กำลังดำเนินการ</option>
-                                <option>ไม่ใช้สิทธิ์</option>
+                            <select class="form-control" id="tax_break"name="tax_break">
+                                <?php echo gen_option($tax_break_opt, $tax_break)?>
                             </select>
                         </div>
                     </div>   
                     <div class="form-group">
-                        <label for="tax_break" class="col-md-5 control-label"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับคุณลักษณะของสถานประกอบการ</label>
-
-                    </div> 
-
+                        <label for="tax_break" class="control-label col-md-offset-1"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับคุณลักษณะของสถานประกอบการ</label>
                     <?php
                     $sql = "select * from business_property order by property_id ASC";
                     $result = mysqli_query($db, $sql);
@@ -187,12 +193,31 @@ require_once INC_PATH . 'header.php';
                                        <?php echo $rs['descript'] ?>
                             </label>
                         </div>           
-
                     <?php } ?>
+                    </div> 
+                    <div class="form-group">
+                        <label for="benefit" class="control-label col-md-offset-1"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับสวัสดิการของสถานประกอบการ</label>
 
+                    <?php
+                    $sql = "select * from business_benefit order by benefit_id ASC";
+                    $result = mysqli_query($db, $sql);
+                    while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                        ?>
+                        <div class="checkbox">
+                            <label class="col-md-offset-2">
+                                <input type="checkbox" 
+                                       name="benefit[]" 
+                                       value="<?php echo $rs['benefit_id'] ?>"
+                                       <?php echo in_array($rs['benefit_id'], $benefit) ? "checked=checked" : "" ?>
+                                       >
+                                       <?php echo $rs['name'] ?>
+                            </label>
+                        </div>           
+                    <?php } ?>
+                    </div>                     
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-sm-primary" name="submit">บันทึกข้อมูล</button>
+                            <button type="submit" class="btn btn-primary" name="submit">บันทึกข้อมูล</button>
                         </div>
                     </div>
                 </form>
@@ -251,8 +276,8 @@ function do_insert() {
     global $db;
     $data = &$_POST;
     //print_r($data['property']);
-    $arr_pro = $data['property'];
-    $pro = implode(",", $arr_pro);
+//    $arr_pro = $data['property'];
+//    $pro = implode(",", $arr_pro);
     //echo $pro;
     //exit();
     $query = "INSERT INTO business ("
@@ -267,6 +292,7 @@ function do_insert() {
             . " `province`,"
             . " `postcode`,"
             . " `land`,"
+            . " `location`,"
             . " `email`,"
             . " `contact`,"
             . " `contact_phone`,"
@@ -275,7 +301,8 @@ function do_insert() {
             . " `capital`,"
             . " `country`,"
             . " `tax_break`,"
-            . " `property_id`) "
+            . " `property_id`, "
+            . " `benefit_id`) "
             . " VALUES ("
             . pq($data['business_id']) . ","
             . pq($data['business_name']) . ","
@@ -288,6 +315,7 @@ function do_insert() {
             . pq($data['province']) . ","
             . pq($data['postcode']) . ","
             . pq($data['land']) . ","
+            . pq($data['location']) . ","
             . pq($data['email']) . ","
             . pq($data['contact']) . ","
             . pq($data['contact_phone']) . ","
@@ -296,8 +324,11 @@ function do_insert() {
             . pq($data['capital']) . ","
             . pq($data['country']) . ","
             . pq($data['tax_break']) . ","
-            . "'$pro') ";
+            . pq(implode(",",$data['property'])) . ","
+            . pq(implode(",",$data['benefit']))
+            . ");";
 //    var_dump($query);
+//    echo '<br>'.$query;
 //    die();
 //    $query = "INSERT INTO group_config (groupname, group_desc, upload, download) VALUES (".pq($data['groupname']).", ".pq($data['group_desc']).", ".pq($data['upload']).", ".pq($data['download']).");";
     mysqli_query($db, $query);

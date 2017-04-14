@@ -10,7 +10,7 @@ if (!isset($_GET['filename']))
 ?>
 
 <?php require_once INC_PATH . 'header.php'; ?>
-<?php require_once INC_PATH . 'config.php'; ?>
+
 <div class="container">
     <?php include_once INC_PATH . 'submenu-school.php'; ?>
     <?php
