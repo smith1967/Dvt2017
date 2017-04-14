@@ -37,6 +37,11 @@ require_once INC_PATH . 'header.php';
     <?php 
     include_once INC_PATH . 'submenu-student.php'; 
     show_message();
+    ?>
+    <div class="page-header">
+        <h3>ข้อมูลนักเรียน <?php echo getSchoolName($school_id) ?></h3>
+    </div>
+    <?php
     echo pagination($total, $url, $page, $order, $limit) ;
     ?>
 <!--    <form method="post" action="">

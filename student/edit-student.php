@@ -76,12 +76,12 @@ require_once INC_PATH . 'header.php';
                 </div>
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="major_id">สาขาวิชา</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="major_id"name="major_id"value="<?php echo $student['major_id'] ?>"></div>
+                    <div class="col-md-4 "><input type="text" class="form-control" id="major_id"name="major_id"value="<?php echo $student['major_id'] ?>" required></div>
                     <?php echo getMajorName($student['major_id']) ?>
                 </div>
                 <div class="form-group">
                     <label class="control-label col-md-3" for="minor_id">สาขางาน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id"name="minor_id"value="<?php echo $student['minor_id'] ?>"></div>
+                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id"name="minor_id"value="<?php echo $student['minor_id'] ?> " required></div>
                     <?php echo getMinorName($student['minor_id']) ?>
                 </div>               
                 <div class="form-group">    
@@ -120,7 +120,10 @@ function do_update(){
     if(mysqli_affected_rows($db) > 0){
         set_info('แก้ไขข้อมูลเรียบร้อย');
     }  else {
-        set_err('แก้ไขข้อมูลไม่สำเร็จ '. mysqli_error($db));
+        set_err('ไม่มีการแก้ไขข้อมูล');
+        if (mysqli_error($db)){
+            set_err('เกิดข้อผิดพลาด'. mysqli_error($db));
+        }
     }
     redirect('student/list-student');
 }
