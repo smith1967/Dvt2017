@@ -45,8 +45,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="do_ems_id" class="col-md-3 control-label">รหัสการลงนาม</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="do_ems_id" name="do_ems_id"value="<?php set_var($do_ems_id); ?>">
-                            <?php set_var($do_ems_id); ?>
+                            <input type="text" class="form-control" readonly="" id="do_ems_id" name="do_ems_id"value="<?php set_var($do_ems_id); ?>">                           
                         </div>
                     </div>                   
                     <div class="form-group">

@@ -45,8 +45,8 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="do_business_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
                         <div class="col-md-3">
-                            <input type="hidden" class="form-control" id="do_business_vg_id" name="do_business_vg_id"value="<?php set_var($do_business_vg_id); ?>">
-                           <?php set_var($do_business_vg_id); ?>
+                            <input type="text" class="form-control" readonly="" id="do_business_vg_id"  name="do_business_vg_id"value="<?php set_var($do_business_vg_id); ?>">
+                         
                         </div>
                     </div>
                     
