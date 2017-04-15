@@ -45,24 +45,21 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="do_school_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="do_school_vg_id" name="do_school_vg_id"value="<?php set_var($do_school_vg_id); ?>">
-                            <?php set_var($do_school_vg_id); ?>
+                            <input type="text" class="form-control" readonly="" id="do_school_vg_id" name="do_school_vg_id"value="<?php set_var($do_school_vg_id); ?>">
+                            
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
-                        <div class="col-md-2">
-                        
+                        <div class="col-md-2">                       
                             <?php
-                            $sql = "select * from vocation_group";
-                            $def = $DoSchoolVg['vg_id'];
+                            $sql = "select * from vocation_group";                          
                             ?>
                             <select class="form-control" id="vg_id" name="vg_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $vg_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>

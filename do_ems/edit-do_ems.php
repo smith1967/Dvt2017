@@ -45,8 +45,7 @@ require_once INC_PATH . 'header.php';
                     <div class="form-group">
                         <label for="do_ems_id" class="col-md-3 control-label">รหัสการลงนาม</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="do_ems_id" name="do_ems_id"value="<?php set_var($do_ems_id); ?>">
-                            <?php set_var($do_ems_id); ?>
+                            <input type="text" class="form-control" readonly="" id="do_ems_id" name="do_ems_id"value="<?php set_var($do_ems_id); ?>">                           
                         </div>
                     </div>                   
                     <div class="form-group">
@@ -71,14 +70,12 @@ require_once INC_PATH . 'header.php';
                         <label for="minor_id" class="col-md-3 control-label">ชื่อสาขางานที่ลงนาม</label>
                         <div class="col-md-2">
                             <?php
-                            $sql = "select * from minor";
-                            $def = $doems['minor_id'];
+                            $sql = "select * from minor";                        
                             ?>
                             <select class="form-control" id="minor_id" name="minor_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $minor_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>     
