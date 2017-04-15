@@ -21,7 +21,7 @@ require_once INC_PATH . 'header.php';
 ?>
 <script>
     $(document).ready(function () {
-        $("#citizen_id").focus();
+        $("#trainer_citizen").focus();
     });
 </script>
 <div class="container">
@@ -42,14 +42,14 @@ require_once INC_PATH . 'header.php';
 
                     <div class="form-group">
                         <label for="trainer_citizen" class="col-md-3 control-label">รหัสบัตรประชาชน</label>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <input type="text" class="form-control" id="trainer_citizen" name="trainer_citizen"value="<?php set_var($trainer_citizen); ?>">
                         </div>
                     </div>    
 
                     <div class="form-group">
                         <label for="trainer_name" class="col-md-3 control-label">ชื่อครูฝึก</label>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <input type="text" class="form-control" id="trainer_name" name="trainer_name"value="<?php set_var($trainer_name); ?>">
                         </div>
                     </div>
@@ -86,9 +86,9 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group">
-                        <label for="certificate_date" class="col-md-3 control-label">วันที่ออกใบรับฝึกงาน</label>
+                        <label for="assign_date" class="col-md-3 control-label">วันที่ได้รับการแต่งตั้งเป็นครูฝึก</label>
                         <div class="col-md-2">
-                            <input type="date" class="form-control" id="certificate_date" name="certificate_date"value="<?php set_var($certificate_date); ?>">
+                            <input type="date" class="form-control" id="assign_date" name="assign_date"value="<?php set_var($certificate_date); ?>">
                         </div>
                     </div>
                     <div class="form-group"> 
@@ -100,6 +100,16 @@ require_once INC_PATH . 'header.php';
                                 $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
                                 echo gen_option($sql, $def)
                                 ?>
+                            </select>              
+                        </div>
+                    </div>
+
+                    <div class="form-group"> 
+                        <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
+                        <div class="col-md-2">
+                            <select class='form-control' id="certificate" name="certificate">
+                                <option>ผ่าน</option>
+                                 <option>ไม่ผ่าน</option>
                             </select>              
                         </div>
                     </div>

@@ -82,7 +82,7 @@ mysqli_set_charset($db, $charset);
 include_once LIB_PATH.'functions.php';
 
 
-<?php
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -165,4 +165,4 @@ mysqli_set_charset($db, $charset);
 include_once LIB_PATH.'functions.php';
 
 
->>>>>>> b375a8dc0e1961631a216f19964a0eb6f64d184c
+
