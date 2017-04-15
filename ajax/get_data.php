@@ -39,7 +39,7 @@ if(isset($_GET['province_id'])){
         $province_id = $_GET['province_id'];
 
         //คำสั่ง SQL เลือก AMPHUR_ID และ  AMPHUR_NAME ที่มี PROVINCE_ID เท่ากับ $province_id
-        $sql = "SELECT AMPHUR_ID,AMPHUR_NAME FROM amphur WHERE PROVINCE_ID = ".$province_id." ";
+        $sql = "SELECT AMPHUR_ID,AMPHUR_NAME FROM amphur WHERE PROVINCE_ID = ".pq($province_id)." ";
 
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);
@@ -71,7 +71,7 @@ if(isset($_GET['amphur_id'])){
         $amphur_id = $_GET['amphur_id'];
 
         //คำสั่ง SQL เลือก DISTRICT_CODE และ  DISTRICT_NAME ที่มี AMPHUR_ID เท่ากับ $amphur_id
-        $sql = "SELECT DISTRICT_CODE,DISTRICT_NAME FROM district WHERE AMPHUR_ID = '".$amphur_id."' ";
+        $sql = "SELECT DISTRICT_CODE,DISTRICT_NAME FROM district WHERE AMPHUR_ID = ".pq($amphur_id)." ";
 
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);
@@ -100,7 +100,7 @@ if(isset($_GET['district_id'])){
         $district_id = $_GET['district_id'];
 
         //คำสั่ง SQL เลือก DISTRICT_CODE และ  DISTRICT_NAME ที่มี AMPHUR_ID เท่ากับ $amphur_id
-        $sql = "SELECT zipcode FROM zipcodes WHERE district_code = '".$district_id."' ";
+        $sql = "SELECT zipcode FROM zipcodes WHERE district_code = ".pq($district_id)." ";
 //        echo $sql.'<br>';
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);

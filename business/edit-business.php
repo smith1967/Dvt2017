@@ -294,7 +294,7 @@ $(function(){
                                           $("#aumphur_id").append("<option value='"+ value.id +"'> " + value.name + "</option>");
                                 });
                                 var aumphur = "<?php echo $aumphur_id ?>"
-                                if(aumphur){
+                                if(aumphur!=""){
                                     $("#aumphur_id").val(aumphur);
                                     <?php $aumphur_id = "" ?>
                                 }
@@ -325,7 +325,7 @@ $(function(){
                                 });
                                 var district = "<?php echo $district_id?>"
 //                                console.log(district)
-                                if(district){
+                                if(district!=""){
                                     $("#district_id").val(district);
                                     <?php $district_id = "" ?>
                                 }
@@ -428,6 +428,7 @@ function do_editbusiness() {
     $query = "update business  set
 	business_name=" . pq($data['business_name']) . ","
             . "job_description=" . pq($data['job_description']) . ","
+            . "business_size=" . pq($data['business_size']) . ","
             . "amount_emp=" . pq($data['amount_emp']) . ","
             . "address_no=" . pq($data['address_no']) . ","
             . "road=" . pq($data['road']) . ","
