@@ -82,7 +82,6 @@ mysqli_set_charset($db, $charset);
 include_once LIB_PATH.'functions.php';
 
 
-=======
 <?php
 /*
  *---------------------------------------------------------------
