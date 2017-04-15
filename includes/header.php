@@ -34,8 +34,10 @@ if (!defined('BASE_PATH'))
           <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <link href = "<?php echo CSS_URL ?>jquery-ui.css" rel = "stylesheet">
+        <link href = "<?php echo CSS_URL ?>select2.min.css" rel = "stylesheet">
         <script src = "<?php echo JS_URL ?>jquery.js"></script>
         <script src = "<?php echo JS_URL ?>jquery-ui.js"></script>     
+        <script src = "<?php echo JS_URL ?>select2.min.js"></script>     
         <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>-->        
         <!--<script type="text/javascript" src="<?php echo JS_URL ?>jquery-3.2.0.slim.min.js"></script>-->
         <script type="text/javascript" src="<?php echo JS_URL ?>jquery.bootcomplete.js"></script>
