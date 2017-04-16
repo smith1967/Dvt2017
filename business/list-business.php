@@ -57,7 +57,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <tr>
                         <td><?php echo $business['business_id']; ?></td>
                         <td><?php echo $business['business_name']; ?></td>
-                        <td><?php echo $business['province']; ?></td>
+                        <td><?php echo $business['province_name']; ?></td>
 
                         <td>
                             <a href="<?php echo site_url('business/list-business') . '&action=delete&business_id=' . $business['business_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
@@ -77,7 +77,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 function get_business($page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
-    $query = "SELECT * FROM business  LIMIT " . $start . "," . $limit . "";
+    $query = "SELECT business.*,province.province_name FROM business,province LIMIT " . $start . "," . $limit . "";
     $result = mysqli_query($db, $query);
     $businesslist = array();
     while ($row = mysqli_fetch_array($result)) {
