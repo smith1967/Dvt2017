@@ -463,7 +463,7 @@ function get_business($business_id = NULL) {
     global $db;
     $sql = "SELECT * FROM business where business_id = '$business_id';";
     $rs = mysqli_query($db, $sql);
-    $row = mysqli_fetch_array($rs);
+    $row = mysqli_fetch_assoc($rs);
     return $row;
 }
 ?>
