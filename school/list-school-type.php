@@ -54,9 +54,13 @@ function checkDelete(){
     return confirm('คุณแน่ใจหรือจะลบ?');
 }
 </script>
+
     <?php echo pagination($total, $url, $page, $order, $limit) ?>
      <div class="table-responsive"> 
+     <span class="col-sm-offset-11 col-sm-12" >   <a href="<?php echo site_url('school/list-school-type') . '&action=add_new'; ?>" >เพิ่ม
+     </span> </a>
         <table class="table table-striped table-condensed table-hover">
+           
             <thead>
                 <tr>
                     <th>รหัสสถานศึกษา</th>
@@ -77,18 +81,13 @@ function checkDelete(){
                         </td>                    
                     </tr>
                 <?php endforeach; ?>
-            </tbody>
-            <span class="col-sm-offset-11 col-sm-12">
-                <a href="<?php echo site_url('school/list-school-type') . '&action=add_new'; ?>" ><span style="height: 80%" class="glyphicon glyphicon-plus-sign"></span></a>    
-                    
-            <span>        
-    </div>           
-        </table>
+            </tbody>                
+         </table>      
     </div>
+    
 </div> <!-- Main contianer -->
 <?php 
     } 
-
 function get_school_type($page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
