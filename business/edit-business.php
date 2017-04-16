@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
     if ($valid) {
         do_editbusiness();
     }
-}else if ($_GET['business_id']) {
+} else if ($_GET['business_id']) {
     $property = array();
     $business = get_business($_GET['business_id']);
     $property = explode(',', $business['property_id']);
@@ -30,14 +30,14 @@ if (isset($_POST['submit'])) {
 
 //    var_dump($business);
 //    exit();
-}  else {
+} else {
     redirect('business/list-business');
 }
 require_once INC_PATH . 'header.php';
 ?>
 
 <div class="container">
-     <?php include_once INC_PATH . 'submenu-business.php'; ?>
+    <?php include_once INC_PATH . 'submenu-business.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -56,8 +56,8 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" required="" id="business_name"name="business_name"value="<?php set_var($business_name); ?>">
                         </div>
                     </div>
-                    <?php 
-                        $business_opt = array('ไม่ระบุ'=>'ไม่ระบุ', 'เล็ก'=>'เล็ก', 'กลาง'=>'กลาง', 'ใหญ่'=>'ใหญ่');
+                    <?php
+                    $business_opt = array('ไม่ระบุ' => 'ไม่ระบุ', 'เล็ก' => 'เล็ก', 'กลาง' => 'กลาง', 'ใหญ่' => 'ใหญ่');
                     ?>
                     <div class="form-group">
                         <label for="business_size" class="col-md-2 control-label">ขนาดสถานประกอบการ</label>
@@ -67,7 +67,7 @@ require_once INC_PATH . 'header.php';
                             </select>
                         </div>
                     </div>    
-                    
+
                     <div class="form-group">
                         <label for="amount_emp" class="col-md-2 control-label">จำนวนพนักงาน</label>
                         <div class="col-md-1">
@@ -96,7 +96,7 @@ require_once INC_PATH . 'header.php';
                         <label for="aumphur_id" class="col-md-2 control-label">อำเภอ</label>
                         <div class="col-md-3">
                             <select class="form-control select2-single" id="aumphur_id" name="aumphur_id">
-                                    <option id="amphur_id_list"> -- กรุณาเลือกอำเภอ -- </option>
+                                <option id="amphur_id_list"> -- กรุณาเลือกอำเภอ -- </option>
                             </select>
                         </div>
                     </div>
@@ -104,7 +104,7 @@ require_once INC_PATH . 'header.php';
                         <label for="district_id" class="col-md-2 control-label">ตำบล</label>
                         <div class="col-md-3">
                             <select class="form-control select2-single" id="district_id" name="district_id">
-                                    <option id="district_id_list"> -- กรุณาเลือกตำบล -- </option>
+                                <option id="district_id_list"> -- กรุณาเลือกตำบล -- </option>
                             </select>
                         </div>
                     </div>
@@ -158,8 +158,8 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div> 
 
-                    <?php 
-                        $do_mou_opt = array('N'=>'ไม่เคยทำ', 'Y'=>'เคยร่วมจัดทำ');
+                    <?php
+                    $do_mou_opt = array('N' => 'ไม่เคยทำ', 'Y' => 'เคยร่วมจัดทำ');
                     ?>
                     <div class="form-group">
                         <label for="do_mou" class="col-md-2 control-label">ทำความร่วมมือจัดอาชีวศึกษา</label>
@@ -188,53 +188,53 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="country" name="country"value="<?php set_var($country); ?>">
                         </div>
                     </div>  
-                    <?php $tax_break_opt = array('ใช้สิทธิ์'=>'ใช้สิทธิ์', 'กำลังดำเนินการ'=>'กำลังดำเนินการ', 'ไม่ใช้สิทธิ์'=>'ไม่ใช้สิทธิ์') ?>
+                    <?php $tax_break_opt = array('ใช้สิทธิ์' => 'ใช้สิทธิ์', 'กำลังดำเนินการ' => 'กำลังดำเนินการ', 'ไม่ใช้สิทธิ์' => 'ไม่ใช้สิทธิ์') ?>
                     <div class="form-group">
                         <label for="tax_break" class="col-md-2 control-label">การลดหย่อนภาษี</label>
                         <div class="col-md-2">
                             <select class="form-control" id="tax_break"name="tax_break">
-                                <?php echo gen_option($tax_break_opt, $tax_break)?>
+                                <?php echo gen_option($tax_break_opt, $tax_break) ?>
                             </select>
                         </div>
                     </div>   
                     <div class="form-group">
                         <label for="tax_break" class="control-label col-md-offset-1"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับคุณลักษณะของสถานประกอบการ</label>
-                    <?php
-                    $sql = "select * from business_property order by property_id ASC";
-                    $result = mysqli_query($db, $sql);
-                    while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                        ?>
-                        <div class="checkbox">
-                            <label class="col-md-offset-2">
-                                <input type="checkbox" 
-                                       name="property[]" 
-                                       value="<?php echo $rs['property_id'] ?>"
-                                       <?php echo in_array($rs['property_id'], $property) ? "checked=checked" : "" ?>
-                                       >
-                                       <?php echo $rs['descript'] ?>
-                            </label>
-                        </div>           
-                    <?php } ?>
+                        <?php
+                        $sql = "select * from business_property order by property_id ASC";
+                        $result = mysqli_query($db, $sql);
+                        while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                            ?>
+                            <div class="checkbox">
+                                <label class="col-md-offset-2">
+                                    <input type="checkbox" 
+                                           name="property[]" 
+                                           value="<?php echo $rs['property_id'] ?>"
+                                           <?php echo in_array($rs['property_id'], $property) ? "checked=checked" : "" ?>
+                                           >
+                                           <?php echo $rs['descript'] ?>
+                                </label>
+                            </div>           
+                        <?php } ?>
                     </div> 
                     <div class="form-group">
                         <label for="benefit" class="control-label col-md-offset-1"><u>คำชี้แจง</u>กรุณาคลิกในช่องที่ตรงกับสวัสดิการของสถานประกอบการ</label>
 
-                    <?php
-                    $sql = "select * from business_benefit order by benefit_id ASC";
-                    $result = mysqli_query($db, $sql);
-                    while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-                        ?>
-                        <div class="checkbox">
-                            <label class="col-md-offset-2">
-                                <input type="checkbox" 
-                                       name="benefit[]" 
-                                       value="<?php echo $rs['benefit_id'] ?>"
-                                       <?php echo in_array($rs['benefit_id'], $benefit) ? "checked=checked" : "" ?>
-                                       >
-                                       <?php echo $rs['name'] ?>
-                            </label>
-                        </div>           
-                    <?php } ?>
+                        <?php
+                        $sql = "select * from business_benefit order by benefit_id ASC";
+                        $result = mysqli_query($db, $sql);
+                        while ($rs = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                            ?>
+                            <div class="checkbox">
+                                <label class="col-md-offset-2">
+                                    <input type="checkbox" 
+                                           name="benefit[]" 
+                                           value="<?php echo $rs['benefit_id'] ?>"
+                                           <?php echo in_array($rs['benefit_id'], $benefit) ? "checked=checked" : "" ?>
+                                           >
+                                           <?php echo $rs['name'] ?>
+                                </label>
+                            </div>           
+                        <?php } ?>
                     </div>                     
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
@@ -248,128 +248,127 @@ require_once INC_PATH . 'header.php';
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
-			
-$(function(){
+
+    $(function () {
 
         //เรียกใช้งาน Select2
         $(".select2-single").select2();
 
         //ดึงข้อมูล province จากไฟล์ get_data.php
         $.ajax({
-                url:"<?php echo SITE_URL ?>ajax/get_data.php",
-                dataType: "json", //กำหนดให้มีรูปแบบเป็น Json
-                data:{show_province:'show_province'}, //ส่งค่าตัวแปร show_province เพื่อดึงข้อมูล จังหวัด
-                success:function(data){
+            url: "<?php echo SITE_URL ?>ajax/get_data.php",
+            dataType: "json", //กำหนดให้มีรูปแบบเป็น Json
+            data: {show_province: 'show_province'}, //ส่งค่าตัวแปร show_province เพื่อดึงข้อมูล จังหวัด
+            success: function (data) {
 
-                        //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data
-                        $.each(data, function( index, value ) {
-                                //แทรก Elements ใน id province  ด้วยคำสั่ง append
-                                  $("#province_id").append("<option value='"+ value.id +"'> " + value.name + "</option>");
-                        });
-                        $("#province_id").val("<?php echo $province_id ?>");
-                        $("#province_id").change();
+                //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data
+                $.each(data, function (index, value) {
+                    //แทรก Elements ใน id province  ด้วยคำสั่ง append
+                    $("#province_id").append("<option value='" + value.id + "'> " + value.name + "</option>");
+                });
+                var province = "<?php echo $province_id ?>";
+                if (isNaN(province)) {
+                    $("#province_id").find('option:eq(0)').prop('selected', true);
+//                    console.log(province)
+                } else {
+                    $("#province_id").val("<?php echo $province_id ?>");
                 }
+                $("#province_id").change();
+            }
         });
 
 
         //แสดงข้อมูล อำเภอ  โดยใช้คำสั่ง change จะทำงานกรณีมีการเปลี่ยนแปลงที่ #province
-        $("#province_id").change(function(){
+        $("#province_id").change(function () {
 
-                //กำหนดให้ ตัวแปร province มีค่าเท่ากับ ค่าของ #province ที่กำลังถูกเลือกในขณะนั้น
-                var province_id = $(this).val();
+            //กำหนดให้ ตัวแปร province มีค่าเท่ากับ ค่าของ #province ที่กำลังถูกเลือกในขณะนั้น
+            var province_id = $(this).val();
 
-                $.ajax({
-                        url:"<?php echo SITE_URL ?>ajax/get_data.php",
-                        dataType: "json",//กำหนดให้มีรูปแบบเป็น Json
-                        data:{province_id:province_id},//ส่งค่าตัวแปร province_id เพื่อดึงข้อมูล อำเภอ ที่มี province_id เท่ากับค่าที่ส่งไป
-                        success:function(data){
+            $.ajax({
+                url: "<?php echo SITE_URL ?>ajax/get_data.php",
+                dataType: "json", //กำหนดให้มีรูปแบบเป็น Json
+                data: {province_id: province_id}, //ส่งค่าตัวแปร province_id เพื่อดึงข้อมูล อำเภอ ที่มี province_id เท่ากับค่าที่ส่งไป
+                success: function (data) {
 
-                                //กำหนดให้ข้อมูลใน #amphur เป็นค่าว่าง
-                                $("#aumphur_id").text("");
+                    //กำหนดให้ข้อมูลใน #amphur เป็นค่าว่าง
+                    $("#aumphur_id").text("");
 
-                                //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data  
-                                $.each(data, function( index, value ) {
+                    //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data  
+                    $.each(data, function (index, value) {
 
-                                        //แทรก Elements ข้อมูลที่ได้  ใน id amphur  ด้วยคำสั่ง append
-                                          $("#aumphur_id").append("<option value='"+ value.id +"'> " + value.name + "</option>");
-                                });
-                                var aumphur = "<?php echo $aumphur_id ?>"
-                                if(aumphur!=""){
-                                    $("#aumphur_id").val(aumphur);
-                                    <?php $aumphur_id = "" ?>
-                                }
-                                $("#aumphur_id").change();
-                        }
-                });
+                        //แทรก Elements ข้อมูลที่ได้  ใน id amphur  ด้วยคำสั่ง append
+                        $("#aumphur_id").append("<option value='" + value.id + "'> " + value.name + "</option>");
+                    });
+                    var aumphur = "<?php echo $aumphur_id ?>"
+                    if (isNaN(aumphur)) {
+                        $("#aumphur_id").find('option:eq(0)').prop('selected', true);
+//                        console.log(province)
+                    } else {
+                        $("#aumphur_id").val("<?php echo $aumphur_id ?>");
+                    }
+                    $("#aumphur_id").change();
+                }
+            });
 
         });
 
         //แสดงข้อมูลตำบล โดยใช้คำสั่ง change จะทำงานกรณีมีการเปลี่ยนแปลงที่  #amphur
-        $("#aumphur_id").change(function(){
-                //กำหนดให้ ตัวแปร amphur_id มีค่าเท่ากับ ค่าของ  #amphur ที่กำลังถูกเลือกในขณะนั้น
-                var amphur_id = $(this).val();
-                $.ajax({
-                        url:"<?php echo SITE_URL ?>ajax/get_data.php",
-                        dataType: "json",//กำหนดให้มีรูปแบบเป็น Json
-                        data:{amphur_id:amphur_id},//ส่งค่าตัวแปร amphur_id เพื่อดึงข้อมูล ตำบล ที่มี amphur_id เท่ากับค่าที่ส่งไป
-                        success:function(data){
+        $("#aumphur_id").change(function () {
+            //กำหนดให้ ตัวแปร amphur_id มีค่าเท่ากับ ค่าของ  #amphur ที่กำลังถูกเลือกในขณะนั้น
+            var amphur_id = $(this).val();
+            $.ajax({
+                url: "<?php echo SITE_URL ?>ajax/get_data.php",
+                dataType: "json", //กำหนดให้มีรูปแบบเป็น Json
+                data: {amphur_id: amphur_id}, //ส่งค่าตัวแปร amphur_id เพื่อดึงข้อมูล ตำบล ที่มี amphur_id เท่ากับค่าที่ส่งไป
+                success: function (data) {
 //                                console.log(JSON.stringify(data))
-                                //กำหนดให้ข้อมูลใน #district เป็นค่าว่าง
-                                $("#district_id").text("");
+                    //กำหนดให้ข้อมูลใน #district เป็นค่าว่าง
+                    $("#district_id").text("");
 
-                                //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data  
-                                $.each(data, function( index, value ) {
-                                //แทรก Elements ข้อมูลที่ได้  ใน id district  ด้วยคำสั่ง append
-                                    $("#district_id").append("<option value='" + value.id + "'> " + value.name + "</option>");
+                    //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data  
+                    $.each(data, function (index, value) {
+                        //แทรก Elements ข้อมูลที่ได้  ใน id district  ด้วยคำสั่ง append
+                        $("#district_id").append("<option value='" + value.id + "'> " + value.name + "</option>");
 
-                                });
-                                var district = "<?php echo $district_id?>"
+                    });
+                    var district = "<?php echo $district_id ?>"
 //                                console.log(district)
-                                if(district!=""){
-                                    $("#district_id").val(district);
-                                    <?php $district_id = "" ?>
-                                }
-                                $("#district_id").change();
-                        }
-                });
+                    if (isNaN(district)) {
+                        $("#district_id").find('option:eq(0)').prop('selected', true);
+                    } else {
+                        $("#district_id").val("<?php echo $district_id ?>");
+                    }
+                    $("#district_id").change();
+                }
+            });
 
         });
 
         //คำสั่ง change จะทำงานกรณีมีการเปลี่ยนแปลงที่  #district 
-        $("#district_id").change(function(){
-                var district_id = $(this).val();
-                $.ajax({
-                        url:"<?php echo SITE_URL ?>ajax/get_data.php",
-                        dataType: "json",//กำหนดให้มีรูปแบบเป็น Json
-                        data:{district_id:district_id},//ส่งค่าตัวแปร amphur_id เพื่อดึงข้อมูล ตำบล ที่มี amphur_id เท่ากับค่าที่ส่งไป
-                        success:function(data){
-//                                console.log(JSON.stringify(data))
-                                //กำหนดให้ข้อมูลใน #district เป็นค่าว่าง
-//                                $("#postcode").val(JSON.stringify(data));
+        $("#district_id").change(function () {
+            var district_id = $(this).val();
+            $.ajax({
+                url: "<?php echo SITE_URL ?>ajax/get_data.php",
+                dataType: "json", //กำหนดให้มีรูปแบบเป็น Json
+                data: {district_id: district_id}, //ส่งค่าตัวแปร amphur_id เพื่อดึงข้อมูล ตำบล ที่มี amphur_id เท่ากับค่าที่ส่งไป
+                success: function (data) {
+                    $("#postcode").val(data[0].id);
+                }
+            });
 
-                                //วนลูปแสดงข้อมูล ที่ได้จาก ตัวแปร data  
-                                $.each(data, function( index, value ) {
-                                //แทรก Elements ข้อมูลที่ได้  ใน id district  ด้วยคำสั่ง append
-//                                   console.log(index);
-                                    $("#postcode").val(value.id);                     
-//                                $("#district_id").append("<option value='" + value.id + "'> " + value.name + "</option>");
-                                });
-                        }
-                });
+            //นำข้อมูลรายการ จังหวัด ที่เลือก มาใส่ไว้ในตัวแปร province
+            var province = $("#province_id option:selected").text();
 
-                //นำข้อมูลรายการ จังหวัด ที่เลือก มาใส่ไว้ในตัวแปร province
-                var province = $("#province_id option:selected").text();
+            //นำข้อมูลรายการ อำเภอ ที่เลือก มาใส่ไว้ในตัวแปร amphur
+            var amphur = $("#aumphur_id option:selected").text();
 
-                //นำข้อมูลรายการ อำเภอ ที่เลือก มาใส่ไว้ในตัวแปร amphur
-                var amphur = $("#aumphur_id option:selected").text();
+            //นำข้อมูลรายการ ตำบล ที่เลือก มาใส่ไว้ในตัวแปร district
+            var district = $("#district_id option:selected").text();
 
-                //นำข้อมูลรายการ ตำบล ที่เลือก มาใส่ไว้ในตัวแปร district
-                var district = $("#district_id option:selected").text();
-
-                //ใช้คำสั่ง alert แสดงข้อมูลที่ได้
+            //ใช้คำสั่ง alert แสดงข้อมูลที่ได้
 //                alert("คุณได้เลือก :  จังหวัด : " + province + " อำเภอ : "+ amphur + "  ตำบล : " + district );
         });
-});
+    });
 
 </script>
 <?php
@@ -446,16 +445,16 @@ function do_editbusiness() {
             . "capital=" . pq($data['capital']) . ","
             . "country=" . pq($data['country']) . ","
             . "tax_break=" . pq($data['tax_break']) . ","
-            . "benefit_id=" . pq(implode(",",$data['benefit'])) . ","
-            . "property_id=" . pq(implode(",",$data['property']))
+            . "benefit_id=" . pq(implode(",", $data['benefit'])) . ","
+            . "property_id=" . pq(implode(",", $data['property']))
             . " WHERE "
             . "business_id = " . pq($data['business_id']) . "";
 //    echo $query; exit();
     $result = mysqli_query($db, $query);
     if (mysqli_affected_rows($db) > 0) {
-        set_info('แก้ไขข้อมูลสำเร็จ'); 
+        set_info('แก้ไขข้อมูลสำเร็จ');
     } else {
-       set_err('ไม่สามารถแก้ไขข้อมูล'.  mysqli_error($db));
+        set_err('ไม่สามารถแก้ไขข้อมูล' . mysqli_error($db));
     }
     redirect('business/list-business');
 }
