@@ -7,7 +7,7 @@ header('Content-Type: application/json; charset=utf-8');
 if(isset($_GET['show_province'])){
 
         //คำสั่ง SQL เลือก id และ  ชื่อจังหวัด
-        $sql = "SELECT PROVINCE_ID,PROVINCE_NAME FROM province";
+        $sql = "SELECT PROVINCE_CODE,PROVINCE_NAME FROM province";
 
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);
@@ -20,7 +20,7 @@ if(isset($_GET['show_province'])){
 
                         //เก็บข้อมูลที่ได้ไว้ในตัวแปร Array 
                         $json_result[] = [
-                                'id'=>$row['PROVINCE_ID'],
+                                'id'=>$row['PROVINCE_CODE'],
                                 'name'=>$row['PROVINCE_NAME'],
                         ];
                 }
@@ -39,7 +39,7 @@ if(isset($_GET['province_id'])){
         $province_id = $_GET['province_id'];
 
         //คำสั่ง SQL เลือก AMPHUR_ID และ  AMPHUR_NAME ที่มี PROVINCE_ID เท่ากับ $province_id
-        $sql = "SELECT AMPHUR_ID,AMPHUR_NAME FROM amphur WHERE PROVINCE_ID = ".pq($province_id)." ";
+        $sql = "SELECT AMPHUR_CODE,AMPHUR_NAME FROM amphur WHERE PROVINCE_CODE = ".pq($province_id)." ";
 
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);
@@ -52,7 +52,7 @@ if(isset($_GET['province_id'])){
 
                         //เก็บข้อมูลที่ได้ไว้ในตัวแปร Array 
                         $json_result[] = [
-                                'id'=>$row['AMPHUR_ID'],
+                                'id'=>$row['AMPHUR_CODE'],
                                 'name'=>$row['AMPHUR_NAME'],
                         ];
                 }
@@ -71,7 +71,7 @@ if(isset($_GET['amphur_id'])){
         $amphur_id = $_GET['amphur_id'];
 
         //คำสั่ง SQL เลือก DISTRICT_CODE และ  DISTRICT_NAME ที่มี AMPHUR_ID เท่ากับ $amphur_id
-        $sql = "SELECT DISTRICT_CODE,DISTRICT_NAME FROM district WHERE AMPHUR_ID = ".pq($amphur_id)." ";
+        $sql = "SELECT DISTRICT_CODE,DISTRICT_NAME FROM district WHERE AMPHUR_CODE = ".pq($amphur_id)." ";
 
         //ประมวณผลคำสั่ง SQL
         $result = $db->query($sql);

@@ -4,21 +4,17 @@ if (!defined('BASE_PATH'))
 $title = "student";
 $active = 'admin';
 $subactive = 'list-student';
-//is_admin('home/index');
+is_admin('home/index');
 $school_id=$_SESSION['user']['school_id'];
 
-?>
-<?php
 $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $action = isset($_GET['action']) ? $_GET['action'] : "list";
-//    $group = isset($_GET['group']) ? $_GET['group'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : '';
 $limit = isset($_GET['limit']) ? $_GET['limit'] : 40;
 
 $params = array(
     'action' => $action,
     'limit' => $limit,
-//        'group' => $group
 );
 $params = http_build_query($params);
 $studentlist = get_student($page, $limit,$school_id);
@@ -35,21 +31,18 @@ $total = get_total($school_id);
 if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     do_delete($_GET['std_id']);
 }
-require_once INC_PATH . 'header.php';
+require_once INC_PATH . 'header.php'; 
 ?>
-
-
-<div class="container"> 
-    
-    <?php include_once INC_PATH . 'submenu-student.php'; ?>
-    <?php
-     show_message();
-//    echo "<h3>".$_SESSION['school_name']."</h3>"; 
-   
-    ?> 
+<div class="container">   
     <?php 
-   // echo $school_id;
-    echo pagination($total, $url, $page, $order, $limit) 
+    include_once INC_PATH . 'submenu-student.php'; 
+    show_message();
+    ?>
+    <div class="page-header">
+        <h3>ข้อมูลนักเรียน <?php echo getSchoolName($school_id) ?></h3>
+    </div>
+    <?php
+    echo pagination($total, $url, $page, $order, $limit) ;
     ?>
 <!--    <form method="post" action="">
 	<div class="form-group">
