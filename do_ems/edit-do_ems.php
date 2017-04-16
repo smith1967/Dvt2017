@@ -18,12 +18,23 @@ if (isset($_POST['submit'])) {
         do_editdoems();
     }
 }
+if(!isset($_GET['do_ems_id']))
+    redirect('do_ems/list-do_ems');
 if ($_GET['do_ems_id']) {
     $doems = get_doems($_GET['do_ems_id']);
+    foreach ($doems as $key => $value) {
+        $$key = $value;
+    }
+    // var_dump($DoBusinessVg);
+    // exit();
 }
 require_once INC_PATH . 'header.php';
 ?>
-
+<script>
+    $(document).ready(function () {
+        $("#business_id").focus();
+    });
+</script>
 <div class="container">
     <?php show_message() ?>
     <div class="col-md-12">
@@ -32,60 +43,39 @@ require_once INC_PATH . 'header.php';
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
                     <div class="form-group">
-                        <label for="do_ems_id" class="col-md-2 control-label">รหัสการลงนาม</label>
+                        <label for="do_ems_id" class="col-md-3 control-label">รหัสการลงนาม</label>
                         <div class="col-md-2">
-                            <input type="hidden" class="form-control" id="do_ems_id" name="do_ems_id"value="<?php echo $doems['do_ems_id']; ?>">
-                            <?php echo $doems['do_ems_id']; ?>
+                            <input type="text" class="form-control" readonly="" id="do_ems_id" name="do_ems_id"value="<?php set_var($do_ems_id); ?>">                           
                         </div>
                     </div>                   
                     <div class="form-group">
-                        <label for="business_id" class="col-md-3 control-label">ชื่อสถานประกอบการ</label>
-                        <div class="col-md-2">
-                            <?php
-                            $sql = "select * from business";
-                            $def = "business_id";
-                            ?>
-                            <select class="form-control" id="business_id" name="business_id">
-                                <?php
-                                echo gen_option($sql, $def);
-                                ?>
-
-                            </select>
+                        <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="business_id" name="business_id" placeholder="Business ID" value="<?php set_var($business_id); ?>">
                         </div>
-                    </div> 
-                    <div class="form-group">
-                        <label for="school_id" class="col-md-3 control-label">ชื่อสถานศึกษา</label>
-                        <div class="col-md-2">
-                            <?php
-                            $sql = "select * from school";
-                            $def = "school_id";
-                            ?>
-                            <select class="form-control" id="vg_id" name="school_id">
-                                <?php
-                                echo gen_option($sql, $def);
-                                ?>
-
-                            </select>
+                    </div>
+                      <div class="form-group">
+                        <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="school_id" name="school_id" placeholder="School ID" value="<?php set_var($school_id); ?>">
                         </div>
-                    </div> 
+                    </div>  
                     <div class="form-group">
-                        <label for="do_date" class="col-md-2 control-label">วันที่ลงนาม</label>
+                        <label for="do_date" class="col-md-3 control-label">วันที่ลงนาม</label>
                         <div class="col-md-3">
-                            <input type="date" class="form-control" id="registration_date"name="do_date"value="<?php echo $doems['do_date']; ?>">
+                            <input type="date" class="form-control" id="registration_date"name="do_date"value="<?php set_var($do_date); ?>">
                         </div>
                     </div> 
                     <div class="form-group">
-                        <label for="major_id" class="col-md-3 control-label">ชื่อสาขาวิชาที่ลงนาม</label>
+                        <label for="minor_id" class="col-md-3 control-label">ชื่อสาขางานที่ลงนาม</label>
                         <div class="col-md-2">
                             <?php
-                            $sql = "select * from major";
-                            $def = "major_id";
+                            $sql = "select * from minor";                        
                             ?>
-                            <select class="form-control" id="major_id" name="major_id">
+                            <select class="form-control" id="minor_id" name="minor_id">
                                 <?php
-                                echo gen_option($sql, $def);
+                                echo gen_option($sql, $minor_id);
                                 ?>
-
                             </select>
                         </div>
                     </div>     
@@ -94,7 +84,7 @@ require_once INC_PATH . 'header.php';
                         <div class="col-md-2">
                             <?php
                             $sql = "select * from ems_detail";
-                            $def = "ems_id";
+                            $def = $doems['ems_id'];
                             ?>
                             <select class="form-control" id="ems_id" name="ems_id">
                                 <?php
@@ -115,7 +105,24 @@ require_once INC_PATH . 'header.php';
     </div>
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
+<script>
+   $(function() {
 
+      $( "#business_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
+         minLength: 1
+      });
+   });
+</script>
+<script>
+   $(function() {
+
+      $( "#school_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_school.php",
+         minLength: 1
+      });
+   });
+</script>
 <?php
 
 function do_validate($data) {
@@ -129,10 +136,6 @@ function do_validate($data) {
         set_err('กรุณาเลือกสถานประกอบการ');
         $valid = false;
     }
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['major_id'])) {
-        set_err('กรุณาเลือกสาขาวิชาที่ลงนาม');
-        $valid = false;
-    }
     return $valid;
 }
 
@@ -143,9 +146,9 @@ function do_editdoems() {
 	business_id=" . pq($data['business_id']) . ","
             . "school_id=" . pq($data['school_id']) . ","
             . "do_date=" . pq($data['do_date']) . ","
-            . "major_id=" . pq($data['major_id']) . ","
-            . "ems_id=" . pq($data['ems_id']) . "'
-where do_ems_id = '" . $data['do_ems_id'] . "'";
+            . "minor_id=" . pq($data['minor_id']) . ","
+            . "ems_id=" . pq($data['ems_id']) . "
+where do_ems_id = " . pq($data['do_ems_id']). ";";
     //echo $query; exit();
     $result = mysqli_query($db, $query);
     if (mysqli_affected_rows($db) == 0) {
@@ -153,7 +156,7 @@ where do_ems_id = '" . $data['do_ems_id'] . "'";
     } else {
         set_info('แก้ไขข้อมูลสำเร็จ');
     }
-    redirect('doems/list-doems');
+    redirect('do_ems/list-do_ems');
 }
 
 function get_doems($do_ems_id = NULL) {

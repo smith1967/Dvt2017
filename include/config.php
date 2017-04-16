@@ -44,8 +44,8 @@ $auhtor = "it-dev";
 $author_email = "smith@cstc.ac.th";
 // database parameter
 $host = 'localhost';
-$user = 'root';
-$password = '';
+$user = 'dvt';
+$password = '123456';
 $database = 'dvt2017';
 $charset = 'utf8';
 //GRANT ALL PRIVILEGES ON dvt2017.* TO dvt@localhost IDENTIFIED BY '123456';

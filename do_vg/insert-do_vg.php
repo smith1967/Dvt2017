@@ -1,8 +1,8 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "เพิ่มข้อมูลสถานประกอบการ การร่วมภาครัฐและเอกชน";
-$active = 'do_business_vg_id';
+$title = "ข้อมูลการลงนามความร่วมมือสถานศึกษาต้นแบบสานพลังประชารัฐ";
+$active = 'do_vg';
 //$subactive = 'edit-group-config';
 if (isset($_POST['submit'])) {
     $data = $_POST;
@@ -25,23 +25,22 @@ require_once INC_PATH . 'header.php';
 ?>
 <script>
     $(document).ready(function () {
-        $("#do_business_vg_id").focus();
+        $("#vg_id").focus();
     });
 </script>
 <div class="container">
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">เพิ่มข้อมูลสถานประกอบการ การร่วมภาครัฐและเอกชน</div>
+            <div class="panel-heading">เพิ่มข้อมูลการทำ กรอ</div>
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
                     <div class="form-group">
-                        <label for="do_business_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
+                        <label for="do_vg_id" class="col-md-3 control-label">รหัสการทำ กรอ</label>
                         <div class="col-md-2">
-                            <input type="text" class="form-control" id="do_business_vg_id" name="do_business_vg_id">
+                            <input type="hidden" class="form-control" id="do_vg_id" name="do_vg_id" value"">
                         </div>
                     </div>
-                     
                     <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
                         <div class="col-md-2">
@@ -56,19 +55,29 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
-                        <div class="col-md-5">
-                            <input type="text" class="form-control" id="business_id" name="business_id" placeholder="Business ID" value='<?php echo isset($business_id) ? $business_id : ''; ?>'>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="date_vg" class="col-md-3 control-label">วันที่เข้าร่วม กรอ.</label>
+                        <label for="do_vg_date" class="col-md-3 control-label">วันที่แต่งตั้งคณะกรรมการ</label>
                         <div class="col-md-3">
-                            <input type="date" class="form-control" id="registration_date" placeholder="yyyy/mm/dd" name="date_vg">
+                            <input type="date" class="form-control" id="do_vg_date" placeholder="yyyy/mm/dd" name="do_vg_date">
                         </div>
                     </div> 
-
+                    <div class="form-group">
+                        <label for="command_number" class="col-md-3 control-label">เลขที่คำสั่ง</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="command_number"name="command_number">
+                        </div>
+                    </div>
+                   <div class="form-group">
+                        <label class="control-label col-md-3" for="secretary_position_name">ตำแหน่งอนุกรรมการและเลขานุการ</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="secretary_position_name"name="secretary_position_name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="president_name">ประธานอนุกรรมการ</label>
+                        <div class="col-md-5">
+                            <input type="text" class="form-control" id="president_name"name="president_name">
+                        </div>
+                    </div>                 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
                             <button type="submit" class="btn btn-sm-primary" name="submit">บันทึกข้อมูล</button>
@@ -79,34 +88,19 @@ require_once INC_PATH . 'header.php';
         </div>
     </div>
 </div>
-<?php 
-require_once INC_PATH.'footer.php';                                
-//var_dump($_SESSION['user']);
-?>
-<script>
-   $(function() {
-
-      $( "#business_id" ).autocomplete({
-         source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 1
-      });
-   });
-</script>
+<?php require_once INC_PATH . 'footer.php'; ?>
 <?php
 
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['do_business_vg_id'])) {
-        set_err('กรุณากรอกรหัสสถานประกอบการ การร่วมภาครัฐและเอกชน');
-        $valid = false;
-    }
+    
     if (empty($data['vg_id'])) {
         set_err('กรุณาเลือกกลุ่มอาชีพ');
         $valid = false;
     }
-    if (empty($data['business_id'])) {
-        set_err('กรุณาเลือกสถานประกอบการ');
+     if (empty($data['command_number'])) {
+        set_err('กรุณากรอกเลขที่คำสั่ง');
         $valid = false;
     }
     return $valid;
@@ -115,17 +109,21 @@ function do_validate($data) {
 function do_insert() {
     global $db;
     $data = &$_POST;
-    $query = "INSERT INTO do_business_vg ("
-            . "`do_business_vg_id`,"
+    $query = "INSERT INTO do_vg ("
+            . "`do_vg_id`,"
             . " `vg_id`,"
-            . " `business_id`,"
-            . " `date_vg`)"
+            . " `do_vg_date`,"
+            . " `command_number`,"
+            . " `secretary_position_name`,"
+            . " `president_name`)"
             . " VALUES ("
-            . pq($data['do_business_vg_id']) . ","
+            . pq($data['do_vg_id']) . ","
             . pq($data['vg_id']) . ","
-            . pq($data['business_id']) . ","
-            . pq($data['date_vg']) . ");";
- 
+            . pq($data['do_vg_date']) . ","
+            . pq($data['command_number']) . ","
+            . pq($data['secretary_position_name']) . ","
+            . pq($data['president_name']) . ");";
+
 //$query = "INSERT INTO group_config (groupname, group_desc, upload, download) VALUES (".pq($data['groupname']).", ".pq($data['group_desc']).", ".pq($data['upload']).", ".pq($data['download']).");";
     mysqli_query($db, $query);
     if (mysqli_affected_rows($db) > 0) {
@@ -133,5 +131,5 @@ function do_insert() {
     } else {
         set_err('ไม่สามารถเพิ่มข้อมูล ' . mysqli_error($db));
     }
-    redirect('do_business_vg/list-do_business_vg');
+    redirect('do_vg/list-do_vg');
 }
