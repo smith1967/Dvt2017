@@ -21,7 +21,7 @@ endif;
 ?>
 <?php
 //   $submenu['home']['cond']=false;
-// show_message();
+ show_message();
 //echo gen_menu($menu_class, $submenu, $subactive);
 
 if (isset($_GET['action'])) {
@@ -79,7 +79,7 @@ if (isset($_GET['action'])) {
     <form class="form-horizontal" id="upload_form" method="post" action="" enctype="multipart/form-data">
         <fieldset>
             <div class="form-group">
-                <label class="control-label col-md-2" for="uploadfile">เลือกไฟล์ .csv</label>
+                <label class="control-label col-md-3" for="uploadfile">เลือกไฟล์ std_รหัสสถานศึกษา.csv</label>
                 <div class="col-md-3">
                     <input type="file" class="btn btn-primary btn-file" id="uploadfile" name="uploadfile" />
                 </div>
