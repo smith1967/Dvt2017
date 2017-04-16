@@ -82,8 +82,6 @@ mysqli_set_charset($db, $charset);
 include_once LIB_PATH.'functions.php';
 
 
-=======
-<?php
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
@@ -129,8 +127,8 @@ $auhtor = "it-dev";
 $author_email = "smith@cstc.ac.th";
 // database parameter
 $host = 'localhost';
-$user = 'dvt';
-$password = '123456';
+$user = 'root';
+$password = '';
 $database = 'dvt2017';
 $charset = 'utf8';
 //GRANT ALL PRIVILEGES ON dvt2017.* TO dvt@localhost IDENTIFIED BY '123456';
@@ -166,4 +164,3 @@ mysqli_set_charset($db, $charset);
 include_once LIB_PATH.'functions.php';
 
 
->>>>>>> 909bffedd9f6db698b9a7d2536cf36b6a1f61ef4
