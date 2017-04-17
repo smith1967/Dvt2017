@@ -83,7 +83,8 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="lname" name="lname" placeholder="lastname" value='<?php echo isset($lname) ? $lname : ''; ?>'>
                         </div>
                     </div>
-                    <div class="form-group"> 
+                    <input type="hidden" id="user_type_id" name="user_type_id" value="4" /> 
+<!--                    <div class="form-group"> 
                         <label class="control-label col-md-3" for="user_type_id">ประเภทผู้ใช้</label>
                         <div class="col-md-4">
                             <select class='form-control input-xlarge'id="user_type_id" name="user_type_id">
@@ -94,7 +95,7 @@ require_once INC_PATH . 'header.php';
                                 ?>
                             </select>              
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label class="control-label col-md-3" for="phone">โทรศัพท์</label>
                         <div class="col-md-5">
@@ -232,7 +233,7 @@ function do_validate($data) {
         set_err('อีเมล์นี้ถูกใช้ไปแล้ว');
         $valid = FALSE;
     }    
-    if (!preg_match('/[0-9_-+]{8,}/', $data['phone'])) {
+    if (!preg_match('/[0-9_-]{8,}/', $data['phone'])) {
         set_err('กรุณาใส่หมายเลขโทรศัพท์');
         $valid = FALSE;
     }
