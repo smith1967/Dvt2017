@@ -21,17 +21,17 @@
                 'training' => array(
                     'title' => 'ข้อมูลการฝึกงาน',
                     'url' => 'training/list-training',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff()  ,
                 ),
                 'school' => array(
                     'title' => 'ข้อมูลสถานศึกษา',
                     'url' => 'school/list-school-type',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
                 ),
                 'student' => array(
                     'title' => 'ข้อมูลนักศึกษา',
                     'url' => 'student/list-student',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
                 ),
                 'signup' => array(
                     'title' => 'ลงทะเบียน',

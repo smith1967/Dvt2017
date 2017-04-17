@@ -31,28 +31,42 @@ function redirect($url = '') {
 }
 
 function is_auth($url = '') {
-    if (empty($url)) {
-        if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+    if (isset($_SESSION['user']) && is_array($_SESSION['user'])) {
+        return TRUE;
     } else {
-        if (!isset($_SESSION['user']) || !is_array($_SESSION['user']))
-            redirect($url);
+        return FALSE;
     }
 }
 
-function is_admin($url = '') {
-    if (empty($url)) {
-        if (isset($_SESSION['user']) && $_SESSION['user']['username'] == 'admin') {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+function is_admin() {
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type_id'] == '1') {
+        return TRUE;
     } else {
-        if (!isset($_SESSION['user']) || $_SESSION['user']['username'] != 'admin')
-            redirect($url);
+        return FALSE;
+    }
+}
+
+function is_dvt_admin() {
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type_id'] == '2') {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+function is_dvt_staff() {
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type_id'] == '3') {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}
+
+function is_school_staff() {
+    if (isset($_SESSION['user']) && $_SESSION['user']['user_type_id'] == '4') {
+        return TRUE;
+    } else {
+        return FALSE;
     }
 }
 
