@@ -4,49 +4,37 @@ if (!defined('BASE_PATH'))
 $title = "ผู้ดูแลระบบ";
 $active = 'admin';
 $subactive = 'list-user';
-is_admin('home/index');
-?>
-<?php 
-if(isset($_GET['action']) && $_GET['action'] == 'list-std'){
+
+if(isset($_GET['action']) && $_GET['action'] == 'list'){
     $page = isset($_GET['page']) ? $_GET['page'] : 0;
     $action = isset($_GET['action']) ? $_GET['action'] : "list";
-    $group = isset($_GET['group']) ? $_GET['group'] : '';
-    $order = isset($_GET['order']) ? $_GET['order'] : '';
     $params = array(
         'action' => $action,
-        'group' => $group
     );
     $params = http_build_query($params);
-    $userslist = get_std_list($page,$group);
-    $total = get_total($group);
+    $userslist = get_user_signup($page);
+    $total = get_total();
     $url = site_url('admin/list-user&').$params;
     //var_dump($userlist);
-}
-
-if(isset($_GET['action']) && $_GET['action'] == 'list-users'){
+}else{
     $page = isset($_GET['page']) ? $_GET['page'] : 0;
     $action = isset($_GET['action']) ? $_GET['action'] : "list";
-    $group = isset($_GET['group']) ? $_GET['group'] : '';
-    $order = isset($_GET['order']) ? $_GET['order'] : '';
     $params = array(
         'action' => $action,
-        'group' => $group
     );
     $params = http_build_query($params);
-    $userslist = get_users_list($page,$group);
-    $total = get_users_total($group);
-    $url = site_url('admin/list-user&').$params;
-//    var_dump($userlist);
-//    f(empty($total))redirect("/home/");
-//    die();
+    $userslist = get_user_signup($page);
+    $total = get_total();
+    $url = site_url('admin/list-user&').$params;    
 }
+
 if(!isset($total))redirect("/admin/index");
 ?>
 
 <?php require_once INC_PATH . 'header.php'; ?>
 
 <div class="container">
-    <?php include_once INC_PATH . 'submenu-admin.php'; ?>
+    <!--<?php include_once INC_PATH . 'submenu-admin.php'; ?>-->
     <?php
     show_message();
     ?> 
@@ -55,11 +43,11 @@ if(!isset($total))redirect("/admin/index");
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Username</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Groupname</th>
+                    <!--<th>ID</th>-->
+                    <th>ชื่อผู้ใช้</th>
+                    <th>ชื่อ-นามสกุล</th>
+                    <!--<th>Last Na</th>-->
+                    <th>ประเภทผู้ใช้งาน</th>
                     <th>กระทำการ</th>
                 </tr>
             </thead>
@@ -68,15 +56,15 @@ if(!isset($total))redirect("/admin/index");
                     foreach ($userslist as $user) :
                 ?>                            
                 <tr>
-                    <td><?php echo $user['id'] ?></td>
+                    <!--<td><?php echo $user['user_id'] ?></td>-->
                     <td><?php echo $user['username'] ?></td>
-                    <td><?php echo $user['fname'] ?></td>
-                    <td><?php echo $user['lname'] ?></td>
-                    <td><?php echo $user['groupname'] ?></td>
+                    <td><?php echo $user['fname'] . " " .$user['lname']  ?></td>
+                    <!--<td><?php echo $user['lname'] ?></td>-->
+                    <td><?php echo $user['user_type_id'] ?></td>
                     <td>
+                        <a href="<?php echo site_url('admin/list-user') . '&action=confirm&user_id=' . $user['id']; ?>" >ยืนยัน</a>
                         <a href="<?php echo site_url('admin/list-user') . '&action=delete&user_id=' . $user['id']; ?>" class="delete">ลบ</a>
-                        <a href="<?php echo site_url('admin/edit-user') . '&action=edit&user_id=' . $user['id']; ?>" >แก้ไข</a>
-                      
+                        <a href="<?php echo site_url('admin/edit-user') . '&action=edit&user_id=' . $user['id']; ?>" >แก้ไข</a>                      
                     </td>                    
                 </tr>
                 <?php endforeach; ?>
@@ -87,11 +75,11 @@ if(!isset($total))redirect("/admin/index");
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>
 <?php 
-function get_std_list($page=0,$group,$limit=10){
+function get_user_signup($page=0,$limit=20){
     global $db;
     $start = $page*$limit;
     $val = $group."%";
-    $query = "SELECT * FROM users WHERE username LIKE ".pq($val)." LIMIT ".$start.",".$limit;
+    $query = "SELECT * FROM user WHERE status LIKE 'N' ORDER BY user_id LIMIT ".$start.",".$limit;
    $result = mysqli_query($db, $query);
    $userlist = array();
    while ($row = mysqli_fetch_array($result)) {
@@ -111,10 +99,9 @@ function get_users_list($page=0,$group,$limit=10){
    }
    return $userlist;            
 }
-function get_total($group){
+function get_total(){
     global $db;
-    $val = $group."%";
-    $query = "SELECT * FROM users WHERE username LIKE ".pq($val);
+    $query = "SELECT * FROM user WHERE status = 'N'";
    $result = mysqli_query($db, $query);
    return mysqli_num_rows($result);            
 }

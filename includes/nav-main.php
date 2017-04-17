@@ -46,7 +46,7 @@
                 'business' => array(
                     'title' => 'ข้อมูลสถานประกอบการ',
                     'url' => 'business/list-business',
-                    'cond' => !is_auth(),
+                    'cond' => is_auth(),
                 ),
                 'edit-user' => array(
                     'title' => 'แก้ไขข้อมูลผู้ใช้',
