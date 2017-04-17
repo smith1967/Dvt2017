@@ -22,7 +22,7 @@ $params = http_build_query($params);
 $businesslist = get_business($page, $limit);
 //    $total = get_total();
 $url = site_url('business/list-business&') . $params;
-//    var_dump($businesslist);
+    // var_dump($businesslist);
 //    exit();
 $total = get_total();
 //if(!isset($total))redirect("/admin/index");
@@ -77,10 +77,10 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 function get_business($page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
-    $query = "SELECT business.*,province.province_name FROM business,province LIMIT " . $start . "," . $limit . "";
+    $query = "SELECT business.*,province.province_name FROM business,province WHERE business.province_id = province.province_code LIMIT " . $start . "," . $limit . "";
     $result = mysqli_query($db, $query);
     $businesslist = array();
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $businesslist[] = $row;
     }
     return $businesslist;
