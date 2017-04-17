@@ -36,7 +36,7 @@
                 'signup' => array(
                     'title' => 'ลงทะเบียน',
                     'url' => 'user/signup',
-                    'cond' => !isset($_SESSION['user']),
+                    'cond' => !is_auth(),
                 ),
 //                'change-password' => array(
 //                    'title' => 'แก้ไขรหัสผ่าน',
@@ -46,7 +46,7 @@
                 'business' => array(
                     'title' => 'ข้อมูลสถานประกอบการ',
                     'url' => 'business/list-business',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => !is_auth(),
                 ),
                 'edit-user' => array(
                     'title' => 'แก้ไขข้อมูลผู้ใช้',
@@ -62,12 +62,12 @@
                 'logout' => array(
                     'title' => 'ออกระบบ',
                     'url' => 'user/logout',
-                    'cond' => isset($_SESSION['user']),
+                    'cond' => is_auth(),
                 ),
                 'login' => array(
                     'title' => 'เข้าระบบ',
                     'url' => 'user/login',
-                    'cond' => !isset($_SESSION['user']),
+                    'cond' => !is_auth(),
                 ),
             );
             $menu_class = "nav navbar-nav";
@@ -76,7 +76,6 @@
             <?php
             echo isset($_SESSION['user']) ? '<p class="navbar-text navbar-right">คุณ' . $_SESSION['user']['fname'] . ' กำลังอยู่ในระบบ</p>' : '';
             ?>
-
         </div><!--/.nav-collapse -->
     </div>
 </div>
