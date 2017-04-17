@@ -56,7 +56,7 @@ require_once INC_PATH . 'footer.php';
 function do_login($data) {
     global $db;
     $strHash = create_password_hash(md5($data['password']), PASSWORD_DEFAULT);
-    $query = "SELECT * FROM user WHERE username = " . pq($data['username']);
+    $query = "SELECT * FROM user WHERE username = " . pq($data['username']) ." AND status = 'Y'" ;
 //    die($query);
     $result = mysqli_query($db, $query);
 //    echo mysqli_error($db);
