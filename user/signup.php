@@ -140,6 +140,7 @@ require_once INC_PATH . 'footer.php';
 function do_save() {
     global $db;
     $data = &$_POST;
+    $password = md5($data['password']);
     //var_dump($data);
     //die();
     $sql = "INSERT INTO `user` ("
@@ -156,7 +157,7 @@ function do_save() {
             . ") VALUES ("
             . "NULL, "
             . pq($data['username']) . ", "
-            . pq($data['password']) . ", "
+            . pq($password) . ", "
             . pq($data['fname']) . ", "
             . pq($data['lname']) . ", "
             . pq($data['email']) . ", "
@@ -195,7 +196,9 @@ function do_validate($data) {
         $valid = FALSE;
     }
     $sql = "SELECT username FROM user WHERE username = ".pq($data['username']);
-    if(mysqli_query($db, $sql)){
+    $result= mysqli_query($db, $sql);
+
+    if(mysqli_num_rows($result)>0){
         set_err('ชือผู้ใช้นี้ถูกใช้ไปแล้ว');
         $valid = FALSE;
     }
@@ -229,10 +232,11 @@ function do_validate($data) {
         $valid = FALSE;
     }
     $sql = "SELECT username FROM user WHERE email = ".pq($data['email']);
-    if(mysqli_query($db, $sql)){
-        set_err('อีเมล์นี้ถูกใช้ไปแล้ว');
+    $result= mysqli_query($db, $sql);
+    if(mysqli_num_rows($result)>0){
+        set_err('อีเมล์นี้ถูกใช้ไปแล้');
         $valid = FALSE;
-    }    
+    } 
     if (!preg_match('/[0-9_-]{8,}/', $data['phone'])) {
         set_err('กรุณาใส่หมายเลขโทรศัพท์');
         $valid = FALSE;

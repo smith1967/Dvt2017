@@ -4,7 +4,6 @@ if (!defined('BASE_PATH'))
 $title = "แก้ไขข้อมูล";
 $active = 'edit-user';
 //$subactive = 'home';
-!is_auth()? redirect():'';
 ?>
 <?php
 if (isset($_POST['submit'])) {
@@ -18,9 +17,15 @@ if (isset($_POST['submit'])) {
         }
     }
 }else{
-    foreach ($_SESSION['user'] as $k => $v){
-        $$k = $v;
-    }    
+    if(isset($_GET['action']) && $_GET['action'] == 'edit'){
+        $user_id = $_GET['user_id'];
+        $user_info = get_info($user_id);
+//        var_dump($user_info);
+//        die();
+        foreach ($user_info as $key => $value) {
+            $$key = $value;
+        }
+    }
 }
 require_once INC_PATH.'header.php'; 
 ?>
@@ -126,7 +131,7 @@ require_once INC_PATH.'footer.php';
 
       $( "#school_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_school.php",
-         minLength: 1
+         minLength: 2
       });
    });
 </script>
@@ -166,9 +171,11 @@ EOD;
 
 function get_info($user_id) {
     global $db;
-    $query = "SELECT * FROM user WHERE user_id='" . pq($user_id + 0) . "'";
-    $res = mysqli_query($db, $query);
-    return $res;
+    $query = "SELECT * FROM user WHERE user_id=" . pq($user_id + 0) . ";";
+    $result = mysqli_query($db, $query);
+//    var_dump($result);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
 }
 
 

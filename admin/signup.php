@@ -139,6 +139,7 @@ require_once INC_PATH . 'footer.php';
 function do_save() {
     global $db;
     $data = &$_POST;
+    $password = md5($data['password']);
     //var_dump($data);
     //die();
     $sql = "INSERT INTO `user` ("
@@ -155,7 +156,7 @@ function do_save() {
             . ") VALUES ("
             . "NULL, "
             . pq($data['username']) . ", "
-            . pq($data['password']) . ", "
+            . pq($password) . ", "
             . pq($data['fname']) . ", "
             . pq($data['lname']) . ", "
             . pq($data['email']) . ", "
