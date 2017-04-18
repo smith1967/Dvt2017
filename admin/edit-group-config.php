@@ -74,10 +74,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 </div>  
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
-    $('.btn-danger').click(function() {
-        if (!confirm('ยืนยันลบข้อมูล')) {
-            return false;
-        }
+    $('.delete').click(function() {
+        return confirm('ยืนยันลบข้อมูล')
     });
 </script>
 </script>
