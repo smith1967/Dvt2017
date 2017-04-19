@@ -114,13 +114,17 @@ require_once INC_PATH . 'header.php';
                         <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
                         <div class="col-md-2">
                             <select class='form-control' id="certificate" name="certificate">
-                                <option value="P">ผ่าน</option>
-                                 <option value="N">ไม่ผ่าน</option>
+                                <?php
+                                $def = isset($certificate) ? $certificate : 'P';
+                                // $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $cert_data = array('P'=>'ผ่าน', 'N'=>'ไม่ผ่าน');
+                                echo gen_option($cert_data, $def)
+                                ?>
                             </select>              
                         </div>
                     </div>
 
-<!--                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="property" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
                         <div class="col-md-2">
                             <select class="form-control" id="property"name="property"value="<?php set_var($property); ?>">
