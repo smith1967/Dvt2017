@@ -6,14 +6,15 @@ include_once './../include/config.php';
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-if (isset($_REQUEST))
-    $search_str = '%' . trim($_REQUEST['term']) . '%';
+if (isset($_GET))
+    $search_str = '%' . strip_tags($_GET['term']) . '%';
+    $school_id = strip_tags($_SESSION['user']['school_id']);
 //echo $search_str.'<br>';
 //die();
 header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
 header('Content-Type: application/json; charset=utf-8');
 $query = "SELECT citizen_id as value,std_name as label FROM student "
-        . "WHERE std_name LIKE " . pq($search_str)." OR citizen_id LIKE ".pq($search_str);
+        . "WHERE school_id = ".pq($school_id)." AND std_name LIKE " . pq($search_str)." OR citizen_id LIKE ".pq($search_str);
 //echo $query;
 $result = mysqli_query($db, $query);
 if ($result) {
