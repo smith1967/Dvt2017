@@ -8,12 +8,12 @@ $active = 'school';
 $subactive = 'list-school';
 // is_admin('home/index');
 ?>
-
 <?php require_once INC_PATH . 'header.php';?>
+
 <div class='container'>
     <?php include_once INC_PATH . 'submenu-school.php';?>
     <?php
-// show_message();
+ show_message();
 ?> 
     <div class="page-header">
         <h3>รายชื่อสถานศึกษา</h3>
@@ -24,13 +24,14 @@ if (isset($_POST['submit'])) {
     	$valid = do_validate($data);
 	// 	check ความถูกต้องของข้อมูล
     if (!$valid) {
-        show_message();
+      //  show_message();
         foreach ($_POST as $k => $v) {
             $k = $v;
             // 			set variable to form
         }
         }else {
             do_update();
+            echo  "school=>".$school_id;
             	//	ไม่มี error บันทึกข้อมูล
        }
 }
@@ -46,17 +47,24 @@ if (isset($_GET['action'])) {
 }else{
     list_form_init();
 }
-
 ?>
         </table>
         </div>
     </div>  
 
-<?php require_once INC_PATH . 'footer.php';
+<?php require_once INC_PATH . 'footer.php';?>
 
-
-function do_delete($school_id) {
-    
+<script>
+   $(function() {
+     
+      $( "#institute_id" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_institute_1.php",
+         minLength: 1
+      });   
+      
+});
+</script>
+<?php function do_delete($school_id) {
     global $db;
     if (empty($school_id)) {
         set_err('ค่าพารามิเตอร์รหัสสถานศึกษาไม่ถูกต้อง11');
@@ -71,31 +79,36 @@ function do_delete($school_id) {
 }
 
 function do_update() {
-global $db,$school_id;
+global $db;
+//$data = &$_POST;
 $data = &$_POST;
-
- $school_name= $data['school_name'];
- $school_type_id= $data['school_type_id'];
- $address_no= $data['address_no'];
- $road= $data['road'];
- $tumbon= $data['tumbon'];
- $aumphur= $data['aumphur'];
- $province= $data['province'];
- $postcode= $data['postcode'];
- $phone= $data['phone'];
- $fax= $data['fax'];
- $zone= $data['zone'];
-  //	var_dump($data);
-  // 	die();
+//	var_dump($data);
+//  exit();
     foreach ($_POST as $k => $v) {
     $k = pq($v);
 		// 		set variable to form
 	}
-	//$	id = $_SESSION['user']['id'];
-	 $sql = "UPDATE school SET school_name='$school_name',school_type_id =$school_type_id,address_no ='$address_no',";
-	 $sql .= "road='$road',tumbon='$tumbon',aumphur ='$aumphur',province = '$province',postcode ='$postcode',";
-	 $sql .= "phone = '$phone',fax='$fax',zone='$zone' WHERE school_id =$school_id";
-	 $result = mysqli_query($db, $sql);
+	
+    $sql = "update school  set
+	school_name=".pq($data['school_name']).","
+            . "school_type_id=" . pq($data['school_type_id']) . ","
+            . "address_no=" . pq($data['address_no']) . ","
+            . "road=" . pq($data['road']) . ","
+            . "address_no=" . pq($data['address_no']) . ","
+            . "road=" . pq($data['road']) . ","
+            . "tumbon=" . pq($data['tumbon']) . ","
+            . "aumphur=" . pq($data['aumphur']) . ","
+            . "province=" . pq($data['province']) . ","
+            . "postcode=" . pq($data['postcode']) . ","
+            . "phone=" . pq($data['phone']) . ","
+            . "fax=" . pq($data['fax']) . ","
+            . "zone=" . pq($data['zone']) . ","
+            . "location=" . pq($data['location']) . ","
+            . "catagory=" . pq($data['catagory']) . ","
+            . "institute_id=" . pq($data['institute'])
+            . " WHERE "
+            . "school_id = " . pq($data['school_id']) . "";
+    $result = mysqli_query($db, $sql);
 	if ($result) {
 		$_SESSION['info'][] = "แก้ไขเรียบร้อยครับ";
 		redirect('school/list-data-school');
@@ -230,11 +243,37 @@ function list_form_edit(){
                         <input type="text" class="form-control" name="zone" value="<?php echo $row['zone'] ?>">
                     </div>
                 </div>
+                 <div class="form-group">
+                        <label for="location" class="col-md-2 control-label">พิกัดที่ตั้ง</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="do_location" name="location" value="<?php echo $row['location']  ?>" placeholder="x,y" >
+                        </div>
+                    </div>
+                 <div class="form-group">
+                        <label for="catagory1" class="col-md-2 control-label">สังกัดหน่วยงาน</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="do_catagory" name="catagory">
+                             <option value="รัฐบาล">รัฐบาล</option>
+                             <option value="เอกชน">เอกชน</option>
+                             <option value="อื่นๆ">อื่นๆ</option>
+                            </select>
+                        </div>                      
+                 </div>
+                 <div class="form-group"> 
+                    <label class="control-label col-md-2 control-label " for="institute_id">รหัสสถาบัน</label>
+                    <div class="col-md-6 "><input type="text" class="form-control" id="institute_id" placeholder="ชื่อสถาบัน" name="institute" value="<?php set_var($institute_id)?>">
+                
+                  </div>
+                </div>
+                
+                   
+
                 <div class="form-group">        
                     <div class="col-sm-offset-2 col-sm-6">
                         <input type="submit" name="submit" value="บันทึกแก้ไขข้อมูล" class="btn btn-default" >
                     </div>
                 </div>
+                
             </form>
 <?php
 } // end list_form_edit()
@@ -250,7 +289,7 @@ $row = mysqli_fetch_array($result);
     <div class="table-responsive col-md-12">
         <table class="table table-hover">
             <thead><th>รหัส</th><th>ชื่อ</th><th>ประเภท</th><th>ที่อยู่</th><th>ถนน</th><th>ตำบล</th>
-            <th>อำเภอ</th><th>จังหวัด</th><th>รหัสไปรษณีย์</th><th>โทรศัพท์</th><th>โทรสาร</th><th>ภาค</th><th>แก้ไข</th></thead>
+            <th>อำเภอ</th><th>จังหวัด</th><th>รหัสไปรษณีย์</th><th>โทรศัพท์</th><th>โทรสาร</th><th>ภาค</th><th>พิกัด</th><th>สังกัดหน่วยงาน</th><th>สังกัดสถาบัน</th><th>แก้ไข</th></thead>
             <tbody>   <tr>
                     <td> <?php echo $row['school_id'];?></td>
                     <td> <?php echo $row['school_name'];?></td>
@@ -264,6 +303,9 @@ $row = mysqli_fetch_array($result);
                     <td> <?php echo $row['phone'];?> </td>
                     <td> <?php echo $row['fax'];?> </td>
                     <td> <?php echo $row['zone'];?> </td>
+                    <td> <?php echo $row['location'];?> </td>
+                    <td> <?php echo $row['catagory'];?> </td>
+                    <td> <?php echo $row['institute_id'];?> </td>
                     <td class="text-center"><a href="index.php?school/list-data-school&action=edit"><span class="glyphicon glyphicon-pencil"></span></a></td>
                     
                 </tr>
