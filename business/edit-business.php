@@ -458,7 +458,6 @@ function do_editbusiness() {
     }
     redirect('business/list-business');
 }
-
 function get_business($business_id = NULL) {
     global $db;
     $sql = "SELECT * FROM business where business_id = '$business_id';";

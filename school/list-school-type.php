@@ -15,19 +15,22 @@ $page = isset($_GET['page']) ? $_GET['page'] : 0;
 $action = isset($_GET['action']) ? $_GET['action'] : "list";
 //    $group = isset($_GET['group']) ? $_GET['group'] : '';
 $order = isset($_GET['order']) ? $_GET['order'] : '';
-$limit = isset($_GET['limit']) ? $_GET['limit'] : 40;
+$limit = isset($_GET['limit']) ? $_GET['limit'] : 20;
 $params = array(
     'action' => $action,
     'limit' => $limit,
 //        'group' => $group
 );
 $params = http_build_query($params);
+//var_dump($params);
+//exit();
 $schoollist = get_school_type($page, $limit);
 //    $total = get_total();
 $url = site_url('school/list-school-type&') . $params;
 //    var_dump($schoollist);
-//    exit();
+  //  exit();
 $total = get_total();
+//echo $total;
 //if(!isset($total))redirect("/admin/index");
 if(isset($_POST['submit'])){  // update data
     do_update($_POST['type_name'],$_POST['school_type_id']);
@@ -39,11 +42,9 @@ if(isset($_GET['action'])){
     if($_GET['action']=='delete'){
       do_delete($_GET['school_type_id']);
    }
-   if($_GET['action']=='add'){
-      do_save($_GET['school_type_id']);
-   }
+  
    if($_GET['action']=='add_new'){
-    redirect('school/form-insert-school-type');//add input data
+    redirect('school/insert-school-type');//add input data
    }
 }else{
 
@@ -58,6 +59,9 @@ function checkDelete(){
     <?php echo pagination($total, $url, $page, $order, $limit) ?>
      <div class="table-responsive"> 
      <span class="col-sm-offset-11 col-sm-12" >   <a href="<?php echo site_url('school/list-school-type') . '&action=add_new'; ?>" >เพิ่ม
+
+
+     
      </span> </a>
         <table class="table table-striped table-condensed table-hover">
            
@@ -103,7 +107,7 @@ function get_school_type($page = 0, $limit = 10) {
 function get_total() {
     global $db;
 //    $val = $group."%";
-    $query = "SELECT * FROM school ";
+    $query = "SELECT * FROM school_type ";
     $result = mysqli_query($db, $query);
     return mysqli_num_rows($result);
 }
@@ -140,21 +144,6 @@ function do_delete($school_type_id) {
     }
     redirect('school/list-school-type');
 }
-
-function do_save($type_id) {
-    global $db;
-    if (empty($school_type_id)) {
-        set_err('ค่าพารามิเตอร์รหัสสถานศึกษาไม่ถูกต้อง');
-        redirect('school/list-school-type');
-    }
-    $query = "DELETE FROM school_type WHERE school_type_id =" . pq($school_type_id);
-    mysqli_query($db, $query);
-    if (mysqli_affected_rows($db)) {
-        set_info('ลบข้อมูลสำเร็จ');
-    }
-    redirect('school/list-school-type');
-}
-
 function do_edit($school_type_id) {
     global $db;
    // echo "type_id=".$_GET['type_id'];
@@ -167,7 +156,7 @@ function do_edit($school_type_id) {
     $result=mysqli_query($db, $sql);
     $row=mysqli_fetch_array($result);
     ?>
-    
+  
        <div class="panel-body">
                 <form class="form-horizontal" id="school_type_id" method="post" action="">
                     <div class="form-group">
