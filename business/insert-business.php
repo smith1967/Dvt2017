@@ -33,12 +33,12 @@ require_once INC_PATH . 'header.php';
             <div class="panel-heading">เพิ่มข้อมูลสถานประกอบการ</div>
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label for="business_id" class="col-md-2 control-label">รหัส</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" required="" id="business_id" name="business_id"value="<?php set_var($business_id); ?>">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label for="business_name" class="col-md-2 control-label">ชื่อสถานประกอบการ</label>
                         <div class="col-md-4">
@@ -425,7 +425,7 @@ function do_insert() {
             . " `property_id`, "
             . " `benefit_id`) "
             . " VALUES ("
-            . pq($data['business_id']) . ","
+            . "NULL,"
             . pq($data['business_name']) . ","
             . pq($data['job_description']) . ","
             . pq($data['amount_emp']) . ","

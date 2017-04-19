@@ -48,7 +48,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
             <td><center>รหัสนักศึกษา</center></td>
             <td><center>รหัสนักศึกษา</center></td>
             <td><center>ชื่อสถานประกอบการ</center></td>
-            <td><center>รหัสสถานศึกษา</center></td>
+            <td><center>สถานศึกษา</center></td>
             <td><center>ชื่อสาขางาน</center></td>
             <td><center>ครูฝึก</center></td>
             <td><center>วันที่ทำสัญญา</center></td>
@@ -65,7 +65,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <td><center><?php echo $training['std_id']; ?></center></td>
                     <td><center><?php echo $training['std_name']; ?></center></td>
                     <td><center><?php echo $training['business_name']; ?></center></td>
-                    <td><center><?php echo $training['school_id']; ?></center></td>
+                    <td><center><?php echo $training['school_name']; ?></center></td>
                     <td><center><?php echo $training['minor_name']; ?></center></td>
                     <td><center><?php echo $training['trainer_name']; ?></center></td>
                     <td><center><?php echo $training['contract_date']; ?></center></td>
@@ -90,11 +90,12 @@ function get_training($school_id,$page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
 //    $query = "SELECT * FROM training WHERE school_id = ".pq($school_id)." LIMIT " . $start . "," . $limit . "";
-    $query = "SELECT t1.std_id,t1.std_name,t2.business_name,t3.*,t4.minor_name,t5.trainer_name "
+    $query = "SELECT t1.std_id,t1.std_name,t2.business_name,t3.*,t4.minor_name,t5.trainer_name,t6.school_name "
             . "FROM training AS t3 "
             . "LEFT JOIN student AS t1 ON t1.citizen_id=t3.citizen_id "
             . "LEFT JOIN business AS t2 ON t2.business_id=t3.business_id "
             . "LEFT JOIN minor AS t4 ON t4.minor_id=t3.minor_id "
+            . "LEFT JOIN school AS t6 ON t3.school_id = t6.school_id "
             . "LEFT JOIN trainer AS t5 ON t5.trainer_id=t3.trainer_id "            
             . " WHERE t3.school_id = ".pq($school_id)." LIMIT " . $start . "," . $limit . "";
     $result = mysqli_query($db, $query);
@@ -110,7 +111,8 @@ function get_training($school_id,$page = 0, $limit = 10) {
 function get_total() {
     global $db;
 //    $val = $group."%";
-    $query = "SELECT * FROM training ";
+    $query = "SELECT * FROM training WHERE "
+            . "school_id = ".pq($school_id)." ORDER BY training_id";
     $result = mysqli_query($db, $query);
     return mysqli_num_rows($result);
 }

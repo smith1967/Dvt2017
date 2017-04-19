@@ -1,13 +1,17 @@
 <?php
 /* if (!defined('BASE_PATH'))
   exit('No direct script access allowed'); */
-$title = "เพิ่มข้อมูลสถานประกอบการ";
-$active = 'business';
+$title = "เพิ่มข้อมูลการฝึกงาน";
+$active = 'training';
 $school_id = $_SESSION['user']['school_id'];
-//$subactive = 'edit-group-config';
+$subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
+<<<<<<< HEAD
     //var_dump($data);
+=======
+//    var_dump($data);
+>>>>>>> master
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
     if ($valid) {
         do_insert($school_id);
@@ -20,6 +24,7 @@ if (isset($_POST['submit'])) {
 require_once INC_PATH . 'header.php';
 ?>
 <div class='container'>
+    <?php include_once INC_PATH . 'submenu-training.php'; ?>    
     <?php show_message() ?>
     <div class="panel panel-default">
         <div class="panel-heading">ข้อมูลการฝึกงาน</div>
@@ -31,23 +36,23 @@ require_once INC_PATH . 'header.php';
                 </div>-->
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="citizen_id">รหัสบัตรประชาชน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="citizen_id" placeholder="ชื่อนักศึกษา" name="citizen_id" value="<?php set_var($citizen_id)?>"></div>
+                    <div class="col-md-3 "><input type="text" class="form-control" id="citizen_id" placeholder="ชื่อนักศึกษา" name="citizen_id" value="<?php set_var($citizen_id)?>"></div>
                 </div>
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="business_id" placeholder="ชื่อสถานประกอบการ" name="business_id" value="<?php set_var($business_id)?>"></div>
+                    <div class="col-md-3 "><input type="text" class="form-control" id="business_id" placeholder="ชื่อสถานประกอบการ" name="business_id" value="<?php set_var($business_id)?>"></div>
                 </div>
-<!--                <div class="form-group"> 
+                <div class="form-group"> 
                     <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id"></div>
-                </div>-->
+                    <div class="col-md-3 "><input type="text" class="form-control" readonly="" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id" value="<?php set_var($school_id)?>"></div>
+                </div>
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="minor_id">รหัสสาขางาน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id" placeholder="ชื่อสาขางาน" name="minor_id" value="<?php set_var($minor_id)?>"></div>
+                    <div class="col-md-3 "><input type="text" class="form-control" id="minor_id" placeholder="ชื่อสาขางาน" name="minor_id" value="<?php set_var($minor_id)?>"></div>
                 </div>
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="trainer_id">รหัสครูฝึก</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="trainer_id" placeholder="ชื่อครูฝึก" name="trainer_id" value="<?php set_var($trainer_id)?>"></div>
+                    <div class="col-md-3 "><input type="text" class="form-control" id="trainer_id" placeholder="ชื่อครูฝึก" name="trainer_id" value="<?php set_var($trainer_id)?>"></div>
                 </div>
 
                 <div class="form-group"> 
@@ -79,19 +84,19 @@ require_once INC_PATH . 'header.php';
    $(function() {
       $( "#citizen_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_student.php",
-         minLength: 1
+         minLength: 2
       });
       $( "#business_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 1
+         minLength: 2
       });   
       $( "#minor_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_minor.php",
-         minLength: 1
+         minLength: 2
       });      
       $( "#trainer_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_trainer.php",
-         minLength: 1
+         minLength: 2
       }); 
 });
 </script> 

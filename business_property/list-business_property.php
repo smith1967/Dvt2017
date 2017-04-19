@@ -41,7 +41,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
     <div class="table-responsive"> 
         <table class="table table-striped table-condensed table-hover">
             <thead>
-                <tr><th><a href="<?php echo site_url('business_property/form_insert_business_benefit'); ?>" >เพิ่มข้อมูลสำเร็จ</a></th></tr>
+                <tr><th><a href="<?php echo site_url('business_property/insert-business_benefit'); ?>" >เพิ่มข้อมูลสำเร็จ</a></th></tr>
                 <tr>
                     <td>รหัสคุณสมบัติ</td>
                     <td>ชื่อคุณสมบัติ</td>
@@ -59,8 +59,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <td><?php echo $property['name'] ?></td>
                         <td><?php echo $property['descript'] ?></td>
 
-                        <td><a href="<?php echo site_url('rain/form_update_business_property') . '&action=edit&property_id=' . $property['property_id']; ?>" >แก้ไข</a></td>
-                        <td><a href="<?php echo site_url('rain/business_property') . '&action=delete&property_id=' . $property['property_id']; ?>" class="delete">ลบ</a>
+                        <td><a href="<?php echo site_url('business_property/edit-business_property') . '&action=edit&property_id=' . $property['property_id']; ?>" >แก้ไข</a></td>
+                        <td><a href="<?php echo site_url('business_property/list-business_property') . '&action=delete&property_id=' . $property['property_id']; ?>" class="delete">ลบ</a>
 
                         </td>                    
                     </tr>
