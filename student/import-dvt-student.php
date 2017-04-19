@@ -32,7 +32,9 @@ $subactive = 'import-dvt-student';
 <p>&nbsp;</p>
 <p>&nbsp;</p>
 <?php $importlink = site_url('student/import-dvt-student') . '&action=delete_dvt_std';?>
-<p>ข้อมูลไม่ถูกต้องต้องการยกเลิกข้อมูลในฐานข้อมูลทั้งหมด <a href="<?php echo $importlink ?>"><button type="button" class="btn btn-danger">ยกเลิกข้อมูล</button></a></p>
+<?php $importlink2 = site_url('student/list-student') ;?>
+<p>จำนวนข้อมูลไม่ถูกต้องต้องการยกเลิกข้อมูลในฐานข้อมูลทั้งหมด <a href="<?php echo $importlink ?>"><button type="button" class="btn btn-danger">ยกเลิกข้อมูล</button></a></p>
+<p>จำนวนข้อมูลถูกต้อง ตรวจสอบรายชื่อนักเรียน <a href="<?php echo $importlink2 ?>"><button type="button" class="btn btn-info">ตรวจสอบรายชื่อนักเรียน</button></a></p>
     <div class="col-md-8">
         <div class="panel panel-default">
        
@@ -71,12 +73,12 @@ function do_import_all_std(){
         //echo $errorlist[0]['errno'];
         $link = site_url('student/file-manager');
         if ($errorlist[0]['errno']==1062){
-            echo '<div class="alert alert-danger">';
-            echo "ข้อมูลในตารางนับจำนวนนักเรียนมีอยู่แล้วในระบบ ไม่สามารถส่งข้อมูลขึ้นระบบได้";
-            echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+          //  echo '<div class="alert alert-danger">';
+          //  echo "ข้อมูลในตารางนับจำนวนนักเรียนมีอยู่แล้วในระบบ ไม่สามารถส่งข้อมูลขึ้นระบบได้";
+          //  echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
             //echo '<p class="text-info"> ต้องการส่งข้อมูลใหม่ กรุณาติดต่อผู้ดูแลระบบ</p>';
-            echo '<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
-            echo '</div>';
+            // echo '<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
+            // echo '</div>';
         }else{
             echo '<div class="alert alert-danger">';
             echo $err.'<a href="'.$link.'">กลับไปหน้าส่งไฟล์ข้อมูล</a>';
@@ -84,7 +86,7 @@ function do_import_all_std(){
             
         }
     } else {
-        $info='โอนข้อมูลเข้าตารางนับจำนวนนักเรียน จำนวน ' . mysqli_affected_rows($db) . ' รายการ';
+       // $info='โอนข้อมูลเข้าตารางนับจำนวนนักเรียน จำนวน ' . mysqli_affected_rows($db) . ' รายการ';
       // echo 'โอนข้อมูลเข้าตาราง student จำนวน ' . mysqli_affected_rows($db) . ' รายการ' ;
         echo '<div class="alert alert-info">';
         echo $info;
