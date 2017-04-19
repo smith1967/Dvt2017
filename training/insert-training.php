@@ -1,10 +1,10 @@
 <?php
 /* if (!defined('BASE_PATH'))
   exit('No direct script access allowed'); */
-$title = "เพิ่มข้อมูลสถานประกอบการ";
-$active = 'business';
+$title = "เพิ่มข้อมูลการฝึกงาน";
+$active = 'training';
 $school_id = $_SESSION['user']['school_id'];
-//$subactive = 'edit-group-config';
+$subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
 require_once INC_PATH . 'header.php';
 ?>
 <div class='container'>
+    <?php include_once INC_PATH . 'submenu-training.php'; ?>    
     <?php show_message() ?>
     <div class="panel panel-default">
         <div class="panel-heading">ข้อมูลการฝึกงาน</div>
