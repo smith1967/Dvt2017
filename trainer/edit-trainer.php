@@ -1,4 +1,6 @@
 <?php
+//แก้ไข DB
+//ALTER TABLE `trainer` ADD `trainer_major` VARCHAR(100) NOT NULL AFTER `educational_id`;
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "แก้ไขข้อมูลครูฝึก";
@@ -78,7 +80,7 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group"> 
-                        <label class="control-label col-md-3" for="educational_id">วุฒิการศึกษาสูงสุด</label>
+                        <label class="control-label col-md-3" for="educational_id">ระดับการศึกษาสูงสุด</label>
                         <div class="col-md-2">
                             <select class='form-control' id="educational_id" name="educational_id">
                                 <?php
@@ -88,20 +90,26 @@ require_once INC_PATH . 'header.php';
                                 ?>
                             </select>              
                         </div>
-                    </div>             
+                    </div>  
+                    <div class="form-group">
+                        <label for="trainer_major" class="col-md-3 control-label">สาขาวิชา/วุฒิการศึกษา</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="trainer_major" name="trainer_major" placeholder="สาขาวิชา/วุฒิการศึกษา" value="<?php set_var($trainer_major); ?>">
+                        </div>
+                    </div>           
 
 
                     <div class="form-group">
-                        <label for="certificate_date" class="col-md-3 control-label">วันที่ออกใบรับฝึกงาน</label>
+                        <label for="assign_date" class="col-md-3 control-label">วันที่ได้รับการแต่งตั้งเป็นครูฝึก</label>
                         <div class="col-md-2">
-                            <input type="date" class="form-control" id="certificate_date" name="certificate_date"value="<?php set_var($certificate_date); ?>">
+                            <input type="date" class="form-control" id="assign_date" name="assign_date"value="<?php set_var($assign_date); ?>">
                         </div>
                     </div>
 
                     <div class="form-group"> 
-                        <label class="control-label col-md-3" for="trainer_property_id">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
+                        <label class="control-label col-md-3" for="trainer_property_id">ประสบการณ์การเป็นครูฝึก</label>
                         <div class="col-md-2">
-                            <select class='form-control' id="educational_id" name="trainer_property_id">
+                            <select class='form-control' id="trainer_property_id" name="trainer_property_id">
                                 <?php
                                 $def = isset($trainer_property_id) ? $trainer_property_id : 'E';
                                 $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
@@ -110,7 +118,15 @@ require_once INC_PATH . 'header.php';
                             </select>              
                         </div>
                     </div>
-
+                    <div class="form-group"> 
+                        <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
+                        <div class="col-md-2">
+                            <select class='form-control' id="certificate" name="certificate">
+                                <option value="P" <?php if ($certificate=="P") {echo "selected";} ?>>ผ่าน</option>
+                                 <option value="N" <?php if ($certificate=="N") {echo "selected";} ?>>ไม่ผ่าน</option>
+                            </select>              
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
@@ -161,6 +177,15 @@ function do_validate($data) {
         set_err('กรุณากรอกรหัสสถานประกอบการ');
         $valid = false;
     }
+    if (empty($data['trainer_major'])) {
+        set_err('กรุณากรอกสาขาวิชา/วุฒิการศึกษา');
+        $valid = false;
+    }
+
+    if (!preg_match('/[0-9]{1,}/', $data['assign_date'])) {
+        set_err('กรุณาเลือกวันที่ออกใบรับฝึกงาน');
+        $valid = false;
+    }
 //    if (!preg_match('/[0-9]{1,}/', $data['educational'])) {
 //        set_err('เลือกวุฒิการศึกษา');
 //        $valid = false;
@@ -191,8 +216,10 @@ function do_update() {
             . "address=" . pq($data['address']) . ","
             . "business_id=" . pq($data['business_id']) . ","
             . "educational_id=" . pq($data['educational_id']) . ","
-            . "certificate_date=" . pq($data['certificate_date']) . ","
-            . "trainer_property_id=" . pq($data['trainer_property_id'])
+            . "trainer_major=" . pq($data['trainer_major']) . ","
+            . "assign_date=" . pq($data['assign_date']) . ","
+            . "trainer_property_id=" . pq($data['trainer_property_id']). ","
+            . "certificate=" . pq($data['certificate'])
             . " WHERE trainer_id = " . pq($data['trainer_id']);
     //echo $query; exit();
     $result = mysqli_query($db, $query);
