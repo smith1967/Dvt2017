@@ -28,6 +28,7 @@ if ($_GET['training_id']) {
 require_once INC_PATH . 'header.php';
 ?>
 <div class='container'>
+    <?php include_once INC_PATH . 'submenu-training.php'; ?>
     <?php show_message() ?>
     <div class="panel panel-default">
         <div class="panel-heading">ข้อมูลการฝึกงาน</div>
@@ -87,19 +88,19 @@ require_once INC_PATH . 'header.php';
    $(function() {
       $( "#citizen_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_student.php",
-         minLength: 1
+         minLength: 2
       });
       $( "#business_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 1
+         minLength: 2
       });   
       $( "#minor_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_minor.php",
-         minLength: 1
+         minLength: 2
       });      
       $( "#training_id" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_training.php",
-         minLength: 1
+         minLength: 2
       }); 
 });
 </script> 
