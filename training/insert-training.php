@@ -7,7 +7,7 @@ $school_id = $_SESSION['user']['school_id'];
 //$subactive = 'edit-group-config';
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    var_dump($data);
+    //var_dump($data);
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
     if ($valid) {
         do_insert($school_id);
