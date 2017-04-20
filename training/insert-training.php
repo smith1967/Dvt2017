@@ -7,11 +7,7 @@ $school_id = $_SESSION['user']['school_id'];
 $subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
-<<<<<<< HEAD
-    //var_dump($data);
-=======
 //    var_dump($data);
->>>>>>> master
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
     if ($valid) {
         do_insert($school_id);
