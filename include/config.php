@@ -63,7 +63,7 @@ define('ADMIN_URL', SITE_URL.'admin/');
 define('BOOTSTRAP_URL', SITE_URL.'bootstrap/');
 define('JS_URL', SITE_URL.'js/');
 define('CSS_URL', SITE_URL.'css/');
-define('IMG_URL', SITE_URL.'image/');
+define('IMG_URL', SITE_URL.'images/');
 define('FONTS_URL', SITE_URL.'fonts/');
 define('COLLEGE_NAME', 'สำนักงานการอาชีวศึกษา');
 
