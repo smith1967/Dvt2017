@@ -4,9 +4,7 @@ if (!defined('BASE_PATH'))
 $title = "แก้ไขข้อมูล";
 $active = 'edit-user';
 //$subactive = 'home';
-!is_auth()? redirect():'';
-?>
-<?php
+
 if (isset($_POST['submit'])) {
     $data = $_POST;
     $valid = do_validate($data);
@@ -18,7 +16,9 @@ if (isset($_POST['submit'])) {
         }
     }
 }else{
-    foreach ($_SESSION['user'] as $k => $v){
+    $user_id = $_SESSION['user']['user_id'];
+    $user = get_info($user_id);
+    foreach ($user as $k => $v){
         $$k = $v;
     }    
 }
@@ -135,8 +135,7 @@ require_once INC_PATH.'footer.php';
 function do_update() {
     global $db;
     $data = &$_POST;
-    //var_dump($data);
-    //die();
+
     foreach ($_POST as $k => $v) {
             $$k = pq($v);  // set variable to form
     }
@@ -148,27 +147,33 @@ function do_update() {
                 fname = {$fname},
                 lname = {$lname},
                 school_id = {$school_id},
+                phone = {$phone},
                 email = {$email} 
             WHERE
                 user_id = {$user_id};
 EOD;
     mysqli_query($db, $sql);
+//    var_dump($sql);
+//    die();    
     if (mysqli_affected_rows($db)>0){   
-        $_SESSION['info'][] = "แก้ไขเรียบร้อยครับ";
-        redirect('home/index');
+        set_info("แก้ไขเรียบร้อยครับ");
     } else {
-        $_SESSION['err'][] = "แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล".  mysqli_error($db) .$sql;        
-        redirect('user/edit-user');
+        if (mysqli_error($db)) {
+            set_err("แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql);            
+        } else {
+            set_err('ไม่มีข้อมูลเปลี่ยนแปลง');
+        }        
     }
     /* close statement and connection */
-    //redirect();
+    redirect('home/index');
 }
 
 function get_info($user_id) {
     global $db;
-    $query = "SELECT * FROM user WHERE user_id='" . pq($user_id + 0) . "'";
-    $res = mysqli_query($db, $query);
-    return $res;
+    $query = "SELECT * FROM user WHERE user_id=" . pq($user_id + 0) . ";";
+    $result = mysqli_query($db, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row;
 }
 
 
