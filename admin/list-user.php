@@ -74,12 +74,20 @@ if (!isset($total))
                         <td><?php echo $user['user_type_id'] ?></td>
                         <td>
                             <?php if($user['status']=='Y') : ?>
-                            <a href="<?php echo site_url('admin/list-user') . '&action=disabled&user_id=' . $user['user_id']; ?>" >ระงับ</a>
+                            <a href="<?php echo site_url('admin/list-user') . '&action=disabled&user_id=' . $user['user_id']; ?>" >
+                                <span class="glyphicon glyphicon-ban-circle"></span>
+                            </a>
                             <?php else: ?>
-                            <a href="<?php echo site_url('admin/list-user') . '&action=enabled&user_id=' . $user['user_id']; ?>" >ยืนยัน</a>
+                            <a href="<?php echo site_url('admin/list-user') . '&action=enabled&user_id=' . $user['user_id']; ?>" >
+                                <span class="glyphicon glyphicon-ok-circle"></span>
+                            </a>
                             <?php endif; ?>
-                            <a href="<?php echo site_url('admin/list-user') . '&action=delete&user_id=' . $user['user_id']; ?>" class="delete">ลบ</a>
-                            <a href="<?php echo site_url('admin/edit-user') . '&action=edit&user_id=' . $user['user_id']; ?>" >แก้ไข</a>                      
+                            <a href="<?php echo site_url('admin/list-user') . '&action=delete&user_id=' . $user['user_id']; ?>" class="delete">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                            </a>
+                            <a href="<?php echo site_url('admin/edit-user') . '&action=edit&user_id=' . $user['user_id']; ?>" >
+                                <span class="glyphicon glyphicon-edit"></span>
+                            </a>                      
                         </td>                    
                     </tr>
 <?php endforeach; ?>

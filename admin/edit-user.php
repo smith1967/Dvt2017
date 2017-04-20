@@ -9,15 +9,14 @@ $active = 'edit-user';
 if (isset($_POST['submit'])) {
     $data = $_POST;
     $valid = do_validate($data);
+    foreach ($_POST as $k => $v) {
+        $$k = $v;  // set variable to form
+    }
     if ($valid) {
         do_update();  // ไม่มี error บันทึกข้อมูล
-    } else {
-        foreach ($_POST as $k => $v) {
-            $$k = $v;  // set variable to form
-        }
     }
-}else{
-    if(isset($_GET['action']) && $_GET['action'] == 'edit'){
+} else {
+    if (isset($_GET['action']) && $_GET['action'] == 'edit') {
         $user_id = $_GET['user_id'];
         $user_info = get_info($user_id);
 //        var_dump($user_info);
@@ -27,12 +26,12 @@ if (isset($_POST['submit'])) {
         }
     }
 }
-require_once INC_PATH.'header.php'; 
+require_once INC_PATH . 'header.php';
 ?>
 <script>
-$(document).ready(function(){
-    $("#username").focus();
-});
+    $(document).ready(function () {
+        $("#username").focus();
+    });
 </script>
 <div class='container'>
     <?php show_message() ?>
@@ -43,25 +42,25 @@ $(document).ready(function(){
             </div>
             <div class="panel-body">
                 <form class="form-horizontal" id="signupform" method="post" action="">
-                    <input type="hidden" name="user_id" value="<?php set_var($user_id)?>"/>
+                    <input type="hidden" name="user_id" value="<?php set_var($user_id) ?>"/>
                     <div class="form-group">
                         <label class="control-label col-md-3" for="username">ชื่อผู้ใช้</label>
                         <div class="col-md-5">
                             <input type="text" class="form-control" id="username" name="username" readonly value='<?php echo isset($username) ? $username : ''; ?>'>
                         </div>
                     </div>
-<!--                    <div class="form-group">
-                        <label class="control-label col-md-3" for="password">รหัสผ่าน</label>
-                        <div class="col-md-5">
-                            <input type="password" class="form-control" id="password" name="password" value='<?php echo isset($password) ? $password : ''; ?>'>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-3" for="confirm_password">ยืนยันรหัสผ่าน</label>
-                        <div class="col-md-5">
-                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" value='<?php echo isset($confirm_password) ? $confirm_password : ''; ?>'>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="form-group">
+                                            <label class="control-label col-md-3" for="password">รหัสผ่าน</label>
+                                            <div class="col-md-5">
+                                                <input type="password" class="form-control" id="password" name="password" value='<?php echo isset($password) ? $password : ''; ?>'>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-3" for="confirm_password">ยืนยันรหัสผ่าน</label>
+                                            <div class="col-md-5">
+                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" value='<?php echo isset($confirm_password) ? $confirm_password : ''; ?>'>
+                                            </div>
+                                        </div>-->
                     <div class="form-group">
                         <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
                         <div class="col-md-5">
@@ -86,7 +85,7 @@ $(document).ready(function(){
                             <input type="text" class="form-control" id="lname" name="lname" placeholder="lastname" value='<?php echo isset($lname) ? $lname : ''; ?>'>
                         </div>
                     </div>
-<!--                    <div class="form-group"> 
+                    <div class="form-group"> 
                         <label class="control-label col-md-3" for="user_type_id">ประเภทผู้ใช้</label>
                         <div class="col-md-4">
                             <select class='form-control input-xlarge'id="user_type_id" name="user_type_id">
@@ -97,7 +96,7 @@ $(document).ready(function(){
                                 ?>
                             </select>              
                         </div>
-                    </div>-->
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3" for="phone">โทรศัพท์</label>
                         <div class="col-md-5">
@@ -107,9 +106,9 @@ $(document).ready(function(){
 
                     <div class="form-group">
 
-                            <div class="checkbox" >
-                                <label class="control-label col-md-offset-3"><input type="checkbox" id='agree' name='agree' value='1'>ยืนยันข้อมูลถูกต้อง</label>
-                            </div>
+                        <div class="checkbox" >
+                            <label class="control-label col-md-offset-3"><input type="checkbox" id='agree' name='agree' value='1'>ยืนยันข้อมูลถูกต้อง</label>
+                        </div>
 
                     </div>            
                     <div class="form-group">
@@ -122,28 +121,28 @@ $(document).ready(function(){
         </div>
     </div>
 </div>
-<?php 
-require_once INC_PATH.'footer.php';                                
+<?php
+require_once INC_PATH . 'footer.php';
 //var_dump($_SESSION['user']);
 ?>
 <script>
-   $(function() {
+    $(function () {
 
-      $( "#school_id" ).autocomplete({
-         source: "<?php echo SITE_URL ?>ajax/search_school.php",
-         minLength: 2
-      });
-   });
+        $("#school_id").autocomplete({
+            source: "<?php echo SITE_URL ?>ajax/search_school.php",
+            minLength: 2
+        });
+    });
 </script>
 <?php
 
 function do_update() {
     global $db;
     $data = &$_POST;
-    //var_dump($data);
+    var_dump($data);
     //die();
     foreach ($_POST as $k => $v) {
-            $$k = pq($v);  // set variable to form
+        $$k = pq($v);  // set variable to form
     }
     $id = $_SESSION['user']['id'];
 
@@ -153,17 +152,23 @@ function do_update() {
                 fname = {$fname},
                 lname = {$lname},
                 school_id = {$school_id},
+                user_type_id = {$user_type_id},
                 email = {$email} 
             WHERE
                 user_id = {$user_id};
 EOD;
     mysqli_query($db, $sql);
-    if (mysqli_affected_rows($db)>0){   
-        $_SESSION['info'][] = "แก้ไขเรียบร้อยครับ";
-        redirect('home/index');
+    if (mysqli_affected_rows($db) > 0) {
+        set_info("แก้ไขเรียบร้อยครับ");
+        redirect('admin/list-user');
     } else {
-        $_SESSION['err'][] = "แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล".  mysqli_error($db) .$sql;        
-        redirect('user/edit-user');
+        if (mysqli_error($db)) {
+            set_err("แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql);
+            redirect('admin/edit-user');
+        } else {
+            set_err('ไม่มีข้อมูลเปลี่ยนแปลง');
+        }
+        redirect('admin/list-user');
     }
     /* close statement and connection */
     //redirect();
@@ -177,7 +182,6 @@ function get_info($user_id) {
     $row = mysqli_fetch_assoc($result);
     return $row;
 }
-
 
 function do_validate($data) {
 //    var_dump($data);

@@ -18,34 +18,70 @@ require_once INC_PATH . 'header.php';
         <h3 class="text-center">เมนูระบบงานสถานศึกษา</h3>
     </div>
     <div class="row">
-        <div class=" col-xs-6 col-md-3">
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('school/list-school-type');?>">
+                    <img src="<?php echo IMG_URL.'menu/school.png';?>" class="img-responsive" />                
+            </a>
+            <!--<a href="<?php echo site_url('school/list-school-type');?>" class="btn btn-link btn-lg btn-block" role="button">ข้อมูลสถานศึกษา</a>-->            
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('trainer/list-trainer');?>">
+                    <img src="<?php echo IMG_URL.'menu/trainer.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('student/list-student');?>">
+                    <img src="<?php echo IMG_URL.'menu/student1.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('training/list-training');?>">
+                    <img src="<?php echo IMG_URL.'menu/training.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
             </a>
         </div>
-        <div class="col-xs-6 col-md-3">
+        <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
             </a>
         </div>
-        <div class="col-xs-6 col-md-3">
-            <a href="<?php echo site_url('admin/list-user');?>">
-                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
-            </a>
-        </div>
-        <div class="col-xs-6 col-md-3">
-            <a href="<?php echo site_url('admin/list-user');?>">
-                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
-            </a>
-        </div>
+
     </div>
     <div class="row">
-        <div class="col-md-3">
-                    <a href="<?php echo site_url('admin/list-user') ?>"><img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" /></a>
+        <div class=" col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
         </div>
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-3">.col-md-3</div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
     </div>    
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>
