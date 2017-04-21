@@ -115,8 +115,8 @@ function do_editdoschoolvg() {
     $query = "update do_school_vg set
 	vg_id=" . pq($data['vg_id']) . ","
             . "school_id=" . pq($data['school_id']) . ","
-            . "date_vg=" . pq($data['date_vg']) ."
-where do_school_vg_id = " . pq($data['do_school_vg_id']). ";";
+            . "date_vg=" . pq($data['date_vg']) . "
+where do_school_vg_id = " . pq($data['do_school_vg_id']) . ";";
     //echo $query; exit();
     $result = mysqli_query($db, $query);
     if (mysqli_affected_rows($db) == 0) {

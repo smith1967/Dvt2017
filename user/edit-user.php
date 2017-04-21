@@ -161,7 +161,7 @@ EOD;
         if (mysqli_error($db)) {
             set_err("แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql);            
         } else {
-            set_err('ไม่มีข้อมูลเปลี่ยนแปลง');
+            set_info('ไม่มีข้อมูลเปลี่ยนแปลง');
         }        
     }
     /* close statement and connection */
