@@ -6,7 +6,7 @@ if (!defined('BASE_PATH'))
     <div>
         <ol class="breadcrumb">
             <li><a href="<?php echo site_url() ?>">หน้าหลัก</a></li>
-            <li class='active'>จัดการระบบ</li>
+            <li class='active'>จัดการข้อมูลนักเรียน</li>
         </ol>
     </div>
     <div class='submenu'>
@@ -15,7 +15,7 @@ if (!defined('BASE_PATH'))
             'home' => array(
                 'title' => 'ข้อมูลนักเรียน',
                 'url' => 'student/index',
-                'cond' => true,
+                'cond' => false,
             ),
             'list-alluser' => array(
                 'title' => 'จัดการผู้ใช้',
@@ -43,7 +43,7 @@ if (!defined('BASE_PATH'))
                 'cond' => true,
             ),
             'list-student' => array(
-                'title' => 'แก้ไขข้อมูลนักเรียน',
+                'title' => 'รายชื่อข้อมูลนักเรียน',
                 'url' => 'student/list-student',
                 'cond' => true,
             ),
