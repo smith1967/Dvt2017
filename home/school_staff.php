@@ -42,7 +42,7 @@ require_once INC_PATH . 'header.php';
             </a>
         </div>
         <div class="col-xs-4 col-md-2">
-<<<<<<< HEAD
+
             <a href="<?php echo site_url('business/list-business');?>">
                     <img src="<?php echo IMG_URL.'menu/business.png';?>" style="width:100px;hight:120px" class="img-responsive" />                
             </a>
@@ -50,7 +50,7 @@ require_once INC_PATH . 'header.php';
         <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" style="width:100px;hight:120px" class="img-responsive" />                
-=======
+
             <a href="<?php echo site_url('mou/list-mou');?>">
                     <img src="<?php echo IMG_URL.'menu/mou.png';?>" class="img-responsive" />                
             </a>
@@ -58,7 +58,7 @@ require_once INC_PATH . 'header.php';
         <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('do_school_vg/list-do_school_vg');?>">
                     <img src="<?php echo IMG_URL.'menu/vg_do_school.png';?>" class="img-responsive" />                
->>>>>>> 8afbfa2fa157349ffdc871fd474a48ad7faa0b2e
+
             </a>
         </div>
 
