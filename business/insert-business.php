@@ -5,7 +5,7 @@ $title = "เพิ่มข้อมูลสถานประกอบกา�
 $active = 'business';
 $property = array();
 $benefit = array();
-//$subactive = 'edit-group-config';
+$subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
    var_dump($data);
@@ -353,10 +353,10 @@ $(function(){
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (empty($data['business_id'])) {
-        set_err('กรุณากรอกรหัสสถานประกอบการ');
-        $valid = false;
-    }
+//    if (empty($data['business_id'])) {
+//        set_err('กรุณากรอกรหัสสถานประกอบการ');
+//        $valid = false;
+//    }
     if (empty($data['business_name'])) {
         set_err('กรุณากรอกชื่อสถานประกอบการ');
         $valid = false;
