@@ -9,13 +9,10 @@ $subactive = 'upload-std';
 //$_SESSION['school_id']='1320026101'; //==========fix session  วท.ชลบุรี
 //$_SESSION['school_id']='1316016101'; //==========fix session ลพบุรี
 //$_SESSION['school_id']='1346146401'; //==========fix session  ห้วยผึ้ง
-
-//$school_id=$_SESSION['user']['school_id'];
-
 //$school_id=1320026101;
 $school_id=$_SESSION['user']['school_id'];
 $school_name= getSchoolName($school_id);
-//echo "school_id=".$school_id;
+// echo "school_id=".$school_id;
 ?>
 <?php
 /* -- upload process -- */
@@ -24,7 +21,7 @@ if (isset($_POST['submit'])):
 endif;
 ?>
 <?php
-//   $submenu['home']['cond']=false;
+// $submenu['home']['cond']=false;
 // show_message();
 //echo gen_menu($menu_class, $submenu, $subactive);
 
@@ -44,7 +41,11 @@ if (isset($_GET['action'])) {
 
 <div class='container'>
     <?php include_once INC_PATH . 'submenu-school.php'; ?>
+<?php   
+echo "school_id=".$school_id."<br >";
+echo "schoolname=".$school_name;
 
+?>
     <div class="page-header">
         <h3>โอนข้อมูลสถานศึกษา <?php echo $school_name ?></h3>
         <?php //echo "school_id=".$school_id ?>
@@ -112,19 +113,16 @@ function do_upload() {
     if (strtolower($ext) != 'csv') {
         set_err("ชนิดของไฟล์ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้งครับ");
     }
-
     if ($_FILES["uploadfile"]["error"] > 0) {
         //echo "Error: " . $_FILES["uploadfile"]["error"] . "<br>";
         set_err("<p>Error: " . $_FILES["uploadfile"]["error"] . "<p/>");
     }
-
     if (file_exists($stdfile)) {
         unlink($stdfile);
     }
     if (!move_uploaded_file($filename, $stdfile)) {
         set_err("อัพโหลดไฟล์ข้อมูลผิดพลาด :" . $stdfile);
     }
-
     redirect('school/file-manager');
 }
 
