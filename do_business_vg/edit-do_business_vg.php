@@ -36,6 +36,7 @@ require_once INC_PATH . 'header.php';
     });
 </script>
 <div class="container">
+        <?php include_once INC_PATH . 'submenu-do_business_vg.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -44,7 +45,7 @@ require_once INC_PATH . 'header.php';
                 <form method="post" class="form-horizontal" action="">
                     <div class="form-group">
                         <label for="do_business_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <input type="text" class="form-control" readonly="" id="do_business_vg_id"  name="do_business_vg_id"value="<?php set_var($do_business_vg_id); ?>">
                          
                         </div>
@@ -52,7 +53,7 @@ require_once INC_PATH . 'header.php';
                     
                      <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
-                        <div class="col-md-2">                       
+                        <div class="col-md-4">                       
                             <?php
                             $sql = "select * from vocation_group";                           
                             ?>

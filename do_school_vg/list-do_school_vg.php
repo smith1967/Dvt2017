@@ -20,6 +20,7 @@ $params = array(
 );
 $params = http_build_query($params);
 $DoSchoolVg = get_DoSchoolVg($page, $limit);
+//var_dump($DoSchoolVg);
 //    $total = get_total();
 $url = site_url('do_school_vg/list-do_school_vg&') . $params;
 //    var_dump($businesslist);
@@ -53,7 +54,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <th>ชื่อสถานศึกษา</th>
                     <th>วันที่เข้าร่วม กรอ.</th>
                     <th colspan="2">จัดการ</th>
-                    <th><a href="<?php echo site_url('do_school_vg/insert-do_school_vg'); ?>" >เพิ่มข้อมูล</a></th>
                 </tr>
             </thead>
             <tbody>
@@ -62,7 +62,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     ?>                            
                     <tr>
                     
-                        <td><?php echo getvocationgroup($doschool['vg_id']); ?></td>
+                        <td><?php echo $doschool['vg_name']; ?></td>
                         <td><?php echo getSchoolName($doschool['school_id']); ?></td>
                         <td><?php echo $doschool['date_vg']; ?></td>
                         <td>
@@ -85,16 +85,20 @@ function getvocationgroup($vg_id){
     $query = "SELECT * FROM vocation_group where vg_id='".$vg_id."'";
     //echo $query;
     $rs = mysqli_query($db, $query);
-    $row = mysqli_fetch_array($rs);
+    $row = mysqli_fetch_assoc($rs);
     return $row['vg_name'];
 }
 function get_DoSchoolVg($page = 0, $limit = 10) {
     global $db;
     $start = $page * $limit;
-    $query = "SELECT * FROM do_school_vg LIMIT " . $start . "," . $limit . "";
+    $query = "SELECT ds.*,vg.vg_name FROM do_school_vg AS ds,vocation_group AS vg WHERE ds.vg_id = vg.vg_id LIMIT " . $start . "," . $limit . "";
     $result = mysqli_query($db, $query);
+//    if(mysqli_error($db)){
+//        var_dump(mysqli_error($db));
+//        die();
+//    }
     $DoSchoolVg = array();
-    while ($row = mysqli_fetch_array($result)) {
+    while ($row = mysqli_fetch_assoc($result)) {
         $DoSchoolVg[] = $row;
     }
     return $DoSchoolVg;

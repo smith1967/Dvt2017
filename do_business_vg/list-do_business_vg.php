@@ -3,7 +3,7 @@ if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "สถานประกอบการทำกรอ.";
 $active = 'business';
-$subactive = 'list-do_business_vg';
+$subactive = 'list';
 //is_admin('home/index');
 ?>
 <?php
@@ -34,7 +34,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 <?php require_once INC_PATH . 'header.php'; ?>
 
 <div class="container">
-    <?php include_once INC_PATH . 'submenu-admin.php'; ?>
+    <?php include_once INC_PATH . 'submenu-do_business_vg.php'; ?>
     <?php
     show_message();
     ?> 
@@ -47,7 +47,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <th>ชื่อสถานประกอบการ</th>
                     <th>วันที่เข้าร่วม กรอ.</th>
                     <th colspan="2">จัดการ</th>
-                    <th><a href="<?php echo site_url('do_business_vg/insert-do_business_vg'); ?>" >เพิ่มข้อมูล</a></th>
+                    <!--<th><a href="<?php echo site_url('do_business_vg/insert-do_business_vg'); ?>" >เพิ่มข้อมูล</a></th>-->
                 </tr>
             </thead>
             <tbody>

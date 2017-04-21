@@ -153,6 +153,7 @@ function do_update() {
                 lname = {$lname},
                 school_id = {$school_id},
                 user_type_id = {$user_type_id},
+                phone = {$phone},
                 email = {$email} 
             WHERE
                 user_id = {$user_id};
@@ -166,7 +167,11 @@ EOD;
             set_err("แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql);
             redirect('admin/edit-user');
         } else {
-            set_err('ไม่มีข้อมูลเปลี่ยนแปลง');
+        if (mysqli_error($db)) {
+            set_err("แก้ไขข้อมูลไม่สำเร็จกรุณาตรวจสอบข้อมูล" . mysqli_error($db) . $sql);            
+        } else {
+            set_info('ไม่มีข้อมูลเปลี่ยนแปลง');
+        }     
         }
         redirect('admin/list-user');
     }

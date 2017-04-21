@@ -2,8 +2,8 @@
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
 $title = "เพิ่มข้อมูลสถานประกอบการ การร่วมภาครัฐและเอกชน";
-$active = 'do_business_vg_id';
-//$subactive = 'edit-group-config';
+$active = 'do_business_vg';
+$subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
@@ -29,22 +29,23 @@ require_once INC_PATH . 'header.php';
     });
 </script>
 <div class="container">
+        <?php include_once INC_PATH . 'submenu-do_business_vg.php'; ?>
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">เพิ่มข้อมูลสถานประกอบการ การร่วมภาครัฐและเอกชน</div>
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
-                    <div class="form-group">
+<!--                    <div class="form-group">
                         <label for="do_business_vg_id" class="col-md-3 control-label">รหัสการร่วมภาครัฐและเอกชน</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="do_business_vg_id" name="do_business_vg_id">
                         </div>
-                    </div>
+                    </div>-->
                      
                     <div class="form-group">
                         <label for="vg_id" class="col-md-3 control-label">กลุ่มอาชีพ</label>
-                        <div class="col-md-2">
+                        <div class="col-md-4">
                             <?php
                             $sql = "select * from vocation_group";
                             ?>
@@ -97,10 +98,10 @@ require_once INC_PATH.'footer.php';
 function do_validate($data) {
     $valid = true;
     $data = &$_POST;
-    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['do_business_vg_id'])) {
-        set_err('กรุณากรอกรหัสสถานประกอบการ การร่วมภาครัฐและเอกชน');
-        $valid = false;
-    }
+//    if (!preg_match('/[a-zA-Z0-9_]{1,}/', $data['do_business_vg_id'])) {
+//        set_err('กรุณากรอกรหัสสถานประกอบการ การร่วมภาครัฐและเอกชน');
+//        $valid = false;
+//    }
     if (empty($data['vg_id'])) {
         set_err('กรุณาเลือกกลุ่มอาชีพ');
         $valid = false;
@@ -121,7 +122,7 @@ function do_insert() {
             . " `business_id`,"
             . " `date_vg`)"
             . " VALUES ("
-            . pq($data['do_business_vg_id']) . ","
+            . "NULL,"
             . pq($data['vg_id']) . ","
             . pq($data['business_id']) . ","
             . pq($data['date_vg']) . ");";
