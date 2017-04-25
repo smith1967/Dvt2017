@@ -68,8 +68,7 @@ function validate_std_file($filename) {
 //print_r($col_names);
     foreach ($stdcol as $col) {
         if (!in_array($col, $col_names)) {
-            $valid = FALSE;
-             
+            $valid = FALSE;           
         }
     }
     
