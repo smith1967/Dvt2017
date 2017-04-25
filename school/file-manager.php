@@ -42,8 +42,8 @@ if (isset($_GET['action'])) {
 <div class='container'>
     <?php include_once INC_PATH . 'submenu-school.php'; ?>
 <?php   
-echo "school_id=".$school_id."<br >";
-echo "schoolname=".$school_name;
+// echo "school_id=".$school_id."<br >";
+// echo "schoolname=".$school_name;
 
 ?>
     <div class="page-header">
