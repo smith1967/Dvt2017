@@ -289,12 +289,52 @@ function list_form_edit(){
 function list_form_init(){
     global $school_id;
     global $db;
-$sql = "SELECT * from school WHERE school_id='$school_id'";
+// $sql1 = "SELECT * from school WHERE school_id='$school_id'";
+// $result1 = mysqli_query($db, $sql);
+// $row1 = mysqli_fetch_array($result1);
+
+
+$sql = "SELECT
+pv.PROVINCE_CODE,
+pv.PROVINCE_NAME,
+dt.DISTRICT_CODE,
+dt.DISTRICT_NAME,
+am.AMPHUR_CODE,
+am.AMPHUR_NAME,
+sh.school_id,
+sh.school_name,
+sh.school_type_id,
+sh.address_no,
+sh.road,
+sh.tumbon,
+sh.aumphur,
+sh.province,
+sh.postcode,
+sh.phone,
+sh.fax,
+sh.zone,
+sh.location,
+sh.catagory,
+sh.institute_id,
+ins.institute_id,
+ins.institute_name
+FROM
+school AS sh ,
+province AS pv ,
+district AS dt ,
+amphur AS am ,
+institute AS ins
+WHERE
+sh.province = pv.PROVINCE_CODE AND
+sh.tumbon = dt.DISTRICT_CODE AND
+sh.aumphur = am.AMPHUR_CODE AND
+sh.institute_id = ins.institute_id AND 
+sh.school_id = '$school_id' ";
 $result = mysqli_query($db, $sql);
 $row = mysqli_fetch_array($result);
 
 ?>
-<div class="table-responsive  col-md-5">
+<div class="table-responsive  col-md-7">
  <table class="table table-hover table-striped">
     <thead>
       <tr>
@@ -325,17 +365,34 @@ $row = mysqli_fetch_array($result);
      </tr>
      <tr>
         <td>จังหวัด</td>
-        <td> <?php echo $row['province'];?> </td>
+        <td> <?php 
+        echo $row['province'];
+        echo "(" ;
+        echo $row['PROVINCE_NAME'];
+        echo ")";     
+        
+        ?> </td>
      </tr>
       <tr>
-        <td>อำเภอ</td>
-        <td> <?php echo $row['aumphur'];?> </td>
+      <td>อำเภอ</td>
+       <td> <?php 
+        echo $row['aumphur'];
+        echo "(" ;
+        echo $row['AMPHUR_NAME'];
+        echo ")";     
+        
+        ?> </td>
      </tr>
      
      <tr>
-        <td>ตำบล</td>
-         <td> <?php echo $row['tumbon'];?> </td>
-     </tr>
+     <td>ตำบล</td>
+        <td> <?php 
+        echo $row['tumbon'];
+        echo "(" ;
+        echo $row['DISTRICT_NAME'];
+        echo ")";     
+        
+        ?> </td>
       
      <tr>
         <td>รหัสไปรษณีย์</td>
@@ -363,8 +420,14 @@ $row = mysqli_fetch_array($result);
      </tr>
      <tr>
         <td>สังกัดหน่วยงาน</td>
-          <td> <?php echo $row['institute_id'];?> </td>
-     </tr>
+        <td> <?php 
+        echo $row['institute_id'];
+        echo "(" ;
+        echo $row['institute_name'];
+        echo ")";     
+        
+        ?> </td>
+         
       <tr>
      <td>  <a href="index.php?school/list-data-school&action=edit">แก้ไขข้อมูล<span class="glyphicon glyphicon-pencil"></span></a> </td>
      </tr>  
