@@ -8,6 +8,7 @@ $subactive = 'insert';
 if (isset($_POST['submit'])) {
     $data = $_POST;
 //    var_dump($data);
+//    die();
     $valid = do_validate($data);  // check ความถูกต้องของข้อมูล
     if ($valid) {
         do_insert();
@@ -66,10 +67,11 @@ require_once INC_PATH . 'header.php';
                             <textarea class="form-control" id="address" rows="3" name="address" ><?php set_var($address); ?></textarea>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control" id="business_id" name="business_id" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_id); ?>">
                     <div class="form-group">
-                        <label for="business_id" class="col-md-3 control-label">รหัสสถานประกอบการ</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="business_id" name="business_id" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_id); ?>">
+                        <label for="business_name" class="col-md-3 control-label">ชื่อสถานประกอบการ</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="business_name" name="business_name" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_name); ?>">
                         </div>
                     </div>
                     <div class="form-group"> 
@@ -150,9 +152,14 @@ require_once INC_PATH . 'header.php';
 <!-- Javascript -->
 <script>
    $(function() {
-      $( "#business_id" ).autocomplete({
+      $( "#business_name" ).autocomplete({
+         minLength: 2, 
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 1
+         select: function (event, ui) {
+            $("#business_name").val(ui.item.label); // display the selected text
+            $("#business_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }         
       });
    });
 </script> 

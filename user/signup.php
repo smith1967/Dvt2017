@@ -153,6 +153,7 @@ function do_save() {
             . "`phone`, "
             . "`school_id`, "
             . "`user_type_id`, "
+            . "`register_date`, "
             . "`status`"
             . ") VALUES ("
             . "NULL, "
@@ -164,6 +165,7 @@ function do_save() {
             . pq($data['phone']) . ", "
             . pq($data['school_id']) . ", "
             . pq($data['user_type_id']) . ","
+            . "NOW(),"
             . "'N');";
 //    die("sql: " . $sql);
     mysqli_query($db, $sql);

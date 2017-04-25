@@ -36,10 +36,10 @@ session_start();
 ///////////////////////////////////////////////////////////
 $site_url = 'http://localhost/dvt2017/';  // เปลี่ยนตาม site ที่ติดตั้ง
 //$fis_year = '2556';         
-$site_title = 'dvt2017';
-$site_subtitle = 'Dvt 2017';
-$version = 'Dvt0.1';
-$project = "Dvt 2017";
+$site_title = 'dve2017';
+$site_subtitle = 'Dve 2017';
+$version = 'Dve0.1';
+$project = "Dve 2017";
 $auhtor = "it-dev";
 $author_email = "smith@cstc.ac.th";
 // database parameter
@@ -65,7 +65,7 @@ define('JS_URL', SITE_URL.'js/');
 define('CSS_URL', SITE_URL.'css/');
 define('IMG_URL', SITE_URL.'images/');
 define('FONTS_URL', SITE_URL.'fonts/');
-define('COLLEGE_NAME', 'สำนักงานการอาชีวศึกษา');
+define('OU_NAME', 'สำนักงานการอาชีวศึกษา');
 
 /*--- Database connect ---*/
 $db = mysqli_connect($host, $user, $password, $database);

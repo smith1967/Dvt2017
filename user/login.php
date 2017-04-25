@@ -72,15 +72,35 @@ function do_login($data) {
             $_SESSION['user'] = $row;
 //            var_dump($_SESSION);
 //            die();
+            do_insert_log($data['username'],'Y');
             set_info('ยินดีต้อนรับคุณ'.$row['fname']);
             redirect();
         } else {
+            do_insert_log($data['username'],'N');
             set_err("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!!");
         }
     }  else {
+            do_insert_log($data['username'],'N');
         set_err("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!!");
     }
 }
-?>
+
+function do_insert_log($username,$event){
+    global $db;
+    $query = "INSERT INTO `access_log` ("
+            . "`id`, "
+            . "`username`, "
+            . "`event` "
+            . ") VALUES ("
+            . "NULL, "
+            . pq($username) . ", "
+            . pq($event).")";
+//    var_dump($query);
+//    die();
+    $result = mysqli_query($db, $query);
+    if(mysqli_error($db)){
+        set_err('ไม่สามารถบันทึกข้อมูลได้');
+    }
+}
 
 
