@@ -18,21 +18,46 @@
                     'url' => 'home/index',
                     'cond' => true,
                 ),
-                'training' => array(
-                    'title' => 'ข้อมูลการฝึกงาน',
-                    'url' => 'training/list-training',
-                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff()  ,
+                'admin' => array(
+                    'title' => 'ผู้ดูแลระบบ',
+                    'url' => 'admin/index',
+                    'cond' => is_admin(),
                 ),
-                'school' => array(
-                    'title' => 'ข้อมูลสถานศึกษา',
-                    'url' => 'school/list-school-type',
-                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
+                'dvt_admin' => array(
+                    'title' => 'ผู้ดูแลระบบทวิภาคี',
+                    'url' => 'home/dvt_admin',
+                    'cond' => is_dvt_admin(),
                 ),
-                'student' => array(
-                    'title' => 'ข้อมูลนักศึกษา',
-                    'url' => 'student/list-student',
-                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
+                'dvt_staff' => array(
+                    'title' => 'เจ้าหน้าที่ส่วนกลาง',
+                    'url' => 'home/dvt_staff',
+                    'cond' => is_dvt_staff(),
                 ),
+                'dvt_staff' => array(
+                    'title' => 'เจ้าหน้าที่สถานศึกษา',
+                    'url' => 'home/school_staff',
+                    'cond' => is_school_staff(),
+                ),
+//                'training' => array(
+//                    'title' => 'ข้อมูลการฝึกงาน',
+//                    'url' => 'training/list-training',
+//                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff()  ,
+//                ),
+//                'school' => array(
+//                    'title' => 'ข้อมูลสถานศึกษา',
+//                    'url' => 'school/list-school-type',
+//                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
+//                ),
+//                'student' => array(
+//                    'title' => 'ข้อมูลนักศึกษา',
+//                    'url' => 'student/list-student',
+//                    'cond' => is_admin() || is_dvt_admin() || is_dvt_staff() || is_school_staff(),
+//                ),
+//                'business' => array(
+//                    'title' => 'ข้อมูลสถานประกอบการ',
+//                    'url' => 'business/list-business',
+//                    'cond' => is_auth(),
+//                ),
                 'signup' => array(
                     'title' => 'ลงทะเบียน',
                     'url' => 'user/signup',
@@ -43,11 +68,6 @@
 //                    'url' => 'user/change-password',
 //                    'cond' => true,
 //                ),
-                'business' => array(
-                    'title' => 'ข้อมูลสถานประกอบการ',
-                    'url' => 'business/list-business',
-                    'cond' => is_auth(),
-                ),
                 'edit-user' => array(
                     'title' => 'แก้ไขข้อมูลผู้ใช้',
                     'url' => 'user/edit-user',

@@ -34,12 +34,21 @@ class acl {
         }
     }
     function is_dvt_admin($url){
-        $url_list = array('home/index');
+        $url_list = array(
+            'home/index',
+            'home/dvt_admin',
+            'user/edit-user',
+            'do_school_vg/list-do_school_vg'
+            );
         $this->allowed = in_array($url, $url_list);
     }
 
     function is_dvt_staff($url){
-        $url_list = array('home/index');
+        $url_list = array(
+            'home/index',
+            'user/edit-user',
+            'do_school_vg/list-do_school_vg'
+            );
         $this->allowed = in_array($url, $url_list);
     }
     function is_school_staff($url){

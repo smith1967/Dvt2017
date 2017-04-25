@@ -4,7 +4,7 @@ if (!defined('BASE_PATH'))
 $title = "ผู้ดูแลระบบ";
 $active = 'admin';
 $subactive = 'home';
-is_admin('home/index');
+//is_admin('home/index');
 // check condition
 //if (isset($_POST)) {
 //    $data = $_POST;
@@ -26,57 +26,79 @@ require_once INC_PATH . 'header.php';
     <?php
     show_message();
     ?> 
-    <div class="jumbotron">
+    <div class="page-header">
         <h3 class="text-center">เมนูผู้ดูแลระบบ</h3>
     </div>
     <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">รายชื่อผู้ใช้งาน</h3>
-                </div>
-                <div class="panel-body">
-                    <a href="<?php echo site_url('admin/list-user') ?>">รายชื่อผู้ใช้งาน</a>
-                </div>
-            </div>                
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('school/list-school-type');?>">
+                    <img src="<?php echo IMG_URL.'menu/school.png';?>" class="img-responsive" />                
+            </a>
+<!--            <a href="<?php echo site_url('school/list-school-type');?>" class="btn btn-link btn-lg btn-block" role="button">
+            ข้อมูลสถานศึกษา
+            </a>            -->
         </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('trainer/list-trainer');?>">
+                    <img src="<?php echo IMG_URL.'menu/trainer.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('student/list-student');?>">
+                    <img src="<?php echo IMG_URL.'menu/student1.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('training/list-training');?>">
+                    <img src="<?php echo IMG_URL.'menu/training.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('mou/list-mou');?>">
+                    <img src="<?php echo IMG_URL.'menu/mou.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('do_school_vg/list-do_school_vg');?>">
+                    <img src="<?php echo IMG_URL.'menu/vg_do_school.png';?>" class="img-responsive" />                
+            </a>
+        </div>
 
-                <div class="panel-body">
-                    <a href="<?php echo site_url('admin/signup') ?>">เพิ่มผู้ใช้งาน</a>
-                </div>
-                <div class="panel-footer">
-                    <h3 class="panel-title text-center"><a href="<?php echo site_url('admin/signup') ?>">เพิ่มผู้ใช้งาน</a></h3>
-                </div>
-            </div>                
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">เพิ่มผู้ใช้งาน</h3>
-                </div>
-                <div class="panel-body">
-                    <a href="<?php echo site_url('admin/signup') ?>">เพิ่มชื่อผู้ใช้งาน</a>
-                </div>
-            </div>                
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">เพิ่มผู้ใช้งาน</h3>
-                </div>
-                <div class="panel-body">
-                    <a href="<?php echo site_url('admin/signup') ?>">เพิ่มชื่อผู้ใช้งาน</a>
-                </div>
-            </div>                
-        </div>
     </div>
     <div class="row">
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-3">.col-md-3</div>
-        <div class="col-md-3">.col-md-3</div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('do_ems/list-do_ems');?>">
+                    <img src="<?php echo IMG_URL.'menu/ems.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('do_business_vg/list-do_business_vg');?>">
+                    <img src="<?php echo IMG_URL.'menu/vg_do_business.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+<!--            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>-->
+            <a href="<?php echo site_url('admin/list-user');?>" class="btn btn-link btn-lg btn-block" role="button">
+            รายชื่อผู้ใช้งาน
+            </a>            
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('admin/list-user');?>">
+                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+            </a>
+        </div>
     </div>    
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>

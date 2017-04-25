@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
         foreach ($user_info as $key => $value) {
             $$key = $value;
         }
+        $password = '';
     }
 }
 require_once INC_PATH . 'header.php';
@@ -49,18 +50,18 @@ require_once INC_PATH . 'header.php';
                             <input type="text" class="form-control" id="username" name="username" readonly value='<?php echo isset($username) ? $username : ''; ?>'>
                         </div>
                     </div>
-                    <!--                    <div class="form-group">
-                                            <label class="control-label col-md-3" for="password">รหัสผ่าน</label>
-                                            <div class="col-md-5">
-                                                <input type="password" class="form-control" id="password" name="password" value='<?php echo isset($password) ? $password : ''; ?>'>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-3" for="confirm_password">ยืนยันรหัสผ่าน</label>
-                                            <div class="col-md-5">
-                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" value='<?php echo isset($confirm_password) ? $confirm_password : ''; ?>'>
-                                            </div>
-                                        </div>-->
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="password">รหัสผ่าน</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="password" name="password" value='<?php set_var($password); ?>'>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3" for="confirm_password">ยืนยันรหัสผ่าน</label>
+                        <div class="col-md-5">
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" value='<?php set_var($confirm_password);; ?>'>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
                         <div class="col-md-5">
@@ -142,22 +143,35 @@ function do_update() {
     var_dump($data);
     //die();
     foreach ($_POST as $k => $v) {
-        $$k = pq($v);  // set variable to form
+        $$k = $v;  // set variable to form
     }
-    $id = $_SESSION['user']['id'];
-
-    $sql = <<<EOD
-            UPDATE user SET 
-                username = {$username},
-                fname = {$fname},
-                lname = {$lname},
-                school_id = {$school_id},
-                user_type_id = {$user_type_id},
-                phone = {$phone},
-                email = {$email} 
-            WHERE
-                user_id = {$user_id};
-EOD;
+//    $id = $_SESSION['user']['id'];
+    if(empty($password)):
+    $sql = "UPDATE user SET "
+                . "username = ".pq($username).","
+                . "fname = ".pq($fname).","
+                . "lname = ".pq($lname).","
+                . "school_id = ".pq($school_id).","
+                . "user_type_id = ".pq($user_type_id).","
+                . "phone = ".pq($phone).","
+                . "email = ".pq($email)
+            ."WHERE "
+                . "user_id = ".pq($user_id).";";
+    else:
+    $sql = "UPDATE user SET "
+                . "username = ".pq($username).","
+                . "fname = ".pq($fname).","
+                . "lname = ".pq($lname).","
+                . "school_id = ".pq($school_id).","
+                . "user_type_id = ".pq($user_type_id).","
+                . "password = MD5(".  strip_tags($password)."),"
+                . "phone = ".pq($phone).","
+                . "email = ".pq($email)
+            ."WHERE "
+                . "user_id = ".pq($user_id).";";
+    endif;         
+//    var_dump($sql);
+//    die();
     mysqli_query($db, $sql);
     if (mysqli_affected_rows($db) > 0) {
         set_info("แก้ไขเรียบร้อยครับ");
@@ -205,14 +219,16 @@ function do_validate($data) {
 //        set_err('ชื่อผู้ใช้ต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 5 ตัวอักษร');
 //        $valid = FALSE;
 //    }    
-//    if (!preg_match('/[a-zA-Z0-9_@]{6,}/', $data['password'])) {
-//        set_err('รหัสผ่านต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 6 ตัวอักษร');
-//        $valid = FALSE;
-//    }
-//    if ($data['password'] != $data['confirm_password']) {
-//        set_err('รหัสยืนยันไม่ตรงกับรหัสผ่าน');
-//        $valid = FALSE;
-//    }
+    if (!empty($data['password'])) {
+        if (!preg_match('/[a-zA-Z0-9_@]{6,}/', $data['password'])) {
+            set_err('รหัสผ่านต้องเป็นตัวเลขหรือตัวอักษรภาษาอังกฤษ ความยาวไม่ต่ำกว่า 6 ตัวอักษร');
+            $valid = FALSE;
+        }
+        if ($data['password'] != $data['confirm_password']) {
+            set_err('รหัสยืนยันไม่ตรงกับรหัสผ่าน');
+            $valid = FALSE;
+        }
+    }
 //    if ($data['password'] == $data['username']) {
 //        set_err('ชื่อผู้ใช้กับรหัสผ่านต้องไม่เหมือนกัน');
 //        $valid = FALSE;
