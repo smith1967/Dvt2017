@@ -38,25 +38,39 @@ require_once INC_PATH . 'header.php';
                     <label class="control-label col-md-3" for="training_id">รหัสการฝึกอาชีพ</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="training_id" name="training_id"></div>
                 </div>-->
+                <input type="hidden" class="form-control" id="citizen_id" name="citizen_id" value="<?php set_var($citizen_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="citizen_id">รหัสบัตรประชาชน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="citizen_id" placeholder="ชื่อนักศึกษา" name="citizen_id" value="<?php set_var($citizen_id)?>"></div>
+                    <label class="control-label col-md-3" for="std_name">ชื่อนักศึกษา</label>
+                    <div class="col-md-3 ">
+                        <input type="text" class="form-control" id="std_name" placeholder="ชื่อนักศึกษา" name="std_name" value="<?php set_var($std_name)?>">
+                    </div>
+                </div>
+                <input type="hidden" class="form-control" id="business_id"  name="business_id" value="<?php set_var($business_id)?>">
+                <div class="form-group"> 
+                    <label class="control-label col-md-3" for="business_name">รหัสสถานประกอบการ</label>
+                    <div class="col-md-3 ">
+                        <input type="text" class="form-control" id="business_name" placeholder="ชื่อสถานประกอบการ" name="business_name" value="<?php set_var($business_name)?>">
+                    </div>
                 </div>
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="business_id" placeholder="ชื่อสถานประกอบการ" name="business_id" value="<?php set_var($business_id)?>"></div>
-                </div>
-<!--                <div class="form-group"> 
                     <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id"></div>
-                </div>-->
-                <div class="form-group"> 
-                    <label class="control-label col-md-3" for="minor_id">รหัสสาขางาน</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="minor_id" placeholder="ชื่อสาขางาน" name="minor_id" value="<?php set_var($minor_id)?>"></div>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" readonly="" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id" value="<?php set_var($school_id)?>">
+                    </div>
                 </div>
+                    <input type="hidden" class="form-control" id="minor_id" name="minor_id" value="<?php set_var($minor_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="training_id">รหัสครูฝึก</label>
-                    <div class="col-md-4 "><input type="text" class="form-control" id="training_id" placeholder="ชื่อครูฝึก" name="training_id" value="<?php set_var($training_id)?>"></div>
+                    <label class="control-label col-md-3" for="minor_name">ชื่อสาขางาน</label>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" id="minor_name" placeholder="ชื่อสาขางาน" name="minor_name" value="<?php set_var($minor_name)?>">
+                    </div>
+                </div>
+                    <input type="hidden" class="form-control" id="trainer_id" name="trainer_id" value="<?php set_var($trainer_id)?>">
+                <div class="form-group"> 
+                    <label class="control-label col-md-3" for="trainer_name">ชื่อครูฝึก</label>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" id="trainer_name" placeholder="ชื่อครูฝึก" name="trainer_name" value="<?php set_var($trainer_name)?>">
+                    </div>
                 </div>
 
                 <div class="form-group"> 
@@ -168,7 +182,23 @@ function do_update() {
 
 function get_training($training_id = NULL) {
     global $db;
-    $sql = "SELECT * FROM training where training_id = '$training_id';";
+    $sql = "SELECT "
+            . "t1.*,s.std_name,b.business_name,m.minor_name,t2.trainer_name "
+            . "FROM "
+            . "training as t1,business as b,minor as m,trainer as t2,student as s "
+            . "where "
+            . "t1.citizen_id = s.citizen_id "
+            . "AND "
+            . "t1.business_id = b.business_id "
+            . "AND "
+            . "t1.minor_id = m.minor_id "
+            . "AND "
+            . "t1.trainer_id = t2.trainer_id "
+            . "AND "
+            . "training_id = '$training_id';";
+//    var_dump($sql);
+//    die();
+    
     $rs = mysqli_query($db, $sql);
     $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
     return $row;

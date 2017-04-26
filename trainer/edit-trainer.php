@@ -72,10 +72,11 @@ require_once INC_PATH . 'header.php';
                             <textarea class="form-control" id="address" rows="3" name="address"><?php trim(set_var($address)); ?></textarea>
                         </div>
                     </div>
+                    <input type="hidden" class="form-control" id="business_id" name="business_id" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_id); ?>">
                     <div class="form-group">
-                        <label for="business_id" class="col-md-3 control-label">รหัสสถานประกอบการ</label>
-                        <div class="col-md-2">
-                            <input type="text" class="form-control" id="business_id" name="business_id" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_id); ?>">
+                        <label for="business_name" class="col-md-3 control-label">ชื่อสถานประกอบการ</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="business_name" name="business_name" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_name); ?>">
                         </div>
                     </div>
 
@@ -122,8 +123,12 @@ require_once INC_PATH . 'header.php';
                         <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
                         <div class="col-md-2">
                             <select class='form-control' id="certificate" name="certificate">
-                                <option value="P" <?php if ($certificate=="P") {echo "selected";} ?>>ผ่าน</option>
-                                 <option value="N" <?php if ($certificate=="N") {echo "selected";} ?>>ไม่ผ่าน</option>
+                                <?php
+                                $def = isset($certificate) ? $certificate : 'P';
+                                // $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $cert_data = array('P'=>'ผ่าน', 'N'=>'ไม่ผ่าน');
+                                echo gen_option($cert_data, $def)
+                                ?>
                             </select>              
                         </div>
                     </div>
@@ -142,9 +147,14 @@ require_once INC_PATH . 'header.php';
 <!-- Javascript -->
 <script>
    $(function() {
-      $( "#business_id" ).autocomplete({
+      $( "#business_name" ).autocomplete({
+         minLength: 2, 
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 1
+         select: function (event, ui) {
+            $("#business_name").val(ui.item.label); // display the selected text
+            $("#business_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }         
       });
    });
 </script> 
@@ -233,7 +243,9 @@ function do_update() {
 
 function get_trainer($trainer_id = NULL) {
     global $db;
-    $sql = "SELECT * FROM trainer where trainer_id = '$trainer_id';";
+    $sql = "SELECT t.*,b.business_name FROM trainer as t,business as b where trainer_id = '$trainer_id';";
+//    var_dump($sql);
+//    exit();
     $rs = mysqli_query($db, $sql);
     $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
     return $row;

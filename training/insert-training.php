@@ -30,25 +30,39 @@ require_once INC_PATH . 'header.php';
                     <label class="control-label col-md-3" for="training_id">รหัสการฝึกอาชีพ</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="training_id" name="training_id"></div>
                 </div>-->
+                <input type="hidden" class="form-control" id="citizen_id" name="citizen_id" value="<?php set_var($citizen_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="citizen_id">รหัสบัตรประชาชน</label>
-                    <div class="col-md-3 "><input type="text" class="form-control" id="citizen_id" placeholder="ชื่อนักศึกษา" name="citizen_id" value="<?php set_var($citizen_id)?>"></div>
+                    <label class="control-label col-md-3" for="std_name">ชื่อนักศึกษา</label>
+                    <div class="col-md-3 ">
+                        <input type="text" class="form-control" id="std_name" placeholder="ชื่อนักศึกษา" name="std_name" value="<?php set_var($std_name)?>">
+                    </div>
                 </div>
+                <input type="hidden" class="form-control" id="business_id"  name="business_id" value="<?php set_var($business_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="business_id">รหัสสถานประกอบการ</label>
-                    <div class="col-md-3 "><input type="text" class="form-control" id="business_id" placeholder="ชื่อสถานประกอบการ" name="business_id" value="<?php set_var($business_id)?>"></div>
+                    <label class="control-label col-md-3" for="business_name">รหัสสถานประกอบการ</label>
+                    <div class="col-md-3 ">
+                        <input type="text" class="form-control" id="business_name" placeholder="ชื่อสถานประกอบการ" name="business_name" value="<?php set_var($business_name)?>">
+                    </div>
                 </div>
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="school_id">รหัสสถานศึกษา</label>
-                    <div class="col-md-3 "><input type="text" class="form-control" readonly="" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id" value="<?php set_var($school_id)?>"></div>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" readonly="" id="school_id" placeholder="ชื่อสถานศึกษา" name="school_id" value="<?php set_var($school_id)?>">
+                    </div>
                 </div>
+                    <input type="hidden" class="form-control" id="minor_id" name="minor_id" value="<?php set_var($minor_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="minor_id">รหัสสาขางาน</label>
-                    <div class="col-md-3 "><input type="text" class="form-control" id="minor_id" placeholder="ชื่อสาขางาน" name="minor_id" value="<?php set_var($minor_id)?>"></div>
+                    <label class="control-label col-md-3" for="minor_name">ชื่อสาขางาน</label>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" id="minor_name" placeholder="ชื่อสาขางาน" name="minor_name" value="<?php set_var($minor_name)?>">
+                    </div>
                 </div>
+                    <input type="hidden" class="form-control" id="trainer_id" name="trainer_id" value="<?php set_var($trainer_id)?>">
                 <div class="form-group"> 
-                    <label class="control-label col-md-3" for="trainer_id">รหัสครูฝึก</label>
-                    <div class="col-md-3 "><input type="text" class="form-control" id="trainer_id" placeholder="ชื่อครูฝึก" name="trainer_id" value="<?php set_var($trainer_id)?>"></div>
+                    <label class="control-label col-md-3" for="trainer_name">ชื่อครูฝึก</label>
+                    <div class="col-md-3 ">
+                    <input type="text" class="form-control" id="trainer_name" placeholder="ชื่อครูฝึก" name="trainer_name" value="<?php set_var($trainer_name)?>">
+                    </div>
                 </div>
 
                 <div class="form-group"> 
@@ -78,21 +92,41 @@ require_once INC_PATH . 'header.php';
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
    $(function() {
-      $( "#citizen_id" ).autocomplete({
+      $( "#std_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_student.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#std_name").val(ui.item.label); // display the selected text
+            $("#citizen_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });
-      $( "#business_id" ).autocomplete({
+      $( "#business_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#business_name").val(ui.item.label); // display the selected text
+            $("#business_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });   
-      $( "#minor_id" ).autocomplete({
+      $( "#minor_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_minor.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#minor_name").val(ui.item.label); // display the selected text
+            $("#minor_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });      
-      $( "#trainer_id" ).autocomplete({
+      $( "#trainer_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_trainer.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#trainer_name").val(ui.item.label); // display the selected text
+            $("#trainer_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       }); 
 });
 </script> 
