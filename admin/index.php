@@ -84,7 +84,7 @@ require_once INC_PATH . 'header.php';
             รายชื่อผู้ใช้งาน
             </a>            
         </div>
-        <div class="col-xs-4 col-md-2">
+<!--        <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
             </a>
@@ -98,7 +98,7 @@ require_once INC_PATH . 'header.php';
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
             </a>
-        </div>
+        </div>-->
     </div>    
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>

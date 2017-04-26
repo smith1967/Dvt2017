@@ -253,7 +253,6 @@ require_once INC_PATH . 'header.php';
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
-
     $(function () {
 
         //เรียกใช้งาน Select2

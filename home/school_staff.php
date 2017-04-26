@@ -64,7 +64,7 @@ require_once INC_PATH . 'header.php';
 
     </div>
     <div class="row">
-        <div class="col-md-offset-4 col-xs-4 col-md-2">
+        <div class="col-md-offset-2 col-xs-4 col-md-2">
             <a href="<?php echo site_url('do_ems/list-do_ems');?>">
                     <img src="<?php echo IMG_URL.'menu/ems.png';?>" class="img-responsive" />                
             </a>
@@ -74,12 +74,12 @@ require_once INC_PATH . 'header.php';
                     <img src="<?php echo IMG_URL.'menu/vg_do_business.png';?>" class="img-responsive" />                
             </a>
         </div>
-<!--        <div class="col-xs-4 col-md-2">
-            <a href="<?php echo site_url('admin/list-user');?>">
-                    <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
+        <div class="col-xs-4 col-md-2">
+            <a href="<?php echo site_url('business/list-business');?>">
+                    <img src="<?php echo IMG_URL.'menu/business.png';?>" class="img-responsive" />                
             </a>
         </div>
-        <div class="col-xs-4 col-md-2">
+<!--        <div class="col-xs-4 col-md-2">
             <a href="<?php echo site_url('admin/list-user');?>">
                     <img src="<?php echo IMG_URL.'menu/school2.png';?>" class="img-responsive" />                
             </a>
