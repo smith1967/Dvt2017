@@ -4,8 +4,8 @@ if (!defined('BASE_PATH'))
 $title = "แก้ไขข้อมูลสถานประกอบการ";
 $active = 'business';
 $subactive = 'edit';
-//$property = array();
-//$benefit = array();
+$property = array();
+$benefit = array();
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
@@ -42,7 +42,7 @@ require_once INC_PATH . 'header.php';
     <div class="col-md-12">
         <div class="panel panel-default">
         <?php  //echo "id_=".$_GET['business_id']; 
-               var_dump($business);
+             //  var_dump($business);
             // var_dump($benefit);
         
          ?>
