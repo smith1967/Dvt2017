@@ -182,9 +182,6 @@ $row = mysqli_fetch_array($result);
 <?php
 }//end list_form_init(){
 ?>
-<<<<<<< HEAD
-=======
-    
 <script>
    $(function () {
 
@@ -308,7 +305,7 @@ $row = mysqli_fetch_array($result);
     });
 
 </script>
->>>>>>> master
+
 
 
     

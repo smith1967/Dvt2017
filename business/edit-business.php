@@ -9,7 +9,7 @@ $subactive = 'edit';
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    var_dump($data);
+  //  var_dump($data);
     foreach ($_POST as $k => $v) {
         $$k = $v;  // set variable to form
     }
