@@ -90,16 +90,20 @@ function do_insert_log($username,$event){
     $query = "INSERT INTO `access_log` ("
             . "`id`, "
             . "`username`, "
-            . "`event` "
+            . "`event`, "
+            . "`ip_address`, "
+            . "`user_agent` "            
             . ") VALUES ("
             . "NULL, "
             . pq($username) . ", "
-            . pq($event).")";
+            . pq($event).","
+            . pq($_SERVER['REMOTE_ADDR']) . ", "
+            . pq($_SERVER['HTTP_USER_AGENT']).")";
 //    var_dump($query);
 //    die();
     $result = mysqli_query($db, $query);
     if(mysqli_error($db)){
-        set_err('ไม่สามารถบันทึกข้อมูลได้');
+        set_err('ไม่สามารถบันทึกข้อมูลได้ : '.  mysqli_error($db));
     }
 }
 
