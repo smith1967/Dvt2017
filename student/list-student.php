@@ -90,12 +90,12 @@ require_once INC_PATH . 'header.php';
                         <td><?php echo getMajorName($studen['major_id']); ?></td>
 <!--                        <td><?php echo $studen['end_edu_id']; ?></td>
                         <td><?php echo $studen['typcode']; ?></td>-->
-                        <td>
-                            <a href="<?php echo site_url('student/edit-student') . '&action=edit&std_id=' . $studen['std_id']; ?>" >แก้ไข</a>
+<!--                        <td>
+                            <a href="<?php //echo site_url('student/edit-student') . '&action=edit&std_id=' . $studen['std_id']; ?>" >แก้ไข</a>
                         </td>
                         <td>
-                            <a href="<?php echo site_url('student/list-student') . '&action=delete&std_id=' . $studen['std_id']; ?>" class="delete">ลบ</a>
-                        </td>
+                            <a href="<?php //echo site_url('student/list-student') . '&action=delete&std_id=' . $studen['std_id']; ?>" class="delete">ลบ</a>
+                        </td>-->
                     </tr>  
                 <?php endforeach; ?>
             </tbody>
