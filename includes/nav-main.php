@@ -24,7 +24,7 @@
                     'cond' => is_admin(),
                 ),
                 'dvt_admin' => array(
-                    'title' => 'ผู้ดูแลระบบทวิภาคี',
+                    'title' => 'ผู้ดูแลระบบส่วนกลาง',
                     'url' => 'home/dvt_admin',
                     'cond' => is_dvt_admin(),
                 ),
@@ -33,7 +33,7 @@
                     'url' => 'home/dvt_staff',
                     'cond' => is_dvt_staff(),
                 ),
-                'dvt_staff' => array(
+                'school_staff' => array(
                     'title' => 'เจ้าหน้าที่สถานศึกษา',
                     'url' => 'home/school_staff',
                     'cond' => is_school_staff(),

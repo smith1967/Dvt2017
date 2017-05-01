@@ -17,6 +17,7 @@ class acl {
         $url_list = array(
             '',
             'home/index',
+            'user/edit-user',
             'user/login',
             'user/signup',
             'user/logout'
@@ -35,7 +36,6 @@ class acl {
     }
     function is_dvt_admin($url){
         $url_list = array(
-            'home/index',
             'home/dvt_admin',
             'user/edit-user',
             'do_school_vg/list-do_school_vg'
@@ -45,23 +45,26 @@ class acl {
 
     function is_dvt_staff($url){
         $url_list = array(
-            'home/index',
             'user/edit-user',
+            'home/dvt_staff',
             'do_school_vg/list-do_school_vg'
             );
         $this->allowed = in_array($url, $url_list);
     }
     function is_school_staff($url){
         $url_list = array(
-            'home/index',
+            'home/school_staff',
             'business/list-business',
             'business/edit-business',
-            'user/edit-user',
             "business/insert-business",
             'student/list-student',
             'student/form_student',
             'student/file-manager',
             'student/check-data',
+            'do_business_vg/list-do_business_vg',
+            'training/list-training',
+            'training/insert-training',
+            'training/edit-training'
             );
         $this->allowed = in_array($url, $url_list);
     }    

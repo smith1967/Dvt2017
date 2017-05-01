@@ -9,7 +9,7 @@ $benefit = array();
 
 if (isset($_POST['submit'])) {
     $data = $_POST;
-    var_dump($data);
+  //  var_dump($data);
     foreach ($_POST as $k => $v) {
         $$k = $v;  // set variable to form
     }
@@ -41,6 +41,11 @@ require_once INC_PATH . 'header.php';
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
+        <?php  //echo "id_=".$_GET['business_id']; 
+             //  var_dump($business);
+            // var_dump($benefit);
+        
+         ?>
             <div class="panel-heading">แก้ไขข้อมูลสถานประกอบการ</div>
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
@@ -248,7 +253,6 @@ require_once INC_PATH . 'header.php';
 </div>
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
-
     $(function () {
 
         //เรียกใช้งาน Select2
