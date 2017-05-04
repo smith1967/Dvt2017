@@ -42,7 +42,7 @@ require_once INC_PATH . 'header.php';
                     </div>-->
 
                     <div class="form-group">
-                        <label for="trainer_citizen" class="col-md-3 control-label">รหัสบัตรประชาชน</label>
+                        <label for="trainer_citizen" class="col-md-3 control-label">เลขประจำตัวประชาชน</label>
                         <div class="col-md-3">
                             <input type="text" class="form-control" id="trainer_citizen" name="trainer_citizen"value="<?php set_var($trainer_citizen); ?>">
                         </div>
@@ -69,7 +69,7 @@ require_once INC_PATH . 'header.php';
                     </div>
                     <input type="hidden" class="form-control" id="business_id" name="business_id" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_id); ?>">
                     <div class="form-group">
-                        <label for="business_name" class="col-md-3 control-label">ชื่อสถานประกอบการ</label>
+                        <label for="business_name" class="col-md-3 control-label">สถานประกอบการ</label>
                         <div class="col-md-4">
                             <input type="text" class="form-control" id="business_name" name="business_name" placeholder="ชื่อสถานประกอบการ" value="<?php set_var($business_name); ?>">
                         </div>
@@ -86,31 +86,46 @@ require_once INC_PATH . 'header.php';
                             </select>              
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="trainer_major" class="col-md-3 control-label">สาขาวิชา/วุฒิการศึกษา</label>
-                        <div class="col-md-4">
-                            <input type="text" class="form-control" id="trainer_major" name="trainer_major" placeholder="สาขาวิชา/วุฒิการศึกษา" value="<?php set_var($trainer_major); ?>">
+                    <div class="form-group"> 
+                        <label class="control-label col-md-4" for="trainer_experience">ประสบการณ์ในอาชีพที่สำเร็จการศึกษา จำนวน</label>
+                       <div class="col-md-2">
+                            <select class='form-control' id="trainer_experience" name="trainer_experience">
+                                <?php
+                                $def = isset($trainer_experience) ? $trainer_experience : 'ต่ำกว่า 3 ปี';
+                                //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $exper_data = array('ต่ำกว่า 3 ปี'=>'ต่ำกว่า 3 ปี', 
+                                                '3 ปี'=>'3 ปี','5 ปี'=>'5 ปี','มากกว่า 5 ปี'=>'มากกว่า 5 ปี');
+                                echo gen_option($exper_data, $def)
+                                ?>
+                            </select>
+                            
                         </div>
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="assign_date" class="col-md-3 control-label">วันที่ได้รับการแต่งตั้งเป็นครูฝึก</label>
                         <div class="col-md-2">
                             <input type="date" class="form-control" id="assign_date" name="assign_date"value="<?php set_var($assign_date); ?>">
                         </div>
                     </div>
-                    <div class="form-group"> 
-                        <label class="control-label col-md-3" for="trainer_property_id">ประสบการณ์การเป็นครูฝึก</label>
-                        <div class="col-md-2">
-                            <select class='form-control' id="trainer_property_id" name="trainer_property_id">
+                    <div class="form-group">
+                        <label for="trainer_method_assign" class="col-md-3 control-label">ได้รับการแต่งตั้งเป็นครูฝึก ด้วยวิธี</label>
+                        <div class="col-md-4">
+                            <select class='form-control' id="trainer_method_assign" name="trainer_method_assign">
                                 <?php
-                                $def = isset($trainer_property_id) ? $trainer_property_id : 'E';
-                                $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
-                                echo gen_option($sql, $def)
+                                $def = isset($trainer_method_assign) ? $trainer_method_assign : 'ผ่านการฝึกอบรม';
+                                //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $assign_data = array('ผ่านการฝึกอบรม'=>'ผ่านการฝึกอบรม', 
+                                                'มีประสบการณืการสอนมากกว่า 6 เดือน'=>'มีประสบการณืการสอนมากกว่า 6 เดือน');
+                                echo gen_option($assign_data, $def);
                                 ?>
-                            </select>              
+                            </select>
+                            
                         </div>
                     </div>
+
+<!--                 
+                    
 
                     <div class="form-group"> 
                         <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
@@ -124,7 +139,7 @@ require_once INC_PATH . 'header.php';
                                 ?>
                             </select>              
                         </div>
-                    </div>
+                    </div>-->
 
                     <!--<div class="form-group">
                         <label for="property" class="col-md-3 control-label">ข้อมูลทำความร่วมมือจัดอาชีวศึกษา</label>
@@ -173,7 +188,7 @@ function do_validate($data) {
 //        $valid = false;
 //    }
     if (check_pid($data['trainer_citizen'])) {
-        set_err('กรุณากรอกเลขบัตรประชาชน');
+        set_err('กรุณากรอกเลขประจำตัวประชาชน');
         $valid = false;
     }
     if (empty($data['trainer_name'])) {
@@ -189,16 +204,12 @@ function do_validate($data) {
         $valid = false;
     }
     if (empty($data['business_id'])) {
-        set_err('กรุณากรอกรหัสสถานประกอบการ');
-        $valid = false;
-    }
-    if (empty($data['trainer_major'])) {
-        set_err('กรุณากรอกสาขาวิชา/วุฒิการศึกษา');
+        set_err('กรุณากรอกชื่อสถานประกอบการ');
         $valid = false;
     }
 
     if (!preg_match('/[0-9]{1,}/', $data['assign_date'])) {
-        set_err('กรุณาเลือกวันที่ออกใบรับฝึกงาน');
+        set_err('กรุณาเลือกวันที่แต่งตั้งเป็นครูฝึก');
         $valid = false;
     }
     return $valid;
@@ -207,7 +218,7 @@ function do_validate($data) {
 function do_insert() {
     global $db;
     $data = &$_POST;
-    $query = "INSERT INTO trainer (`trainer_id`, `trainer_citizen`, `trainer_name`, `phone`, `address`, `business_id`, `educational_id`, `trainer_major`,`assign_date`, `trainer_property_id`,certificate) VALUES (NULL," . pq($data['trainer_citizen']) . "," . pq($data['trainer_name']) . "," . pq($data['phone']) . "," . pq($data['address']) . "," . pq($data['business_id']) . "," . pq($data['educational_id']) . "," . pq($data['trainer_major']) . "," . pq($data['assign_date']) . "," . pq($data['trainer_property_id']) .",". pq($data['certificate']) . ")";
+    $query = "INSERT INTO trainer (`trainer_id`, `trainer_citizen`, `trainer_name`, `phone`, `address`, `business_id`, `educational_id`, `trainer_experience`,`assign_date`, `trainer_method_assign`) VALUES (NULL," . pq($data['trainer_citizen']) . "," . pq($data['trainer_name']) . "," . pq($data['phone']) . "," . pq($data['address']) . "," . pq($data['business_id']) . "," . pq($data['educational_id']) . "," . pq($data['trainer_experience']) . "," . pq($data['assign_date']) . "," . pq($data['trainer_method_assign']) .")";
 //    var_dump($query);
 //    die();
 //    $query = "INSERT INTO group_config (groupname, group_desc, upload, download) VALUES (".pq($data['groupname']).", ".pq($data['group_desc']).", ".pq($data['upload']).", ".pq($data['download']).");";
