@@ -26,6 +26,11 @@ if ($_GET['trainer_id']) {
     foreach ($trainer as $key => $value) {
         $$key = $value;
     }
+    if(!empty($business_id)){
+        $data = get_business_name($business_id);
+        $business_name = $data['business_name'];
+//        var_dump($business_name);
+    }
 //    var_dump($trainer);
 }
 require_once INC_PATH . 'header.php';
@@ -235,7 +240,22 @@ function do_update() {
 
 function get_trainer($trainer_id = NULL) {
     global $db;
-    $sql = "SELECT t.*,b.business_name FROM trainer as t,business as b where trainer_id = '$trainer_id';";
+    $sql = "SELECT t.* "
+            . "FROM trainer as t "
+            . "WHERE "
+            . "t.trainer_id = '$trainer_id';";
+//    var_dump($sql);
+//    exit();
+    $rs = mysqli_query($db, $sql);
+    $row = mysqli_fetch_array($rs,MYSQLI_ASSOC);
+    return $row;
+}
+function get_business_name($business_id) {
+    global $db;
+    $sql = "SELECT business_name "
+            . "FROM business "
+            . "WHERE "
+            . "business_id = '$business_id';";
 //    var_dump($sql);
 //    exit();
     $rs = mysqli_query($db, $sql);
@@ -243,5 +263,7 @@ function get_trainer($trainer_id = NULL) {
     return $row;
 }
 ?>
+
+
 </body>
 </html>
