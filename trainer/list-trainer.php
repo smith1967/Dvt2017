@@ -65,7 +65,7 @@ function checkDelete(){
                         <td><?php echo $trainer['trainer_id']; ?></td>
                         <td><?php echo $trainer['trainer_name']; ?></td>
                         <td><?php echo $trainer['phone']; ?></td>
-                        <td><?php echo $trainer['educational_id']; ?></td>
+                        <td><?php echo getNameEducational($trainer['educational_id']); ?></td>
                         <td>                            
                              <a href="<?php echo site_url('trainer/list-trainer') . '&action=delete&trainer_id=' . $trainer['trainer_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
                              <a href="<?php echo site_url('trainer/edit-trainer') . '&action=edit&trainer_id=' . $trainer['trainer_id']; ?>" >แก้ไข</a>
@@ -111,6 +111,14 @@ function do_delete($trainer_id) {
         set_info('ลบข้อมูลสำเร็จ');
     }
     redirect('trainer/list-trainer');
+}
+
+function getNameEducational($s){
+    global $db;
+    $query = "SELECT * FROM educational where educational_id='".$s."'";
+    $result = mysqli_query($db, $query);
+    $row=mysqli_fetch_assoc($result);
+    return $row['educational_name'];   
 }
 
 ?>

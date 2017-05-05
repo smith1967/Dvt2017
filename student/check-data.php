@@ -100,7 +100,9 @@ function do_transfer_std($stdfile) {
     $res=mysqli_query($db, $sql_t);
     $num_row=0;
     $count =0;
-	$count2 =0;
+    $count2 =0;
+    $date_update=date("Y-m-d");
+        
     while (!feof($handle)) {
         $data_str = fgetcsv($handle);
         //print_r($data_str); exit(); //====================
@@ -127,7 +129,8 @@ function do_transfer_std($stdfile) {
 			$strsql .= "'$data[44]','$data[2]','$data[4]',";
 			$strsql .= "'$name','$dofb','$sex',";
 			$strsql .= "'$minor_id','$major_id',";
-            $strsql .= "'$data[55]','$data[61]','$data[53]','$data[0]'";
+                        $strsql .= "'$data[55]','$data[61]','$data[53]',";
+                        $strsql .= "'$data[0]','$data[1]','$date_update'";
 			$strsql .=");";
 		//	echo $strsql.'<br>';exit();
        // echo 'zzz='.$count;
