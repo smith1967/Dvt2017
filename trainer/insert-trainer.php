@@ -87,14 +87,14 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>
                     <div class="form-group"> 
-                        <label class="control-label col-md-4" for="trainer_experience">ประสบการณ์ในอาชีพที่สำเร็จการศึกษา จำนวน</label>
+                        <label class="control-label col-md-4" for="trainer_experience">ประสบการณ์ในอาชีพที่สำเร็จการศึกษา</label>
                        <div class="col-md-2">
                             <select class='form-control' id="trainer_experience" name="trainer_experience">
                                 <?php
                                 $def = isset($trainer_experience) ? $trainer_experience : 'ต่ำกว่า 3 ปี';
                                 //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
-                                $exper_data = array('ต่ำกว่า 3 ปี'=>'ต่ำกว่า 3 ปี', 
-                                                '3 ปี'=>'3 ปี','5 ปี'=>'5 ปี','มากกว่า 5 ปี'=>'มากกว่า 5 ปี');
+                                $exper_data = array('1'=>'ต่ำกว่า 3 ปี', 
+                                                '2'=>'3 ปี','3'=>'5 ปี','4'=>'มากกว่า 5 ปี');
                                 echo gen_option($exper_data, $def)
                                 ?>
                             </select>
@@ -115,8 +115,8 @@ require_once INC_PATH . 'header.php';
                                 <?php
                                 $def = isset($trainer_method_assign) ? $trainer_method_assign : 'ผ่านการฝึกอบรม';
                                 //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
-                                $assign_data = array('ผ่านการฝึกอบรม'=>'ผ่านการฝึกอบรม', 
-                                                'มีประสบการณืการสอนมากกว่า 6 เดือน'=>'มีประสบการณืการสอนมากกว่า 6 เดือน');
+                                $assign_data = array('T'=>'ผ่านการฝึกอบรม', 
+                                                'E'=>'มีประสบการณืการสอนมากกว่า 6 เดือน');
                                 echo gen_option($assign_data, $def);
                                 ?>
                             </select>
