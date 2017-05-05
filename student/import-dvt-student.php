@@ -8,7 +8,7 @@ $subactive = 'import-dvt-student';
 
  // do_import_all_std();
  //do_import_std();
-
+$date_update=date("Y-m-d");
 
 ?>
 <?php require_once INC_PATH . 'header.php'; ?>
@@ -52,8 +52,9 @@ $subactive = 'import-dvt-student';
 <?php
 function do_import_all_std(){
     global $db;
+    
     $sql="insert into sum_of_student 
-        select `school_id`,`edu_year`,
+        select `school_id`,`semester`,`edu_year`,
         (SELECT count(`std_id`) FROM `student_tmp`) as sum_of_student,
         (SELECT count(`std_id`) FROM `student_tmp` where `edu_id`=2) as sum_of_dvt_student,
         (SELECT  count(`std_id`) FROM `student_tmp` WHERE substr(std_id,3,1)=2) as sum_of_vc_student,
@@ -97,12 +98,13 @@ function do_import_all_std(){
 }
 function do_import_std() {
     global $db;
+    global $date_update;
    //  transfer new data from tmp to student
-    $sql = "insert INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year`) 
-    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year` 
+    $sql = "replace INTO student (`std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year`,`date_update`) 
+    SELECT `std_id`,`school_id`,`citizen_id`,`std_name`,`dateofbirth`,`sex`,`minor_id`,`major_id`,`type_code`,`end_edu_id`,`edu_year` ,`date_update`
     FROM `student_tmp` 
     WHERE `edu_id`=2;";
-   // echo "sql= ".$sql; exit();
+    //echo "sql= ".$sql; exit();
     $result= mysqli_query($db, $sql);
     if (!$result) {
         $err="การเพิ่มข้อมูลเข้าตาราง student ผิดพลาด  : " . mysqli_error($db);
@@ -126,7 +128,15 @@ function do_import_std() {
         }
         //redirect('form.php');
     } else {
-        $info='โอนข้อมูลนักเรียนทวิภาคี เข้าตาราง student จำนวน ' . mysqli_affected_rows($db) . ' รายการ';
+        //ปรับ end_edu_id เป็น 0 สำหรับผู้ไม่มีรายชื่อ ในการโอนครั้งต่อไป
+        //UPDATE `dvt2017`.`student` SET `end_edu_id` = '0' 
+        //WHERE `student`.`std_id` = '5931110025' AND `student`.`school_id` = '1320026101';
+        $sql="UPDATE `student` SET `end_edu_id` = '0' WHERE  `date_update` != '".$date_update."'";
+        $result= mysqli_query($db, $sql);
+        
+        
+        
+        $info='โอนข้อมูลนักเรียนทวิภาคี เข้าตาราง student เรียบร้อยแล้ว';
       //  echo 'โอนข้อมูลเข้าตาราง student จำนวน ' . mysqli_affected_rows($db) . ' รายการ' ;
         //show_info($_SESSION['info']);
         echo '<div class="alert alert-info">';

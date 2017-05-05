@@ -40,14 +40,14 @@ require_once INC_PATH . 'header.php';
     <?php show_message() ?>
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading">เพิ่มข้อมูลครูฝึก</div>
+            <div class="panel-heading">แก้ไขข้อมูลครูฝึก</div>
             <div class="panel-body">
                 <form method="post" class="form-horizontal" action="">
 
                     <input type="hidden" class="form-control" id="trainer_id" name="trainer_id" value="<?php set_var($trainer_id); ?>">
 
                     <div class="form-group">
-                        <label for="trainer_citizen" class="col-md-3 control-label">รหัสบัตรประชาชน</label>
+                        <label for="trainer_citizen" class="col-md-3 control-label">เลขประจำตัวประชาชน</label>
                         <div class="col-md-2">
                             <input type="text" class="form-control" id="trainer_citizen" readonly="" name="trainer_citizen"value="<?php set_var($trainer_citizen); ?>">
                         </div>
@@ -93,9 +93,17 @@ require_once INC_PATH . 'header.php';
                         </div>
                     </div>  
                     <div class="form-group">
-                        <label for="trainer_major" class="col-md-3 control-label">สาขาวิชา/วุฒิการศึกษา</label>
+                        <label for="trainer_experience" class="col-md-4 control-label">ประสบการณ์ในอาชีพที่สำเร็จการศึกษา จำนวน</label>
                         <div class="col-md-4">
-                            <input type="text" class="form-control" id="trainer_major" name="trainer_major" placeholder="สาขาวิชา/วุฒิการศึกษา" value="<?php set_var($trainer_major); ?>">
+                            <select class='form-control' id="trainer_experience" name="trainer_experience" >
+                                <?php
+                                $def = isset($trainer_experience) ? $trainer_experience : 'ต่ำกว่า 3 ปี';
+                                //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $exper_data = array('ต่ำกว่า 3 ปี'=>'ต่ำกว่า 3 ปี', 
+                                                '3 ปี'=>'3 ปี','5 ปี'=>'5 ปี','มากกว่า 5 ปี'=>'มากกว่า 5 ปี');
+                                echo gen_option($exper_data, $def)
+                                ?>
+                            </select>
                         </div>
                     </div>           
 
@@ -108,26 +116,15 @@ require_once INC_PATH . 'header.php';
                     </div>
 
                     <div class="form-group"> 
-                        <label class="control-label col-md-3" for="trainer_property_id">ประสบการณ์การเป็นครูฝึก</label>
-                        <div class="col-md-2">
-                            <select class='form-control' id="trainer_property_id" name="trainer_property_id">
+                        <label class="control-label col-md-3" for="trainer_method_assign">ได้รับการแต่งตั้งเป็นครูฝึก ด้วยวิธี</label>
+                        <div class="col-md-4">
+                            <select class='form-control' id="trainer_method_assign" name="trainer_method_assign">
                                 <?php
-                                $def = isset($trainer_property_id) ? $trainer_property_id : 'E';
-                                $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
-                                echo gen_option($sql, $def)
-                                ?>
-                            </select>              
-                        </div>
-                    </div>
-                    <div class="form-group"> 
-                        <label class="control-label col-md-3" for="certificate">ผ่านการฝึกอบรมเป็นครูฝึก</label>
-                        <div class="col-md-2">
-                            <select class='form-control' id="certificate" name="certificate">
-                                <?php
-                                $def = isset($certificate) ? $certificate : 'P';
-                                // $sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
-                                $cert_data = array('P'=>'ผ่าน', 'N'=>'ไม่ผ่าน');
-                                echo gen_option($cert_data, $def)
+                                $def = isset($trainer_method_assign) ? $trainer_method_assign : 'ผ่านการฝึกอบรม';
+                                //$sql = "SELECT trainer_property_id,trainer_property FROM trainer_property ORDER BY trainer_property_id ASC";
+                                $assign_data = array('ผ่านการฝึกอบรม'=>'ผ่านการฝึกอบรม', 
+                                                'มีประสบการณืการสอนมากกว่า 6 เดือน'=>'มีประสบการณืการสอนมากกว่า 6 เดือน');
+                                echo gen_option($assign_data, $def);
                                 ?>
                             </select>              
                         </div>
@@ -184,16 +181,12 @@ function do_validate($data) {
         $valid = false;
     }
     if (!preg_match('/[0-9]{1,}/', $data['trainer_id'])) {
-        set_err('กรุณากรอกรหัสสถานประกอบการ');
+        set_err('กรุณากรอกชื่อสถานประกอบการ');
         $valid = false;
     }
-    if (empty($data['trainer_major'])) {
-        set_err('กรุณากรอกสาขาวิชา/วุฒิการศึกษา');
-        $valid = false;
-    }
-
+   
     if (!preg_match('/[0-9]{1,}/', $data['assign_date'])) {
-        set_err('กรุณาเลือกวันที่ออกใบรับฝึกงาน');
+        set_err('กรุณาเลือกวันที่แต่งตั้งเป็นครูฝึก');
         $valid = false;
     }
 //    if (!preg_match('/[0-9]{1,}/', $data['educational'])) {
@@ -226,10 +219,9 @@ function do_update() {
             . "address=" . pq($data['address']) . ","
             . "business_id=" . pq($data['business_id']) . ","
             . "educational_id=" . pq($data['educational_id']) . ","
-            . "trainer_major=" . pq($data['trainer_major']) . ","
+            . "trainer_experience=" . pq($data['trainer_experience']) . ","
             . "assign_date=" . pq($data['assign_date']) . ","
-            . "trainer_property_id=" . pq($data['trainer_property_id']). ","
-            . "certificate=" . pq($data['certificate'])
+            . "trainer_method_assign=" . pq($data['trainer_method_assign'])." "
             . " WHERE trainer_id = " . pq($data['trainer_id']);
     //echo $query; exit();
     $result = mysqli_query($db, $query);
