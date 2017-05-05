@@ -46,7 +46,7 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                     <th>รหัสสถานประกอบการ</th>
                     <th>ชื่อสถานประกอบการ</th>
                     <th>จังหวัด</th>
-                    <th colspan="2">จัดการ</th>
+                    <th colspan="2">ดำเนินการ</th>
                     <!--<th><a href="<?php echo site_url('business/business'); ?>" >เพิ่มข้อมูล</a></th>-->
                 </tr>
             </thead>

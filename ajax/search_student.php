@@ -6,28 +6,28 @@ include_once './../include/config.php';
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-if (isset($_GET))
+header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
+header('Content-Type: application/json; charset=utf-8');
+if (isset($_GET)) {
     $search_str = '%' . strip_tags($_GET['term']) . '%';
     $school_id = strip_tags($_SESSION['user']['school_id']);
 //echo $search_str.'<br>';
 //die();
-header("Cache-Control: no-transform,public,max-age=300,s-maxage=900");
-header('Content-Type: application/json; charset=utf-8');
-$query = "SELECT citizen_id as value,std_name as label FROM student "
-        . "WHERE school_id = ".pq($school_id)." AND std_name LIKE " . pq($search_str)." OR citizen_id LIKE ".pq($search_str);
+    $query = "SELECT citizen_id as value,std_name as label FROM student "
+            . "WHERE school_id = " . pq($school_id) . " AND std_name LIKE " . pq($search_str) . " OR citizen_id LIKE " . pq($search_str);
 //echo $query;
-$result = mysqli_query($db, $query);
-if ($result) {
-    $data = array();
-    while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-        $data[] = $row;
-    }
-    echo json_encode($data,JSON_UNESCAPED_UNICODE);
+    $result = mysqli_query($db, $query);
+    if ($result) {
+        $data = array();
+        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+            $data[] = $row;
+        }
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
 //    var_dump(json_encode($data));
-} else {
-    echo "can't query";
+    } else {
+        echo "can't query";
+    }
 }
-
 //$data = array(
 //    array(
 //      'id'=>1,

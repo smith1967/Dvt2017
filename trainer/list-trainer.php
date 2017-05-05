@@ -52,7 +52,7 @@ function checkDelete(){
                     <th>ชื่อครูฝึก</th>
                     <th>เบอร์โทรศัพท์</th>
                     <th>วุฒิการศึกษาสูงสุด</th>
-                    <th colspan="2">จัดการ</th>
+                    <th>จัดการ</th>
                    <!--<th><a href="<?php echo site_url('trainer/form_insert_trainer'); ?>" >เพิ่มข้อมูล</a></th>-->
 
                 </tr>
