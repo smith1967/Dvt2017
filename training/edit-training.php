@@ -38,6 +38,7 @@ require_once INC_PATH . 'header.php';
                     <label class="control-label col-md-3" for="training_id">รหัสการฝึกอาชีพ</label>
                     <div class="col-md-4 "><input type="text" class="form-control" id="training_id" name="training_id"></div>
                 </div>-->
+                 <input type="hidden" class="form-control" id="training_id" name="training_id" value="<?php set_var($training_id)?>">
                 <input type="hidden" class="form-control" id="citizen_id" name="citizen_id" value="<?php set_var($citizen_id)?>">
                 <div class="form-group"> 
                     <label class="control-label col-md-3" for="std_name">ชื่อนักศึกษา</label>
@@ -100,24 +101,44 @@ require_once INC_PATH . 'header.php';
 <?php require_once INC_PATH . 'footer.php'; ?>
 <script>
    $(function() {
-      $( "#citizen_id" ).autocomplete({
+      $( "#std_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_student.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#std_name").val(ui.item.label); // display the selected text
+            $("#citizen_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });
-      $( "#business_id" ).autocomplete({
+      $( "#business_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_business_1.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#business_name").val(ui.item.label); // display the selected text
+            $("#business_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });   
-      $( "#minor_id" ).autocomplete({
+      $( "#minor_name" ).autocomplete({
          source: "<?php echo SITE_URL ?>ajax/search_minor.php",
-         minLength: 2
+         minLength: 2,
+         select: function (event, ui) {
+            $("#minor_name").val(ui.item.label); // display the selected text
+            $("#minor_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       });      
-      $( "#training_id" ).autocomplete({
-         source: "<?php echo SITE_URL ?>ajax/search_training.php",
-         minLength: 2
+      $( "#trainer_name" ).autocomplete({
+         source: "<?php echo SITE_URL ?>ajax/search_trainer.php",
+         minLength: 2,
+         select: function (event, ui) {
+            $("#trainer_name").val(ui.item.label); // display the selected text
+            $("#trainer_id").val(ui.item.value); // save selected id to hidden input
+            return false;
+        }   
       }); 
 });
-</script> 
+</script>
 <?php
 function do_validate($data) {
     $valid = true;
@@ -138,7 +159,7 @@ function do_validate($data) {
         set_err('กรุณากรอกรหัสสาขางาน');
         $valid = false;
     }
-    if (empty($data['training_id'])) {
+    if (empty($data['trainer_id'])) {
         set_err('กรุณากรอกรหัสครูฝึก');
         $valid = false;
     }
@@ -173,7 +194,7 @@ function do_update() {
             ." WHERE `training_id`=".pq($data['training_id']).";";
     $result = mysqli_query($db, $query);
     if (mysqli_affected_rows($db) == 0) {
-        set_err('ไม่สามารถแก้ไขข้อมูล');
+        set_err('ไม่สามารถแก้ไขข้อมูล'.  mysqli_error($db));
     } else {
         set_info('แก้ไขข้อมูลสำเร็จ');
     }
