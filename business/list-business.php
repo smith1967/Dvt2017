@@ -60,8 +60,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
                         <td><?php echo $business['province_name']; ?></td>
 
                         <td>
-                            <a href="<?php echo site_url('business/list-business') . '&action=delete&business_id=' . $business['business_id']; ?>" class="delete"onclick="return confirm('คุณแน่ใจหรือจะลบ?')">ลบ</a>
-                            <a href="<?php echo site_url('business/edit-business') . '&action=edit&business_id=' . $business['business_id']; ?>" >แก้ไข</a>
+                            <a href="<?php echo site_url('business/list-business') . '&action=delete&business_id=' . $business['business_id']; ?>" class="delete"><i class="glyphicon glyphicon-remove"></i></a>
+                            <a href="<?php echo site_url('business/edit-business') . '&action=edit&business_id=' . $business['business_id']; ?>" ><i class="glyphicon glyphicon-pencil"></i></a>
 
                         </td>                    
                     </tr>
@@ -72,6 +72,11 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
 
 </div> <!-- Main contianer -->
 <?php require_once INC_PATH . 'footer.php'; ?>
+<script>
+    $('.delete').click(function () {
+        return confirm('ยืนยันลบข้อมูล')
+    });
+</script>
 <?php
 
 function get_business($page = 0, $limit = 10) {

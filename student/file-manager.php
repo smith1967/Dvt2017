@@ -113,9 +113,7 @@ if (isset($_GET['action'])) {
                 </div>
             </div>
         </div> 
-    <?php 
-   
-    ?>
+
             <?php
             //get file list in upload folder
             //ie(UPLOAD_DIR);

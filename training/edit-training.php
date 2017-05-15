@@ -88,9 +88,6 @@ require_once INC_PATH . 'header.php';
                     <div class="col-md-4 "><input type="date" id="end_date" name="end_date" value="<?php set_var($end_date)?>"/></div>
                 </div>
 
-
-        </div> 
-
         <div class="form-group"> 
             <div class="col-md-offset-3"><button type="submit" class="btn btn-primary"name="submit">บันทึกข้อมูล</button></div>
         </div>
@@ -187,7 +184,7 @@ function do_update() {
             .pq($data['citizen_id']).",`business_id`=".pq($data['business_id'])
             .",`business_id`=".pq($data['business_id'])
             .",`minor_id`=".pq($data['minor_id'])
-            .",`training_id`=".pq($data['training_id'])
+            .",`trainer_id`=".pq($data['trainer_id'])
             .",`contract_date`=".pq($data['contract_date'])
             .",`start_date`=".pq($data['start_date'])
             .",`end_date`=".pq($data['end_date'])

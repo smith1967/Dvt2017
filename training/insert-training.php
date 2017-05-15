@@ -78,7 +78,7 @@ require_once INC_PATH . 'header.php';
                     <label class="control-label col-md-3" for="end_date">วันที่สิ้นสุดการฝึก</label>
                     <div class="col-md-4 "><input type="date" id="end_date" name="end_date" value="<?php set_var($end_date)?>"/></div>
                 </div>
-        </div> 
+
 
         <div class="form-group"> 
             <div class="col-md-offset-3"><button type="submit" class="btn btn-primary"name="submit">บันทึกข้อมูล</button></div>

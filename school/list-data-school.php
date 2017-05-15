@@ -73,7 +73,7 @@ sh.aumphur_id = am.AMPHUR_CODE AND
 sh.institute_id = ins.institute_id AND 
 sh.school_id = '$school_id' ";
 $result = mysqli_query($db, $sql);
-$row = mysqli_fetch_array($result);
+$row = mysqli_fetch_assoc($result);
 
 ?>
 <div class="table-responsive  col-md-7">
