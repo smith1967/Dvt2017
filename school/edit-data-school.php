@@ -1,9 +1,9 @@
 <?php
 if (!defined('BASE_PATH'))
     exit('No direct script access allowed');
-$title = "อัพโหลดไฟล์และตรวจสอบข้อมูล";
+$title = "แก้ไขข้อมูลสถานศึกษา";
 $active = 'school';
-$subactive = 'list-school';
+$subactive = 'edit';
 global $school_id;
 $school_id = $_SESSION['user']['school_id'];
 //$check=$_GET['action'];
