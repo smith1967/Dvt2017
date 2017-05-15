@@ -44,16 +44,17 @@ if (isset($_GET['action']) && $_GET['action'] == 'delete') {
         <table class="table table-striped table-condensed table-hover">
             <thead>
                 <tr>
-            <td><center>รหัสการฝึกอาชีพ</center></td>
-            <td><center>รหัสนักศึกษา</center></td>
-            <td><center>รหัสนักศึกษา</center></td>
-            <td><center>ชื่อสถานประกอบการ</center></td>
-            <td><center>สถานศึกษา</center></td>
-            <td><center>ชื่อสาขางาน</center></td>
-            <td><center>ครูฝึก</center></td>
-            <td><center>วันที่ทำสัญญา</center></td>
-            <td><center>วันที่เริ่มต้นการฝึก</center></td>
-            <td><center>วันที่สิ้นสุดการฝึก</center></td>
+            <th><center>รหัสการฝึกอาชีพ</center></th>
+            <th><center>รหัสนักศึกษา</center></th>
+            <th><center>รหัสนักศึกษา</center></th>
+            <th><center>ชื่อสถานประกอบการ</center></th>
+            <th><center>สถานศึกษา</center></th>
+            <th><center>ชื่อสาขางาน</center></th>
+            <th><center>ครูฝึก</center></th>
+            <th><center>วันที่ทำสัญญา</center></th>
+            <th><center>วันที่เริ่มต้นการฝึก</center></th>
+            <th><center>วันที่สิ้นสุดการฝึก</center></th>
+            <th><center>ดำเนินการ</center></th>
                 </tr>
             </thead>
             <tbody>
